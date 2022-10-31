@@ -1,4 +1,3 @@
-
 const host = import.meta.env.DEV? `localhost:${import.meta.env.VITE_EXPRESS_PORT}` : location.host
 
 
@@ -8,7 +7,7 @@ const host = import.meta.env.DEV? `localhost:${import.meta.env.VITE_EXPRESS_PORT
  * @param {RequestInit} init
  * @returns {Promise<Response>}
  */
-export function fetchApi(path_,init) {
+export function fetchApi(path_,init={}) {
     let url = new URL(path_,`http://${host}`)
     return fetch(url, init)
 }
