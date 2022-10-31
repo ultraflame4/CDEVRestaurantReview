@@ -2,7 +2,7 @@
 
 This is a Restaurant Review website built using ReactJS and ExpressJS
 
-Features include:
+Features planned include:
 1. A list of restaurants
 2. Restaurant ratings in stars out of 10
 3. Restaurant average cost
