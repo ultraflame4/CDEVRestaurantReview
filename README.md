@@ -28,3 +28,7 @@ Alternatively, you can build the client and run server separately.
 1. Run `npm run build` to build the client.
 2. Run `npm run express-run` to run the server.
 
+
+## Thjings to Note:
+- See icons from https://icones.js.org/
+- Use library [Iconfig](https://docs.iconify.design/icon-components/react/) to use icons from multiple vendors in React

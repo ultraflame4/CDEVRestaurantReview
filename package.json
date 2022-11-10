@@ -12,6 +12,7 @@
     "build&run": "npm run build && npm run express-run"
   },
   "dependencies": {
+    "@iconify-icon/react": "^1.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
