@@ -1,36 +1,101 @@
 
-.HeaderNav{
+.HeaderNav {
     display: flex;
     color: var(--white);
     background: var(--black);
-    height: min(6rem,100px);
+    height: min(6rem, 100px);
     position: sticky;
     top: 0;
     padding: 0 1em;
+    align-items: center;
+    gap: 4em;
 }
 
-.HeaderNav > *{
+.HeaderNav > * {
     flex-shrink: 0;
+    height: fit-content;
 }
 
-.HeaderNavTitle{
+.HeaderNavTitle {
     display: flex;
     align-items: center;
 }
 
-.HeaderNavTitle *{
+.HeaderNavTitle * {
     margin: 0;
     font-family: "Poppins";
 }
 
-.HeaderNavTitle{
+.HeaderNavTitle {
     color: var(--green);
 }
-.HeaderNavTitle sub{
+
+.HeaderNavTitle sub {
     font-size: 0.6em;
     color: var(--red);
 }
 
-.HeaderNavSearch{
+
+.HeaderNavSearch {
     flex-grow: 1;
+    display: flex;
+    gap: 0.6em;
+    align-items: center;
 }
+
+.SearchIcon {
+    color: var(--slight-gray);
+    flex-shrink: 0;
+    font-size: 2.5em;
+    transition: color 200ms ease, transform 600ms ease;
+}
+
+:has(.SearchInput>input:focus) .SearchIcon, .HeaderNavSearch:hover .SearchIcon {
+    color: var(--light-gray);
+    transform: rotate(calc(360deg * 2));
+}
+
+.SearchInput {
+    flex-grow: 1;
+    position: relative;
+}
+
+.SearchInput>input{
+    background: var(--black);
+    border: none;
+    color: var(--off-white);
+    font-size: 1.4em;
+    font-family: "Segoe UI";
+    font-weight: 600;
+    outline: none;
+    width: 100%;
+
+}
+.SearchInput>input::placeholder{
+    transition: color 200ms ease;
+}
+
+.HeaderNavSearch:hover input::placeholder {
+    color: var(--light-gray);
+}
+
+
+.SearchInputUnderline {
+    content: "tes";
+    position: absolute;
+    width: 100%;
+    max-width: 0;
+    height: max(0.18em,1px);
+    background: var(--light-gray);
+    bottom: -8px;
+    border-radius: 0.18em;
+    left: 0;
+    opacity: 0;
+    transition: all 200ms ease;
+}
+
+.HeaderNavSearch:hover .SearchInputUnderline, .SearchInput:has(>input:focus)>.SearchInputUnderline {
+    max-width: 100%;
+    opacity: 1;
+}
+
