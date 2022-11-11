@@ -31,3 +31,5 @@ Alternatively, you can build the client and run server separately.
 ## Thjings to Note:
 - See icons from https://icones.js.org/
 - Use library [Iconfig](https://docs.iconify.design/iconify-icon/react.html) to use icons from multiple vendors in React
+
+- Use geocoding to convert addresses to coordinates. Do this manually and store it in the database. Google Map Api use requires $$$ :(
