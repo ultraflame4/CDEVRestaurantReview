@@ -16,7 +16,6 @@ Features planned include:
 This is a fullstack web development project done for school.
 
 ## Installation
-I will not go into the details on how to install and run this project, but basically,
 1. Clone the repository
 2. Run `npm install` in the root directory
 
