@@ -1,0 +1,14 @@
+:root{
+    --red: #e55555;
+    --green: #a9ae69;
+    --gold: #b9ac33;
+    --black: #222;
+    --gray: #444;
+    --light-gray: #888;
+    --white: #fff;
+    --off-white: #ccc;
+}
+
+body{
+    /*background: var(--black);*/
+}

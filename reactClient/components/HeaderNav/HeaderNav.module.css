@@ -1,0 +1,36 @@
+
+.HeaderNav{
+    display: flex;
+    color: var(--white);
+    background: var(--black);
+    height: min(6rem,100px);
+    position: sticky;
+    top: 0;
+    padding: 0 1em;
+}
+
+.HeaderNav > *{
+    flex-shrink: 0;
+}
+
+.HeaderNavTitle{
+    display: flex;
+    align-items: center;
+}
+
+.HeaderNavTitle *{
+    margin: 0;
+    font-family: "Poppins";
+}
+
+.HeaderNavTitle{
+    color: var(--green);
+}
+.HeaderNavTitle sub{
+    font-size: 0.6em;
+    color: var(--red);
+}
+
+.HeaderNavSearch{
+    flex-grow: 1;
+}
