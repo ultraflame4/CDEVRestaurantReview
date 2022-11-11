@@ -15,18 +15,24 @@ function fetchApi(path_,init={}) {
 }
 
 
-
 /**
- * Context for whether the user is logged in or not.
- * Defaults to false.
- * @type {React.Context<boolean>}
+ * Contains basic information about the user
+ * @export
+ * @typedef UserAccountInfoObject
+ * @property {string} username
+ * @property {string} email
  */
-export const UserLoggedInContext = React.createContext(false);
+/**
+ * Context for whether the user account information
+ * Defaults to null. When null, user is not logged in.
+ * @type {React.Context<UserAccountInfoObject|null>}
+ */
+export const UserInfoContext = React.createContext(null)
 
 
 export default {
     fetch: fetchApi,
     contexts: {
-        UserLoggedInContext
+        UserInfoContext
     }
 }

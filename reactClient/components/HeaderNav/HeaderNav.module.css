@@ -8,7 +8,7 @@
     top: 0;
     padding: 0 1em;
     align-items: center;
-    gap: 4em;
+    gap: 3rem;
 }
 
 .HeaderNav > * {
@@ -117,7 +117,7 @@
     color: var(--light-gray);
     font-weight: 700;
     text-decoration: none;
-    font-size: 1.4em;
+    font-size: 1.5em;
 }
 
 
@@ -127,4 +127,40 @@
 
 .HeaderNavLinks > li:nth-child(2) a {
     --icon-color: var(--gold);
+}
+
+
+.HeaderNavAccount {
+    --acc-menu-border: 2px;
+    position: relative;
+}
+
+.HeaderNavAccount > a {
+    position: relative;
+    display: flex;
+    font-size: 2.25em;
+    color: var(--red);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding: 0.1em;
+    background: var(--black);
+    margin: var(--acc-menu-border);
+    z-index: 1;
+    border-radius: 1em;
+}
+
+
+.HeaderNavAccount[data-loggedin="true"] > a {
+    display: flex;
+    font-size: 2.25em;
+    color: var(--green);
+}
+
+
+/*==========Account Menu Stuff==========*/
+
+
+.HeaderNavAccountMenu {
+
 }

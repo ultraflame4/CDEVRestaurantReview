@@ -1,4 +1,4 @@
-import {UserLoggedInContext} from "@/api";
+import {UserInfoContext} from "@/api";
 import HeaderNav from "@/components/HeaderNav/HeaderNav";
 import {Outlet} from "react-router-dom";
 import "./App.css"
@@ -6,10 +6,10 @@ import "./App.css"
 export default function App() {
 
     return (
-        <UserLoggedInContext.Provider value={false}>
+        <UserInfoContext.Provider value={null}>
             <HeaderNav/>
             <Outlet/>
-        </UserLoggedInContext.Provider>
+        </UserInfoContext.Provider>
     )
 }
 
