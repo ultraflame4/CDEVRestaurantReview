@@ -60,7 +60,7 @@
     position: relative;
 }
 
-.SearchInput>input{
+.SearchInput > input {
     background: var(--black);
     border: none;
     color: var(--off-white);
@@ -71,7 +71,8 @@
     width: 100%;
 
 }
-.SearchInput>input::placeholder{
+
+.SearchInput > input::placeholder {
     transition: color 200ms ease;
 }
 
@@ -85,7 +86,7 @@
     position: absolute;
     width: 100%;
     max-width: 0;
-    height: max(0.18em,1px);
+    height: max(0.18em, 1px);
     background: var(--light-gray);
     bottom: -8px;
     border-radius: 0.18em;
@@ -94,8 +95,36 @@
     transition: all 200ms ease;
 }
 
-.HeaderNavSearch:hover .SearchInputUnderline, .SearchInput:has(>input:focus)>.SearchInputUnderline {
+.HeaderNavSearch:hover .SearchInputUnderline, .SearchInput:has(>input:focus) > .SearchInputUnderline {
     max-width: 100%;
     opacity: 1;
 }
 
+.HeaderNavLinks {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    gap: 1.4rem;
+}
+
+.HeaderNavLinks > li {
+    display: inline;
+    margin: 0 0.5em;
+}
+
+.HeaderNavLinks a {
+
+    color: var(--light-gray);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1.4em;
+}
+
+
+.HeaderNavLinks > li:nth-child(1) a {
+    --icon-color: var(--green);
+}
+
+.HeaderNavLinks > li:nth-child(2) a {
+    --icon-color: var(--gold);
+}

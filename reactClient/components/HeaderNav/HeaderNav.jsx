@@ -1,6 +1,7 @@
 import {defComponent} from "@/tools/define";
 import classes from "./HeaderNav.module.css";
 import {Icon} from "@iconify-icon/react";
+import {IconLink} from "@/components/Links/IconLink";
 
 export default defComponent((props) => {
     return (
@@ -15,6 +16,14 @@ export default defComponent((props) => {
                     <span className={classes.SearchInputUnderline}></span>
                 </div>
             </div>
+            <ul className={classes.HeaderNavLinks}>
+                <li>
+                    <IconLink to={"/search?sort=0"} text={"Nearby"} icon={"oi:map-marker"}/>
+                </li>
+                <li>
+                    <IconLink to={"/search?sort=1"} text={"Top Rated"} icon={"ic:stars"}/>
+                </li>
+            </ul>
         </header>
     )
 })
