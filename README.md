@@ -30,4 +30,4 @@ Alternatively, you can build the client and run server separately.
 
 ## Thjings to Note:
 - See icons from https://icones.js.org/
-- Use library [Iconfig](https://docs.iconify.design/icon-components/react/) to use icons from multiple vendors in React
+- Use library [Iconfig](https://docs.iconify.design/iconify-icon/react.html) to use icons from multiple vendors in React
