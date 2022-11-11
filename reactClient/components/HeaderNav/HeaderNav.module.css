@@ -75,7 +75,7 @@
     transition: color 200ms ease;
 }
 
-.HeaderNavSearch:hover input::placeholder {
+.HeaderNavSearch:hover input::placeholder, .HeaderNavSearch input:focus::placeholder {
     color: var(--light-gray);
 }
 
