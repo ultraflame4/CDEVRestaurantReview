@@ -34,7 +34,7 @@ const HeaderNavAccount = (props) => {
     return (
         <div className={classes.HeaderNavAccount} data-loggedin={(userInfo != null).toString()}>
             <a onClick={listener}>
-                <Icon icon={"ic:account-circle"}/>
+                <Icon icon={"ic:account-circle"} />
             </a>
             <span></span>
 
