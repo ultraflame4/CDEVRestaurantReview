@@ -6,7 +6,7 @@
 :root {
     font-family: "Segoe UI", "Poppins", sans-serif;
     box-sizing: border-box;
-    font-size: max(min(1rem, 1.5vmin),0.5rem);
+    font-size: max(min(1rem, 2.5vmin),0.5rem);
     overflow: hidden;
 }
 
