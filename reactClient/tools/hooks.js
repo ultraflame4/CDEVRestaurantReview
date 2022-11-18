@@ -18,7 +18,7 @@ export function useToggle(callback){
 /**
  * Makes any element toggleable like useToggle, but also focuses the target element. When target element is unfocused \ blurred, the element is toggled off.
  *
- * @param {MutableRefObject<null> | null} triggerElementRef The element ref to trigger toggle when clicked. Defaults to element ref that is returned
+ * @param {MutableRefObject<null> | null} triggerElementRef The element ref to trigger toggle when clicked. Defaults to element ref that is returned. When left to default, the element will toggle itself and cause visibility issues,
  * @param {(toggled: boolean)=>void | null} callback The callback called
  * @return {MutableRefObject<HTMLElement | null>} Returns a ref to set for the target element.
  */
