@@ -6,8 +6,8 @@ import classes from "./Links.module.css";
 
 export const IconLink = function (props){
     return (
-        <Link to={props.to} className={classes.IconLinks}>
-            <Icon icon={props.icon} className={classes.IconLinks_Icon}/>
+        <Link to={props.to} className={`${classes.IconLinks} IconLink`}>
+            <Icon icon={props.icon} className={classes.IconLinks_Icon} viewBox={"0 0 24 24"}/>
             <span>{props.text}</span>
         </Link>
     )

@@ -113,11 +113,16 @@
 }
 
 .HeaderNavLinks a {
-
     color: var(--light-gray);
     font-weight: 700;
     text-decoration: none;
     font-size: 1.5em;
+    height: 100%;
+
+}
+
+.HeaderNavLinks > li:nth-child(2) a > *:nth-child(1){
+    font-size: 1.71em;
 }
 
 
