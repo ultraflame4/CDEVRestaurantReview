@@ -45,7 +45,6 @@ export function useFocusedToggle( triggerElementRef=null,callback=null){
 
         const clickListener = (e)=>{
             e.stopPropagation()
-            console.log("a")
             ref.current?.toggleAttribute("toggled")
             ref.current?.focus()
             callback?.(true)
