@@ -140,6 +140,7 @@
     position: relative;
 }
 
+
 .HeaderNavAccount > a {
     position: relative;
     display: flex;
@@ -182,7 +183,7 @@
 
 }
 
-.HeaderNavAccount:has(>a[toggled]) > .HeaderNavAccountIconBorder{
+.HeaderNavAccount[toggled] .HeaderNavAccountIconBorder{
 
     opacity: 1;
 
@@ -209,7 +210,7 @@
     transition: opacity 200ms ease;
 }
 
-.HeaderNavAccount:has(>a[toggled]) > .HeaderNavAccountMenu{
+.HeaderNavAccount[toggled] .HeaderNavAccountMenu{
 
     opacity: 1;
 }
