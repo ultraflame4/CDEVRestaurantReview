@@ -154,13 +154,20 @@
     margin: var(--acc-menu-border);
     z-index: 1;
     border-radius: 1em;
+
 }
+
 
 .HeaderNavAccountIcon {
     position: relative;
     z-index: 2;
     padding: 0.08em;
+    transition: transform 200ms ease;
+}
 
+.HeaderNavAccount:not([toggled]) .HeaderNavAccountIcon:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0px 0px 12px black);
 }
 
 
@@ -173,7 +180,7 @@
 .HeaderNavAccountIconBorder{
     position: absolute;
     opacity: 0;
-    transition: opacity 200ms ease;
+    transition: opacity 200ms ease-out;
     border-radius: 2em;
     top:0;
     left: 0;
@@ -184,11 +191,7 @@
 }
 
 .HeaderNavAccount[toggled] .HeaderNavAccountIconBorder{
-
     opacity: 1;
-
-
-
 }
 
 /*==========Account Menu Stuff==========*/
@@ -207,10 +210,23 @@
     border: var(--acc-menu-border) solid var(--gray);
     border-radius: 1em;
     border-top-right-radius: 0;
-    transition: opacity 200ms ease;
+
+    display: none;
+
+
 }
 
 .HeaderNavAccount[toggled] .HeaderNavAccountMenu{
-
+    display: block;
     opacity: 1;
+    animation: fadein 200ms ease;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
 }
