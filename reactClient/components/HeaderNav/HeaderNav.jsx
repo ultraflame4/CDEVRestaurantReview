@@ -48,7 +48,7 @@ const HeaderNavAccount = (props) => {
                 <Icon icon={"ic:account-circle"} className={classes.HeaderNavAccountIcon}/>
             </a>
             <div className={classes.HeaderNavAccountMenu}>
-                <h6 className={classes.HeaderNavAccountMenu_username}>{username??"Guest"}</h6>
+                <h6 className={classes.HeaderNavAccountMenu_username}>{username??"Guest User"}</h6>
                 {
                     username==null?
                         <HeaderNavAccount_GuestMenu/>:

@@ -8,6 +8,12 @@
     --light-gray: #999;
     --white: #fff;
     --off-white: #ccc;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+
 }
 
 .color-gray{
@@ -46,21 +52,19 @@
     margin-right: auto;
 }
 
-body{
-    /*background: var(--black);*/
-}
 
 button {
     --fore: var(--light-gray);
     --back: var(--gray);
 
-    padding: 0.8em 1em;
+    padding: 0.5em 1em;
     border: none;
-    border-radius: 0.5em;
+    border-radius: 0.4em;
     outline: none;
-    font-family: "Poppins";
-    font-weight: 800;
-    letter-spacing: 0.4px;
+    font-family: "Segoe UI";
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
     color: var(--fore);
     background: var(--back);
 
