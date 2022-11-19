@@ -17,14 +17,18 @@ const allowedOrigins = [
     `http://127.0.0.1:${process.env.VITE_DEV_PORT}`,
 ]
 
-// Serve the static files
+// Serve the static files (the react client) on /app
 app.use("/app",express.static(path.join(__dirname,'../dist/')))
 
+// Cross-site origin configuration
 app.use(cors({
     origin: (origin, callback) => {
+        // If origin is from development server aka localhost, allow
+        // If origin is undefined aka ourselfs, allow
         if (allowedOrigins.includes(origin) || !origin) {
             return callback(null, true)
         }
+        // Else error out
         console.log(`CORS error: origin ${origin} not allowed`)
         return callback(new Error("The CORS policy for this site does not allow access from the specified Origin"), true)
     },
@@ -32,13 +36,17 @@ app.use(cors({
 }))
 
 
+// Intercept all /app sub path on refresh and send back react client
 app.get('/app/*', (req, res) => {
     // When refreshing in the app path, redirect back to react client
     res.sendFile(path.join(__dirname,'../dist/index.html'))
 })
 app.get('/', (req, res) => {
+    // Redirect to react client
     res.redirect("/app")
 })
+
+// Test path. _ .
 app.get('/test', (req, res) => {
     res.json({test: 'test', date: new Date().toDateString()})
 })
