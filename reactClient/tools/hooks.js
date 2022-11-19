@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-
 /**
  * Makes any element toggleable
  *
@@ -8,56 +7,60 @@ import React, {useEffect, useRef, useState} from "react";
  * @param {(toggled: boolean)=>void} [callback] Callback function to run when the element is toggled
  * @return {React.MouseEventHandler} Returns a onClick listener for the target element.
  */
-export function useToggle(callback){
-    return (/**React.MouseEvent*/e)=>{
+export function useToggle(callback) {
+    return (/**React.MouseEvent*/e) => {
         e.currentTarget.toggleAttribute("toggled")
         callback?.(e.currentTarget.hasAttribute("toggled"))
     }
 }
 
 /**
- * Makes any element toggleable like useToggle, but also focuses the target element. When target element is unfocused \ blurred, the element is toggled off.
+ * Makes any element toggleable like useToggle, but also un-toggles when the mouse is clicked outside of the element (and descendents)
  *
  * @param {MutableRefObject<null> | null} triggerElementRef The element ref to trigger toggle when clicked. Defaults to element ref that is returned. When left to default, the element will toggle itself and cause visibility issues,
  * @param {(toggled: boolean)=>void | null} callback The callback called
  * @return {MutableRefObject<HTMLElement | null>} Returns a ref to set for the target element.
  */
 
-export function useFocusedToggle( triggerElementRef=null,callback=null){
+export function useOverlayToggle(triggerElementRef = null, callback = null) {
     /**
      * @type {MutableRefObject<HTMLElement | null>}
      */
     const ref = useRef(null)
-    useEffect(()=>{
+    useEffect(() => {
 
-        ref.current.tabIndex=-1
+        ref.current.tabIndex = -1
 
 
+        if (triggerElementRef == null) {
+            triggerElementRef = ref
+        }
 
-        const blurListener = ()=>{
-            ref.current?.toggleAttribute("toggled",false)
+        const clickListener = (e) => {
+            e.stopPropagation()
+            ref.current?.toggleAttribute("toggled")
+            callback?.(true)
+        }
+
+        const blurListener = (/**@type {MouseEvent}*/e) => {
+
+            if  (ref.current.contains(e.target))
+                return
+            ref.current?.toggleAttribute("toggled", false)
             callback?.(false)
         }
 
-        if (triggerElementRef==null){
-            triggerElementRef=ref
-        }
 
-        const clickListener = (e)=>{
-            e.stopPropagation()
-            ref.current?.toggleAttribute("toggled")
-            ref.current?.focus()
-            callback?.(true)
-        }
-        ref.current?.addEventListener("blur",blurListener)
+        document.addEventListener("click", blurListener)
         triggerElementRef.current?.addEventListener("click", clickListener)
 
-        return ()=>{
-            ref.current?.removeEventListener("blur",blurListener)
+        return () => {
+
+            document.removeEventListener("click", blurListener)
             triggerElementRef.current?.removeEventListener("click", clickListener)
         }
 
-    },[ref.current])
+    }, [ref.current])
     return ref;
 }
 
@@ -75,14 +78,14 @@ export function useWatchableValue(watchableVal) {
     const [getVal, setVal] = useState(watchableVal.value);
 
     useEffect(() => {
-        const callback = ()=>{
+        const callback = () => {
             setVal(watchableVal.value)
         }
         watchableVal.watch(callback);
         return () => {
             watchableVal.release(callback)
         };
-    },[watchableVal])
+    }, [watchableVal])
 
     return getVal
 }

@@ -4,7 +4,7 @@ import {Icon} from "@iconify-icon/react";
 import {IconLink} from "@/components/Links/IconLink";
 import {useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import {useFocusedToggle, useToggle, useWatchableValue} from "@/tools/hooks";
+import {useOverlayToggle, useToggle, useWatchableValue} from "@/tools/hooks";
 import {UserAccountInfo} from "@/api";
 
 
@@ -38,7 +38,7 @@ const HeaderNavAccount = (props) => {
     /**
      * @type {MutableRefObject<HTMLDivElement | null>}
      */
-    const menuRef = useFocusedToggle(accIconRef);
+    const menuRef = useOverlayToggle(accIconRef);
 
 
     return (
