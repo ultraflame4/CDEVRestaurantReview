@@ -11,6 +11,8 @@ export default defineConfig({
 
     build: {
         manifest: true,
+        cssCodeSplit: true,
+
     },
     server: {
         port: process.env.VITE_DEV_PORT,

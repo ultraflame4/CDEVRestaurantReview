@@ -1,0 +1,25 @@
+{
+  "index.html": {
+    "file": "assets/index.5badb071.js",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "reactClient/views/Home/Home.jsx"
+    ],
+    "css": [
+      "assets/index.770a8a6c.css"
+    ]
+  },
+  "reactClient/views/Home/Home.jsx": {
+    "file": "assets/Home.ee8a714b.js",
+    "src": "reactClient/views/Home/Home.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ]
+  },
+  "index.css": {
+    "file": "assets/index.770a8a6c.css",
+    "src": "index.css"
+  }
+}

@@ -1,0 +1,1 @@
+import{d as s,j as h,a as e}from"./index.5badb071.js";const d=s(r=>h("div",{children:[e("h1",{children:"Test"}),e("h2",{children:"Test"}),e("h3",{children:"Test"}),e("h4",{children:"Test"}),e("h5",{children:"Test"}),e("h6",{children:"Test"})]}));export{d as default};

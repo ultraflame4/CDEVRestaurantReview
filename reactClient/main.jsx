@@ -4,7 +4,7 @@ import './index.css'
 import {createBrowserRouter, RouterProvider, Route} from "react-router-dom";
 
 import App from "@/views/App";
-import Home from "@/views/Home/Home";
+const Home = React.lazy(()=>import("@/views/Home/Home"))
 
 const router = createBrowserRouter([
     {

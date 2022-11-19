@@ -20,13 +20,19 @@ This is a fullstack web development project done for school.
 2. Run `npm install` in the root directory
 
 ## Running the project
-1. Run `npm build&run` to build the client and run the server.
+1. node .<br/>
+or
+2. Run `npm build&run` to build the client and run the server.
 
 Alternatively, you can build the client and run server separately.
 
 1. Run `npm run build` to build the client.
 2. Run `npm run express-run` to run the server.
 
+### Running the project in development mode
+1. `npm run dev` - Runs the vite development server for the react client
+2. `npm run express-dev` - Starts the express server with nodemon (auto restart for code changes).
+The express server will use the files in `./dist/` folder for its static html pages
 
 ## Thjings to Note:
 - See icons from https://icones.js.org/
