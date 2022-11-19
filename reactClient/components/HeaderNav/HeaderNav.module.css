@@ -83,7 +83,7 @@
 
 
 .SearchInputUnderline {
-    content: "tes";
+    content: "";
     position: absolute;
     width: 100%;
     max-width: 0;
@@ -123,7 +123,7 @@
 }
 
 .HeaderNavLinks > li:nth-child(2) a > *:nth-child(1){
-    font-size: 1.71em;
+    font-size: 1.65em;
 }
 
 
