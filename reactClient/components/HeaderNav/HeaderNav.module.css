@@ -105,7 +105,8 @@
     display: flex;
     list-style-type: none;
     padding: 0;
-    gap: 1.4rem;
+    gap: 1.45rem;
+    margin-right: min(2vw,4rem);
 }
 
 .HeaderNavLinks > li {
@@ -115,11 +116,15 @@
 
 .HeaderNavLinks a {
     color: var(--light-gray);
+    font-family: "Poppins";
     font-weight: 700;
     text-decoration: none;
     font-size: 1.5em;
     height: 100%;
+}
 
+.HeaderNavLinks a > span{
+    font-size: 0.85em;
 }
 
 .HeaderNavLinks > li:nth-child(2) a > *:nth-child(1) {
@@ -137,7 +142,7 @@
 
 
 .HeaderNavAccount {
-    --acc-menu-border: 3px;
+    --acc-menu-border: 0.2rem;
     position: relative;
 }
 
@@ -203,11 +208,11 @@
 
     opacity: 0;
     position: absolute;
-    width: 200px;
+    width: 12.5rem;
 
     z-index: 0;
     background: var(--black);
-    right: 0.5px;
+    right: 0;
     top: calc(50% - 4px);
     border: var(--acc-menu-border) solid var(--gray);
     border-radius: 0.9em;
