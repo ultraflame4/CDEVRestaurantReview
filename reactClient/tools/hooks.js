@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 /**
  * Makes any element toggleable
@@ -61,3 +61,27 @@ export function useFocusedToggle( triggerElementRef=null,callback=null){
     return ref;
 }
 
+/**
+ * This hook allows easy usage of WatchableValues, whenever a value is changed, the component is re-rendered.
+ * <br/>
+ * Usage is similar useState()
+ * <br/>
+ * This hook internally uses useState and useEffect.
+ * @param {WatchableValue<T>} watchableVal The WatchableValue instance to use
+ * @return {T} Returns the WatchableValue's current value
+ */
+export function useWatchableValue(watchableVal) {
+    const [getVal, setVal] = useState(watchableVal.value);
+
+    useEffect(() => {
+        const callback = ()=>{
+            setVal(watchableVal.value)
+        }
+        watchableVal.watch(callback);
+        return () => {
+            watchableVal.release(callback)
+        };
+    },[watchableVal])
+
+    return getVal
+}

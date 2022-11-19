@@ -28,7 +28,7 @@ class WatchableValue{
     /**
      * Adds a callback to the watchable value.
      * It is called every time the value is changed
-     * @param {Array<()=>void>} callback
+     * @param {()=>void} callback
      */
     watch(callback){
         this.#listeners.push(callback)
