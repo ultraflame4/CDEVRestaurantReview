@@ -20,6 +20,9 @@ const HeaderNavAccount_LoggedInMenu = (props) => {
 const HeaderNavAccount_GuestMenu = (props) => {
     return (
         <>
+            <button className={"btn-primary"}>Sign in</button>
+            <h6 className={"color-lightg no-margin text-center"}>or</h6>
+            <button className={"btn-secondary"}>Sign up</button>
         </>
     )
 }

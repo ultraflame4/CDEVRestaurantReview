@@ -41,7 +41,7 @@
     display: flex;
     gap: 0.6em;
     align-items: center;
-    margin-left: min(1vw,2rem);
+    margin-left: min(1vw, 2rem);
 }
 
 .SearchIcon {
@@ -122,7 +122,7 @@
 
 }
 
-.HeaderNavLinks > li:nth-child(2) a > *:nth-child(1){
+.HeaderNavLinks > li:nth-child(2) a > *:nth-child(1) {
     font-size: 1.65em;
 }
 
@@ -179,12 +179,12 @@
     color: var(--green);
 }
 
-.HeaderNavAccountIconBorder{
+.HeaderNavAccountIconBorder {
     position: absolute;
     opacity: 0;
     transition: opacity 200ms ease-out;
     border-radius: 2em;
-    top:0;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
@@ -192,7 +192,7 @@
 
 }
 
-.HeaderNavAccount[toggled] .HeaderNavAccountIconBorder{
+.HeaderNavAccount[toggled] .HeaderNavAccountIconBorder {
     opacity: 1;
 }
 
@@ -210,14 +210,15 @@
     right: 0.5px;
     top: calc(50% - 4px);
     border: var(--acc-menu-border) solid var(--gray);
-    border-radius: 1em;
+    border-radius: 0.9em;
     border-top-right-radius: 0;
-    padding: 0.4rem 0.6rem;
+    padding: 0.4rem 0.6rem 0.8rem;
     display: none;
 }
 
 .HeaderNavAccountMenu_username {
     margin: 0;
+    margin-bottom: 1em;
     letter-spacing: 0.4px;
     color: var(--off-white);
     padding-right: 2.5em;
@@ -226,17 +227,26 @@
     text-overflow: ellipsis;
 }
 
-.HeaderNavAccount[toggled] .HeaderNavAccountMenu{
-    display: block;
+.HeaderNavAccount[toggled]
+.HeaderNavAccountMenu {
+    display: flex;
     opacity: 1;
+    flex-direction: column;
+    gap: 0.5rem;
     animation: fadein 200ms ease;
+}
+
+.HeaderNavAccountMenu > button {
+    font-size: 0.9em;
+    width: 100%;
+
 }
 
 @keyframes fadein {
     from {
         opacity: 0;
     }
-    to{
+    to {
         opacity: 1;
     }
 }

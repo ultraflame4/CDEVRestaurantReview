@@ -10,6 +10,84 @@
     --off-white: #ccc;
 }
 
+.color-gray{
+    color: var(--gray);
+}
+.color-offwhite{
+    color: var(--off-white);
+}
+
+.color-slightg{
+    color: var(--slight-gray);
+}
+.color-lightg{
+    color: var(--light-gray);
+}
+
+.poppins{
+    font-family: "Poppins";
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.alignself-center{
+    align-self: center;
+}
+
+.text-center{
+    align-self: center;
+}
+
+/*Centers horizontally using margin*/
+.margin-h-center{
+    margin-left: auto;
+    margin-right: auto;
+}
+
 body{
     /*background: var(--black);*/
+}
+
+button {
+    --fore: var(--light-gray);
+    --back: var(--gray);
+
+    padding: 0.8em 1em;
+    border: none;
+    border-radius: 0.5em;
+    outline: none;
+    font-family: "Poppins";
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: var(--fore);
+    background: var(--back);
+
+    transition: color 200ms ease-out,background-color 200ms ease-out,filter 200ms ease-out;
+    cursor: pointer;
+}
+
+button:hover{
+    --fore: var(--gray);
+    --back: var(--green);
+}
+
+button.btn-primary{
+    --fore: var(--gray);
+    --back: var(--green);
+}
+
+button.btn-secondary{
+    --fore: var(--light-gray);
+    --back: var(--gray);
+}
+button.btn-primary:hover,button.btn-secondary:hover{
+    filter: drop-shadow(1px 3.5px 6px black);
+
+}
+
+button:active{
+    filter: none !important;
+
 }
