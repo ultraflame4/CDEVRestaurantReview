@@ -9,9 +9,7 @@ import {UserAccountInfo} from "@/api";
 
 
 
-
-const HeaderNavAccount_Menu = (props) => {
-
+const HeaderNavAccount_LoggedInMenu = (props) => {
     return (
         <>
 
@@ -19,7 +17,14 @@ const HeaderNavAccount_Menu = (props) => {
     )
 }
 
-HeaderNavAccount_Menu.propTypes={
+const HeaderNavAccount_GuestMenu = (props) => {
+    return (
+        <>
+        </>
+    )
+}
+
+HeaderNavAccount_GuestMenu.propTypes={
     username: PropTypes.string,
 }
 
@@ -40,8 +45,12 @@ const HeaderNavAccount = (props) => {
                 <Icon icon={"ic:account-circle"} className={classes.HeaderNavAccountIcon}/>
             </a>
             <div className={classes.HeaderNavAccountMenu}>
-                {username??"Guest"}
-                <HeaderNavAccount_Menu/>
+                <h6 className={classes.HeaderNavAccountMenu_username}>{username??"Guest"}</h6>
+                {
+                    username==null?
+                        <HeaderNavAccount_GuestMenu/>:
+                        <HeaderNavAccount_LoggedInMenu/>
+                }
             </div>
 
 
