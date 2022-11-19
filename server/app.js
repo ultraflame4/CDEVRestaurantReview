@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
+const {redirect} = require("react-router-dom");
 
 dotenv.config() // load env variables
 
@@ -36,7 +37,7 @@ app.get('/app/*', (req, res) => {
     res.sendFile(path.join(__dirname,'../dist/index.html'))
 })
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.redirect("/app")
 })
 app.get('/test', (req, res) => {
     res.json({test: 'test', date: new Date().toDateString()})
