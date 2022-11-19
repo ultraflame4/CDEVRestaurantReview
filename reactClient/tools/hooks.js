@@ -62,6 +62,7 @@ export function useFocusedToggle( triggerElementRef=null,callback=null){
 }
 
 /**
+ * @template T
  * This hook allows easy usage of WatchableValues, whenever a value is changed, the component is re-rendered.
  * <br/>
  * Usage is similar useState()
