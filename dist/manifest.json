@@ -1,17 +1,17 @@
 {
   "index.html": {
-    "file": "assets/index.37bdb50a.js",
+    "file": "assets/index.b876241e.js",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
       "reactClient/views/Home/Home.jsx"
     ],
     "css": [
-      "assets/index.770a8a6c.css"
+      "assets/index.9b2383c5.css"
     ]
   },
   "reactClient/views/Home/Home.jsx": {
-    "file": "assets/Home.ded5dba2.js",
+    "file": "assets/Home.3373ed57.js",
     "src": "reactClient/views/Home/Home.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -19,7 +19,7 @@
     ]
   },
   "index.css": {
-    "file": "assets/index.770a8a6c.css",
+    "file": "assets/index.9b2383c5.css",
     "src": "index.css"
   }
 }
