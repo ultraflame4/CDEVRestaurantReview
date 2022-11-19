@@ -1,7 +1,7 @@
 /**
  * @template T
  */
-class WatchableValue{
+export class WatchableValue{
     /**
      * @type {T}
      */
