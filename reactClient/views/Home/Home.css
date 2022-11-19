@@ -1,8 +1,14 @@
 
-#recommendations-banner{
-    height: 100vh;
-}
 
 section{
+    height: calc(100vh - var(--header-height));
     background: var(--black);
+}
+
+#recommendations-banner{
+
+}
+
+#allrestaurants{
+
 }

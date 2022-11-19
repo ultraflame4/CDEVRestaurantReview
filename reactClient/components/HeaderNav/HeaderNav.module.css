@@ -3,7 +3,7 @@
     display: flex;
     color: var(--white);
     background: var(--black);
-    height: min(6rem, 100px);
+    height: var(--header-height);
     position: sticky;
     top: 0;
     padding: 0 1em;
