@@ -1,7 +1,7 @@
 /**
  * @template T
  */
-export class WatchableValue{
+export class WatchableValue {
     /**
      * @type {T}
      */
@@ -11,18 +11,18 @@ export class WatchableValue{
      */
     #listeners;
 
-    constructor(value){
+    constructor(value) {
         this.#value = value
         this.#listeners = []
     }
 
-    get value(){
+    get value() {
         return this.#value
     }
 
-    set value(value){
+    set value(value) {
         this.#value = value
-        this.#listeners.forEach(listener=>listener())
+        this.#listeners.forEach(listener => listener())
     }
 
     /**
@@ -30,7 +30,7 @@ export class WatchableValue{
      * It is called every time the value is changed
      * @param {()=>void} callback
      */
-    watch(callback){
+    watch(callback) {
         this.#listeners.push(callback)
     }
 
@@ -38,7 +38,7 @@ export class WatchableValue{
      * Removes the specified callback
      * @param {Array<()=>void>} callback
      */
-    release(callback){
-        this.#listeners = this.#listeners.filter(l=>l!==callback)
+    release(callback) {
+        this.#listeners = this.#listeners.filter(l => l !== callback)
     }
 }
