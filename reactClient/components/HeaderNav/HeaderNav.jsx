@@ -4,7 +4,8 @@ import {Icon} from "@iconify-icon/react";
 import {IconLink} from "@/components/Links/IconLink";
 import {useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import {useFocusedToggle, useToggle} from "@/tools/hooks";
+import {useFocusedToggle, useToggle, useWatchableValue} from "@/tools/hooks";
+import {UserAccountInfo} from "@/api";
 
 
 
@@ -23,7 +24,8 @@ HeaderNavAccount_Menu.propTypes={
 }
 
 const HeaderNavAccount = (props) => {
-    const userInfo = null;
+    const username = useWatchableValue(UserAccountInfo.username);
+
     const accIconRef = useRef(null);
     /**
      * @type {MutableRefObject<HTMLDivElement | null>}
@@ -32,13 +34,13 @@ const HeaderNavAccount = (props) => {
 
 
     return (
-        <div className={classes.HeaderNavAccount} data-loggedin={(userInfo != null).toString()} ref={menuRef}>
+        <div className={classes.HeaderNavAccount} data-loggedin={(username != null).toString()} ref={menuRef}>
             <div className={classes.HeaderNavAccountIconBorder}></div>
             <a ref={accIconRef}>
                 <Icon icon={"ic:account-circle"} className={classes.HeaderNavAccountIcon}/>
             </a>
             <div className={classes.HeaderNavAccountMenu}>
-                {userInfo?.username??"Guest"}
+                {username??"Guest"}
                 <HeaderNavAccount_Menu/>
             </div>
 
