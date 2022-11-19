@@ -17,22 +17,22 @@ function fetchApi(path_,init={}) {
 
 /**
  * Contains basic information about the user
+ *
  * @export
  * @typedef UserAccountInfoObject
- * @property {string} username
- * @property {string} email
+ * @property {WatchableValue<string|null>} username WatchableValue, value is null when not logged in
+ * @property {WatchableValue<string|null>} email WatchableValue, value is null when not logged in
  */
 /**
- * Context for whether the user account information
- * Defaults to null. When null, user is not logged in.
- * @type {React.Context<UserAccountInfoObject|null>}
+ *
+ * @type {UserAccountInfoObject}
  */
-export const UserInfoContext = React.createContext(null)
+export const UserAccountInfo = {
+    username: new WatchableValue(null),
+    email: new WatchableValue(null),
+}
 
 
 export default {
-    fetch: fetchApi,
-    contexts: {
-        UserInfoContext
-    }
+    fetch: fetchApi
 }
