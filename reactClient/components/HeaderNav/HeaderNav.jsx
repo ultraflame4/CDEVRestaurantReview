@@ -65,9 +65,9 @@ const HeaderNavAccount = (props) => {
 export default defComponent((props) => {
     return (
         <header className={classes.HeaderNav}>
-            <div className={classes.HeaderNavTitle}>
+            <a href={"/"} className={classes.HeaderNavTitle}>
                 <h1>Restau<sub>Rants</sub></h1>
-            </div>
+            </a>
             <div className={classes.HeaderNavSearch}>
                 <Icon icon={"ic:outline-search"} className={classes.SearchIcon}/>
                 <div className={classes.SearchInput}>
