@@ -21,5 +21,6 @@ export default defineConfig({
         alias: {
             "@": path.resolve(__dirname, "reactClient"),
         }
-    }
+    },
+    base: "/app/"
 })
