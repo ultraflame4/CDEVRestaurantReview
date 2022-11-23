@@ -34,7 +34,7 @@ export const InputRangeSlider = function (props) {
         let min = parseFloat(inputElement.min.length !== 0 ? inputElement.min : "0")
         let max = parseFloat(inputElement.max.length !== 0 ? inputElement.max : "100")
         let current = parseFloat(inputElement.value)
-        console.log(min, max, current)
+
         let fillPercent = ((inputElement.value - min) / (max - min)) * 100
         inputElement.style.background =
             `linear-gradient(to right, var(--fill-track-color) 0%, var(--fill-track-color) ${fillPercent}%, var(--bg-color) ${fillPercent}%, var(--bg-color) 100%)`
