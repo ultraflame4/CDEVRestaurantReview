@@ -38,7 +38,7 @@ const FilterSliderItem = (props) => {
             <h5>{props.title}</h5>
             {
                 props.showValue?"":
-                    <span className={classes.filterRangeSlider}>
+                    <span className={classes.filterRangeSliderValue}>
                         {valueText}
                     </span>
             }
