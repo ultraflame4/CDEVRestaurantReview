@@ -33,7 +33,16 @@ export const UserAccountInfo = {
     email: new WatchableValue(null),
 }
 
+export function GetRestaurants(n){
+    // todo, change this to actual api call
+    let a = []
+    for (let i = 0; i < n; i++) {
+        a.push("test")
+    }
+    return a
+}
 
 export default {
-    fetch: fetchApi
+    fetch: fetchApi,
+    GetRestaurants
 }

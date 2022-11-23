@@ -3,6 +3,7 @@ import classes from "./Restaurant.module.css"
 import {InputRangeSlider} from "@/components/InputRangeSlider/InputRangeSlider";
 import {Icon} from "@iconify-icon/react";
 import React, {useRef, useState} from "react";
+import {GetRestaurants} from "@/api";
 
 /**
  * @param {{
@@ -28,21 +29,21 @@ import React, {useRef, useState} from "react";
 const FilterSliderItem = (props) => {
     const [valueText, setValueText] = useState(0)
 
-    function callback(value, min, max){
-        setValueText(value!==max?value:(props.showValueMaxText??value))
-        props.callback?.(value,min,max)
+    function callback(value, min, max) {
+        setValueText(value !== max ? value : (props.showValueMaxText ?? value))
+        props.callback?.(value, min, max)
     }
 
     return (
         <li className={props.className}>
             <h5>{props.title}</h5>
             {
-                !props.showValue?"":
+                !props.showValue ? "" :
                     <span className={classes.filterRangeSliderValue}>
                         {valueText}
                         {
-                            props.showValueIcon?
-                                <Icon icon={props.showValueIcon} className={classes.icon}/>:
+                            props.showValueIcon ?
+                                <Icon icon={props.showValueIcon} className={classes.icon}/> :
                                 ""
                         }
                     </span>
@@ -78,7 +79,6 @@ const FilterSliderItem = (props) => {
 }
 
 
-
 FilterSliderItem.propTypes = {
     title: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired,
@@ -100,8 +100,22 @@ FilterSliderItem.propTypes = {
 
 const MemoizedFilterSliderItem = React.memo(FilterSliderItem)
 
+const RestaurantListContents = (props) => {
+    return (<ul className={classes.restaurantListContent}>
+        {
+            GetRestaurants(10).map((value,index) => {
+                return (
+                    <li key={index} className={classes.restaurantListContentItem+" card"}>
+                        {value}
+                    </li>
+                )
+            })
+        }
+    </ul>)
+}
+
 export const RestaurantList = (props) => {
-    return <>
+    return <div className={classes.RestaurantList}>
         <h1 className={classes.title}>
             {props.title}
         </h1>
@@ -144,11 +158,9 @@ export const RestaurantList = (props) => {
 
             </ul>
             <h4>Sort by</h4>
-            <ul>
-
-            </ul>
         </aside>
-    </>;
+        <RestaurantListContents/>
+    </div>;
 }
 
 RestaurantList.propTypes = {
