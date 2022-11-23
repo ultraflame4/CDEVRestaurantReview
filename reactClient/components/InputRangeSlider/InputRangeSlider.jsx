@@ -46,7 +46,7 @@ export const InputRangeSlider = function (props) {
     return (
         <input type={"range"} className={props.className ?? "" + " " + classes.slider} onInput={OnInput}
                min={props.min??0}
-               max={props.defaultValue??100}
+               max={props.max??100}
                step={props.step??1}
                defaultValue={props.defaultValue??0}
         />
