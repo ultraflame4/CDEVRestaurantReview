@@ -1,4 +1,71 @@
 
 .title {
     text-align: center;
+    position: sticky;
+}
+
+.filterpanel {
+    width: 16rem;
+    margin: 1rem;
+    padding: 0.8em 1em;
+    position: sticky;
+    display: inline-block;
+    background: var(--gray);
+}
+
+.filterpanel h4 {
+    margin-top: 0;
+    letter-spacing: 0.05em;
+}
+
+.filterpanel h5 {
+    display: inline-block;
+    margin: 0;
+    font-family: "Poppins";
+    font-weight: 500;
+
+}
+
+.filterpanel ul {
+    padding: 0;
+}
+
+.filterpanel li{
+    margin-bottom: 0.5em;
+}
+
+.filterpanel input[type="range"] {
+    width: 100%;
+
+}
+
+.filterpanel div {
+    float: right;
+}
+
+.icon {
+    margin-top: 0.5em;
+    margin-left: 0.1em;
+    font-size: 1.2em;
+}
+
+
+.costSection .icon {
+    color: var(--red);
+}
+
+.starsSection .icon{
+    color: var(--gold);
+    margin-top: 0.2em;
+    margin-left: 0;
+    font-size: 1.5em;
+}
+
+.filterpanel span {
+    font-size: 1.3em;
+    font-weight: 700;
+}
+
+.filterRangeSlider{
+    float: right;
 }

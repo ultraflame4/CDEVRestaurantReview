@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./InputRangeSlider.module.css"
+import PropTypes from "prop-types";
 
 /**
  * Wrapper around the html input element so that I can easily customise it. <br/>
@@ -13,7 +14,7 @@ import classes from "./InputRangeSlider.module.css"
  * Colors are set with css
  *
  * @param {{
- *     className: string,
+ *     className?: string,
  *     min?: number,
  *     max?: number,
  *     step?: number,
@@ -50,4 +51,12 @@ export const InputRangeSlider = function (props) {
                defaultValue={props.defaultValue??0}
         />
     )
+}
+
+InputRangeSlider.propType = {
+    min:PropTypes.number,
+    max:PropTypes.number,
+    step:PropTypes.number,
+    defaultValue:PropTypes.number,
+    onInput:PropTypes.object,
 }
