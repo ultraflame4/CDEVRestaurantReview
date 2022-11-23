@@ -37,9 +37,14 @@ const FilterSliderItem = (props) => {
         <li className={props.className}>
             <h5>{props.title}</h5>
             {
-                props.showValue?"":
+                !props.showValue?"":
                     <span className={classes.filterRangeSliderValue}>
                         {valueText}
+                        {
+                            props.showValueIcon?
+                                <Icon icon={props.showValueIcon} className={classes.icon}/>:
+                                ""
+                        }
                     </span>
             }
             <InputRangeSlider min={props.min} max={props.max} step={props.step} defaultValue={props.defaultValue}
@@ -49,6 +54,7 @@ const FilterSliderItem = (props) => {
                     <>
                         <span>
                             {props.minText}
+
                         </span>
                         <div>
                             <span>
@@ -114,12 +120,15 @@ export const RestaurantList = (props) => {
                     title={"Min. Ratings"}
                     minIcon={"material-symbols:star-outline"}
                     icon={"material-symbols:star"}
+                    showValueIcon={"material-symbols:star"}
                     min={0}
                     max={5}
+                    showValue={true}
+
                 />
 
                 <MemoizedFilterSliderItem
-                    className={classes.starsSection}
+                    className={classes.reviewsSection}
                     title={"Min. Reviews"}
                     minIcon={"material-symbols:star-outline"}
                     icon={"material-symbols:star"}
@@ -129,6 +138,8 @@ export const RestaurantList = (props) => {
                     minText={"0"}
                     maxText={"40+"}
                     showValueMaxText={"40+"}
+                    showValue={true}
+                    showValueIcon={"material-symbols:chat"}
                 />
 
             </ul>
