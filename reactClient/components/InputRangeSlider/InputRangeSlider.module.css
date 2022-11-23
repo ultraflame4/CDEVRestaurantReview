@@ -1,0 +1,30 @@
+/* Slider css, there is an easier way using accent-color but i wanted to remove annoying border around the slider.*/
+.slider{
+    -webkit-appearance: none;
+    appearance: none;
+    --fill-track-color: var(--gold);
+    --bg-color: var(--black);
+
+    width: 100%;
+    margin: 0;
+    height: 8px;
+    outline: none;
+
+    background: linear-gradient(to right, var(--fill-track-color) 0%, var(--fill-track-color) 50%, var(--bg-color) 50%, var(--bg-color) 100%);
+    border-radius: 4px;
+    overflow: visible;
+    padding: 0;
+}
+
+
+.slider::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--gold);
+
+    border-radius: 8px;
+    cursor: pointer;
+
+}
