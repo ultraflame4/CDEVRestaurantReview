@@ -13,31 +13,40 @@ import classes from "./InputRangeSlider.module.css"
  * -<br/>
  * Colors are set with css
  *
- * @param props
+ * @param {{
+ *     className: string,
+ *     min?: number,
+ *     max?: number,
+ *     defaultValue?: number,
+ *     onInput?: function (value:number, min:number, max :number) : void
+ * }} props
  * @return {*}
  * @constructor
  */
 export const InputRangeSlider = function (props) {
+
 
     function OnInput(/**@type {React.FormEvent<HTMLInputElement>}*/e) {
         /**
          * @type {HTMLInputElement}
          */
         let inputElement = e.currentTarget
-        let min = inputElement.min.length!==0?inputElement.min:"1"
-        let max =  inputElement.max.length!==0?inputElement.max:"100"
-        let current = inputElement.value
-        console.log(min,max,current)
-        let fillPercent = ((inputElement.value - min) / (max - min) )*100
+        let min = parseFloat(inputElement.min.length !== 0 ? inputElement.min : "0")
+        let max = parseFloat(inputElement.max.length !== 0 ? inputElement.max : "100")
+        let current = parseFloat(inputElement.value)
+        console.log(min, max, current)
+        let fillPercent = ((inputElement.value - min) / (max - min)) * 100
         inputElement.style.background =
             `linear-gradient(to right, var(--fill-track-color) 0%, var(--fill-track-color) ${fillPercent}%, var(--bg-color) ${fillPercent}%, var(--bg-color) 100%)`
+
+        props.onInput?.(current,min,max)
     }
 
     return (
-        <input type={"range"} className={props.className ?? "" + " " + classes.slider} onInput={OnInput}/>
+        <input type={"range"} className={props.className ?? "" + " " + classes.slider} onInput={OnInput}
+               min={props.min??0}
+               max={props.defaultValue??100}
+               defaultValue={props.defaultValue??0}
+        />
     )
-}
-
-InputRangeSlider.propTypes = {
-    className: PropTypes.string
 }
