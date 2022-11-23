@@ -112,4 +112,15 @@
     min-width: 24rem;
     aspect-ratio: 1/1;
     background: var(--gray);
+    transition: all 400ms ease;
+    cursor: pointer;
+}
+
+.restaurantListContentItem:hover{
+    transform: translateY(-0.4rem);
+}
+
+
+.restaurantListContentItem:not(:hover){
+    filter: none;
 }
