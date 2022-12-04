@@ -39,3 +39,4 @@ The express server will use the files in `./dist/` folder for its static html pa
 - Use library [Iconfig](https://docs.iconify.design/iconify-icon/react.html) to use icons from multiple vendors in React
 
 - Use geocoding to convert addresses to coordinates. Do this manually and store it in the database. Google Map Api use requires $$$ :(
+  - and then store both the location string and coordinates in the database
