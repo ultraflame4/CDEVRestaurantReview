@@ -1,5 +1,5 @@
 
-.RestaurantList{
+.RestaurantList {
     height: 100%;
     width: 100%;
     display: grid;
@@ -7,7 +7,8 @@
     grid-template-rows: min-content min-content;
     overflow: visible;
 }
-.RestaurantList ul{
+
+.RestaurantList ul {
     list-style: none;
 }
 
@@ -45,7 +46,7 @@
     padding: 0;
 }
 
-.filterpanel li{
+.filterpanel li {
     margin-bottom: 0.5em;
 }
 
@@ -70,35 +71,36 @@
     font-weight: 700;
 }
 
-.filterRangeSliderValue{
+.filterRangeSliderValue {
     float: right;
     display: flex;
     align-items: flex-end;
     gap: 0.2em;
 }
-.filterRangeSliderValue>.icon{
+
+.filterRangeSliderValue > .icon {
     margin: 0;
 }
-
 
 
 .costSection .icon {
     color: var(--red);
 }
 
-.starsSection .icon{
+.starsSection .icon {
     color: var(--gold);
     margin-top: 0.2em;
     margin-left: 0;
     font-size: 1.5em;
 }
-.reviewsSection .icon{
+
+.reviewsSection .icon {
     color: var(--green);
     margin-left: 0.25em;
 }
 
 
-.restaurantListContent{
+.restaurantListContent {
     display: flex;
     flex-wrap: wrap;
     /*justify-content: center;*/
@@ -108,19 +110,50 @@
     overflow-y: visible;
 }
 
-.restaurantListContentItem{
+.restaurantListContentItem {
     min-width: 24rem;
     aspect-ratio: 1/1;
     background: var(--gray);
     transition: all 400ms ease;
     cursor: pointer;
+    padding: 0.6em;
 }
 
-.restaurantListContentItem:hover{
+.restaurantListContentItem:hover {
     transform: translateY(-0.4rem);
 }
 
 
-.restaurantListContentItem:not(:hover){
+.restaurantListContentItem:not(:hover) {
     filter: none;
+}
+
+.restaurantListContentItem > h3 {
+    margin: 0 0.15em 0.2em;
+}
+
+.restaurantListContentItem > ul {
+    margin: 0 0.15em;
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 0.25em;
+}
+
+.restaurantListContentItem > ul > li {
+    font-family: "Poppins";
+    font-weight: 700;
+    font-size: 0.63em;
+    padding: 0 0.5em;
+    border-radius: 0.3rem;
+    background: var(--black);
+    color: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.05em;
+    height: 2em;
+    min-width: 2.5rem;
+    max-width: fit-content;
+
 }

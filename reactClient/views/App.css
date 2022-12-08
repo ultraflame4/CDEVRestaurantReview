@@ -98,5 +98,5 @@ button:active{
 
 .card{
     filter: drop-shadow(0rem 0.1rem 0.4rem black);
-    border-radius: 0.5em;
+    border-radius: 0.6em;
 }

@@ -33,11 +33,20 @@ export const UserAccountInfo = {
     email: new WatchableValue(null),
 }
 
+/**
+ *
+ * @param n
+ * @return {{name:string,tags:string[]}[]}
+ * @constructor
+ */
 export function GetRestaurants(n){
     // todo, change this to actual api call
     let a = []
     for (let i = 0; i < n; i++) {
-        a.push("test")
+        a.push({
+            name: "Restaurant#"+i,
+            tags: ["Chinese","Halal","Western"]
+        })
     }
     return a
 }

@@ -103,10 +103,23 @@ const MemoizedFilterSliderItem = React.memo(FilterSliderItem)
 const RestaurantListContents = (props) => {
     return (<ul className={classes.restaurantListContent}>
         {
-            GetRestaurants(10).map((value,index) => {
+            GetRestaurants(10).map((value, index) => {
                 return (
-                    <li key={index} className={classes.restaurantListContentItem+" card"}>
-                        {value}
+                    <li key={index} className={classes.restaurantListContentItem + " card"}>
+                        <h3>
+                            {value.name}
+                        </h3>
+                        <ul>
+                            {
+                                value.tags.map((tagname, tagindex) => {
+                                    return (
+                                        <li>
+                                            {tagname}
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
                     </li>
                 )
             })
