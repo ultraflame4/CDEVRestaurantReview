@@ -4,6 +4,7 @@ import {InputRangeSlider} from "@/components/InputRangeSlider/InputRangeSlider";
 import {Icon} from "@iconify-icon/react";
 import React, {useRef, useState} from "react";
 import {GetRestaurants} from "@/api";
+import {StarRatings} from "@/components/StarRatings/StarRatings";
 
 /**
  * @param {{
@@ -113,13 +114,14 @@ const RestaurantListContents = (props) => {
                             {
                                 value.tags.map((tagname, tagindex) => {
                                     return (
-                                        <li>
+                                        <li key={tagindex}>
                                             {tagname}
                                         </li>
                                     )
                                 })
                             }
                         </ul>
+                        <StarRatings rating={value.rating}/>
                     </li>
                 )
             })

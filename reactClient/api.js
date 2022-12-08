@@ -36,7 +36,7 @@ export const UserAccountInfo = {
 /**
  *
  * @param n
- * @return {{name:string,tags:string[]}[]}
+ * @return {{name:string,tags:string[],rating:number}[]}
  * @constructor
  */
 export function GetRestaurants(n){
@@ -45,7 +45,8 @@ export function GetRestaurants(n){
     for (let i = 0; i < n; i++) {
         a.push({
             name: "Restaurant#"+i,
-            tags: ["Chinese","Halal","Western"]
+            tags: ["Chinese","Halal","Western"],
+            rating: 7
         })
     }
     return a
