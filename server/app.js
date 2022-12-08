@@ -51,6 +51,6 @@ app.get('/test', (req, res) => {
     res.json({test: 'test', date: new Date().toDateString()})
 })
 
-app.listen(port, () => {
+app.listen(port,"localhost", () => {
     console.log(`CDEV Restau-Rant app server started at http://localhost:${port}`)
 })
