@@ -19,7 +19,8 @@
 
 .filterpanel {
     width: 14rem;
-    margin: 1rem;
+    margin-left: 1rem;
+    margin-top: 1rem;
     padding: 0.8em 1em;
     height: fit-content;
     top: calc(var(--header-height) + 2vh);
@@ -103,20 +104,33 @@
 .restaurantListContent {
     display: flex;
     flex-wrap: wrap;
-    /*justify-content: center;*/
+
     align-items: center;
     gap: 1rem;
-    padding-right: 1rem;
     overflow-y: visible;
+
+    padding: 0 0 0 6vw;
 }
 
+/*The individual restaurant card*/
 .restaurantListContentItem {
-    min-width: 24rem;
-    aspect-ratio: 1/1;
+
+    width: 24rem;
+    height: 24rem;
     background: var(--gray);
     transition: all 400ms ease;
     cursor: pointer;
     padding: 0.6em;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: min-content auto 50%;
+    overflow: hidden;
+}
+
+.restaurantListContentItem_Head {
+    grid-column: 1/3;
+    grid-row: 1/1;
 }
 
 .restaurantListContentItem:hover {
@@ -128,38 +142,61 @@
     filter: none;
 }
 
-.restaurantListContentItem > h3 {
+.restaurantListContentItem_Name {
     margin: 0 0.15em 0.2em;
 }
 
-.restaurantListContentItem > ul {
+
+/*Tags list*/
+.restaurant_tagslist {
     margin: 0.4em 0.15em 0.25em;
     list-style-type: none;
     padding: 0;
     display: flex;
     gap: 0.25em;
+
 }
 
-.starRating{
-    font-size: 1.5em;
-    color: var(--gold);
-}
-
-
-.restaurantListContentItem > ul > li {
+/*Individual Tags*/
+.restaurant_tagslist > li {
     font-family: "Poppins";
     font-weight: 700;
-    font-size: 0.63em;
+    font-size: 0.6em;
     padding: 0 0.5em;
-    border-radius: 0.3rem;
+    border-radius: 0.275rem;
     background: var(--black);
     color: var(--light-gray);
     display: flex;
     align-items: center;
     justify-content: center;
     letter-spacing: 0.05em;
-    height: 2.25em;
+    height: 2em;
     min-width: 2.5rem;
     max-width: fit-content;
 
+}
+
+.restaurant_desc{
+    grid-column: 1/1;
+    grid-row: 2/3;
+    margin: 0;
+    width: 100%;
+    height: fit-content;
+    overflow: hidden;
+    line-break: anywhere;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    font-size: 0.8em;
+    font-family: "Poppins";
+    font-weight: 600;
+    color: var(--light-gray);
+}
+
+
+
+
+.starRating {
+    font-size: 1.65em;
+    color: var(--gold);
 }

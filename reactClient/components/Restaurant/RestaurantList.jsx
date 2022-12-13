@@ -99,32 +99,60 @@ FilterSliderItem.propTypes = {
 }
 
 
-const MemoizedFilterSliderItem = React.memo(FilterSliderItem)
+const RestaurantListItem = (props)=>{
+
+    return (
+        <li className={classes.restaurantListContentItem + " card"}>
+            <div className={classes.restaurantListContentItem_Head}>
+                <h3 className={classes.restaurantListContentItem_Name}>
+                    {props.name}
+                </h3>
+
+                {/*Tags here*/}
+                <ul className={classes.restaurant_tagslist}>
+                    {
+                        props.tags.map((tagname, tagindex) => {
+                            return (
+                                <li key={tagindex}>
+                                    {tagname}
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
+                <StarRatings rating={props.rating}/>
+            </div>
+            <p className={classes.restaurant_desc}>
+
+                    {/*{props.desc}*/}
+                    123edfyvodrfi3nyh0289p5pb  phatjb93i0jv90813hio;nvp3iotoooooooddddddddddddddddddddddddototototototototototot
+                    123edfyvodrfi3nyh0289p5pb  phatjb93i0jv90813hio;nvp3iotoooooooddddddddddddddddddddddddototototototototototot
+                    123edfyvodrfi3nyh0289p5pb  phatjb93i0jv90813hio;nvp3iotoooooooddddddddddddddddddddddddototototototototototot
+                    123edfyvodrfi3nyh0289p5pb  phatjb93i0jv90813hio;nvp3iotoooooooddddddddddddddddddddddddototototototototototot
+
+            </p>
+        </li>
+    )
+}
+
+RestaurantListItem.propType={
+    tags: PropTypes.arrayOf(PropTypes.string),
+    name: PropTypes.string,
+    rating: PropTypes.number,
+    desc: PropTypes.string
+}
 
 const RestaurantListContents = (props) => {
     return (<ul className={classes.restaurantListContent}>
         {
-            GetRestaurants(10).map((value, index) => {
-                return (
-                    <li key={index} className={classes.restaurantListContentItem + " card"}>
-                        <h3>
-                            {value.name}
-                        </h3>
-                        <ul>
-                            {
-                                value.tags.map((tagname, tagindex) => {
-                                    return (
-                                        <li key={tagindex}>
-                                            {tagname}
-                                        </li>
-                                    )
-                                })
-                            }
-                        </ul>
-                        <StarRatings rating={value.rating}/>
-                    </li>
-                )
-            })
+            GetRestaurants(10).map((value, index) =>
+                <RestaurantListItem key={index}
+                                    tags={value.tags}
+                                    rating={value.rating}
+                                    name={value.name}
+                                    desc={value.desc}
+                />
+            )
         }
     </ul>)
 }
@@ -137,14 +165,14 @@ export const RestaurantList = (props) => {
         <aside className={`card ${classes.filterpanel}`}>
             <h4>Filters</h4>
             <ul>
-                <MemoizedFilterSliderItem
+                <FilterSliderItem
                     className={classes.costSection}
                     title={"Cost"}
                     icon={"fa:dollar"}
                     min={1}
                     max={5}
                 />
-                <MemoizedFilterSliderItem
+                <FilterSliderItem
                     className={classes.starsSection}
                     title={"Min. Ratings"}
                     minIcon={"material-symbols:star-outline"}
@@ -156,7 +184,7 @@ export const RestaurantList = (props) => {
 
                 />
 
-                <MemoizedFilterSliderItem
+                <FilterSliderItem
                     className={classes.reviewsSection}
                     title={"Min. Reviews"}
                     minIcon={"material-symbols:star-outline"}
