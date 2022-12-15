@@ -241,6 +241,7 @@
 .restaurant_subInfoBar > span{
     font-weight: 700;
     font-size: 1.05rem;
+    height: 1.6rem;
     color: var(--green);
     margin: 0;
 }
