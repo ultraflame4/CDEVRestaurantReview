@@ -99,7 +99,7 @@ FilterSliderItem.propTypes = {
 }
 
 
-const RestaurantListItem = (props)=>{
+const RestaurantListItem = (props) => {
 
     return (
         <li className={classes.restaurantListContentItem + " card"}>
@@ -123,23 +123,20 @@ const RestaurantListItem = (props)=>{
                 <StarRatings rating={props.rating}/>
             </div>
             <p className={classes.restaurant_desc}>
-
-                    {/*{props.desc}*/}
-                    123edfyvodrfi3nyh0289p5pb  phatjb93i0jv90813hio;nvp3iotoooooooddddddddddddddddddddddddototototototototototot
-                    123edfyvodrfi3nyh0289p5pb  phatjb93i0jv90813hio;nvp3iotoooooooddddddddddddddddddddddddototototototototototot
-                    123edfyvodrfi3nyh0289p5pb  phatjb93i0jv90813hio;nvp3iotoooooooddddddddddddddddddddddddototototototototototot
-                    123edfyvodrfi3nyh0289p5pb  phatjb93i0jv90813hio;nvp3iotoooooooddddddddddddddddddddddddototototototototototot
-
+                {props.desc}
             </p>
+            <img className={classes.restaurant_banner_img} title={"Image of the restaurant"} src={props.imageSrc}/>
+
         </li>
     )
 }
 
-RestaurantListItem.propType={
-    tags: PropTypes.arrayOf(PropTypes.string),
-    name: PropTypes.string,
-    rating: PropTypes.number,
-    desc: PropTypes.string
+RestaurantListItem.propType = {
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    name: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    desc: PropTypes.string.isRequired,
+    imageSrc: PropTypes.string.isRequired,
 }
 
 const RestaurantListContents = (props) => {
@@ -151,6 +148,7 @@ const RestaurantListContents = (props) => {
                                     rating={value.rating}
                                     name={value.name}
                                     desc={value.desc}
+                                    imageSrc={value.bannerSrc}
                 />
             )
         }
