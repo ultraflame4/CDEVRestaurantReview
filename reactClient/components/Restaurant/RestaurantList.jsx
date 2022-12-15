@@ -125,8 +125,13 @@ const RestaurantListItem = (props) => {
             <p className={classes.restaurant_desc}>
                 {props.desc}
             </p>
-            <img className={classes.restaurant_banner_img} title={"Image of the restaurant"} src={props.imageSrc}/>
-
+            <img className={classes.restaurant_banner_img} alt={"Image of the restaurant"} src={props.imageSrc}/>
+            <div className={classes.restaurant_recentReviews}>
+                <div className={classes.restaurant_recentReviews_header}>
+                    <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
+                    <h4>Recent Reviews</h4>
+                </div>
+            </div>
         </li>
     )
 }

@@ -202,6 +202,35 @@
     border-radius: 0.4rem;
 }
 
+.restaurant_recentReviews_header{
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.restaurant_recentReviews{
+    grid-column: 2/3;
+    grid-row: 2/-1;
+    background: var(--black);
+    margin-left: 0.6rem;
+    border-radius: 0.5rem;
+    filter: drop-shadow(0 0.1rem 0.2rem var(--black));
+    padding: 0.5rem
+}
+
+.restaurant_recentReviews .icon{
+    color: var(--green);
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.restaurant_recentReviews h4{
+    margin: 0;
+    font-family: "Poppins";
+    font-size: 0.85rem;
+    letter-spacing: 0.02rem;
+    color: var(--off-white);
+}
 
 .starRating {
     font-size: 1.65em;
