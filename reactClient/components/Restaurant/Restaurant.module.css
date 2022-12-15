@@ -232,7 +232,15 @@
     color: var(--off-white);
 }
 
-.starRating {
-    font-size: 1.65em;
-    color: var(--gold);
+
+.restaurant_subInfoBar{
+    display: flex;
+    align-items: center;
+}
+
+.restaurant_subInfoBar > span{
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--green);
+    margin: 0;
 }

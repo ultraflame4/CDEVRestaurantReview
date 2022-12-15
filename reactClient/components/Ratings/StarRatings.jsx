@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import {Icon} from "@iconify-icon/react";
-import classes from "@/components/Restaurant/Restaurant.module.css";
+import classes from "./Ratings.module.css";
 import React from "react";
 
 

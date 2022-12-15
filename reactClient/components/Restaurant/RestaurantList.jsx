@@ -4,7 +4,8 @@ import {InputRangeSlider} from "@/components/InputRangeSlider/InputRangeSlider";
 import {Icon} from "@iconify-icon/react";
 import React, {useRef, useState} from "react";
 import {GetRestaurants} from "@/api";
-import {StarRatings} from "@/components/StarRatings/StarRatings";
+import {StarRatings} from "@/components/Ratings/StarRatings";
+import {CostRatings} from "@/components/Ratings/CostRatings";
 
 /**
  * @param {{
@@ -120,14 +121,21 @@ const RestaurantListItem = (props) => {
                         })
                     }
                 </ul>
-                <StarRatings rating={props.rating}/>
+                <div className={classes.restaurant_subInfoBar}>
+                    <StarRatings rating={props.rating}/>
+                    <Icon icon={"ci:dot-03-m"}/>
+                    <CostRatings rating={props.cost}/>
+                    <Icon icon={"ci:dot-03-m"}/>
+                    <span>1km</span>
+                </div>
+
             </div>
             <p className={classes.restaurant_desc}>
                 {props.desc}
             </p>
             <img className={classes.restaurant_banner_img} alt={"Image of the restaurant"} src={props.imageSrc}/>
             <div className={classes.restaurant_recentReviews}>
-                <div className={classes.restaurant_recentReviews_header}>
+                    <div className={classes.restaurant_recentReviews_header}>
                     <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
                     <h4>Recent Reviews</h4>
                 </div>
@@ -140,6 +148,7 @@ RestaurantListItem.propType = {
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,
     name: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
+    cost: PropTypes.number.isRequired,
     desc: PropTypes.string.isRequired,
     imageSrc: PropTypes.string.isRequired,
 }
@@ -151,6 +160,7 @@ const RestaurantListContents = (props) => {
                 <RestaurantListItem key={index}
                                     tags={value.tags}
                                     rating={value.rating}
+                                    cost={value.cost}
                                     name={value.name}
                                     desc={value.desc}
                                     imageSrc={value.bannerSrc}

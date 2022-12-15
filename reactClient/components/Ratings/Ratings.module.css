@@ -1,0 +1,10 @@
+.starRating {
+    font-size: 1.65em;
+    color: var(--gold);
+}
+
+.costRating{
+    font-size: 1.15rem;
+    color: var(--red);
+    margin-left: 0.2rem;
+}
