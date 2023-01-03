@@ -2,7 +2,8 @@ const express = require('express')
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
-const {redirect} = require("react-router-dom");
+const {setupClientRedirects} = require("./others");
+const restaurantController = require("./controller/restaurantController");
 
 dotenv.config() // load env variables
 
@@ -36,20 +37,14 @@ app.use(cors({
 }))
 
 
-// Intercept all /app sub path on refresh and send back react client
-app.get('/app/*', (req, res) => {
-    // When refreshing in the app path, redirect back to react client
-    res.sendFile(path.join(__dirname,'../dist/index.html'))
-})
-app.get('/', (req, res) => {
-    // Redirect to react client
-    res.redirect("/app")
-})
-
-// Test path. _ .
-app.get('/test', (req, res) => {
+// Test path . _ .
+app.get('/api/test', (req, res) => {
     res.json({test: 'test', date: new Date().toDateString()})
 })
+
+setupClientRedirects(app)
+app.get('/api/restaurants',restaurantController.getRestaurants)
+
 
 app.listen(port,"localhost", () => {
     console.log(`CDEV Restau-Rant app server started at http://localhost:${port}`)
