@@ -93,6 +93,7 @@ class RestauRantDatabase {
         })
     }
 
+
     /**
      * Returns the list of restaurants sort by distance in descending order
      * @param refCoords {{x:number,y:number}} The coords to use against the restaurants' coords when calculating the distance
@@ -106,10 +107,23 @@ class RestauRantDatabase {
 
     /**
      * Gets and returns a list of reviews for a specified restuarant
+     *
+     * @param restaurantId {number}
+     * @param startOffset {number}
+     * @param limit {number}
+     * @param sortBy {"like"|"edit_date"}
+     * @param orderAsc {boolean}
+     * @return
      */
-    GetReviewForRestaurant(restaurantId, startOffset = 0, limit = 10) {
+    GetReviewForRestaurant(restaurantId, startOffset = 0, limit = 10,sortBy="like", orderAsc = true) {
+        const sortByMappings = {
+            "like":"like_count",
+            "edit_date":"last_edit"
+        }
+
         //todo
     }
+
 
 }
 
