@@ -32,6 +32,28 @@ function resErrInvalidOption(res, badOption, parameterName, validOptions) {
     )
 }
 
+
+/**
+ * @param res {import("express").Response} The express response to use
+ * @param badValue {number} The value that is out of range.
+ * @param parameterName {string} The parameter/query name that the option was passed to.
+ * @param min {number|null} [Optional] The inclusive min value for the range (null if infinitely small, no lower bound)
+ * @param max {number|null} [Optional] The inclusive max value for the range (null if infinitely big, no upper bound)
+ */
+function resErrArgOutOfRange(res, badValue, parameterName, min=null,max=null) {
+    sendErrRes(res,
+        400,
+        "ArgumentOutOfRange",
+        `Argument '${badValue}' for parameter ${parameterName} is out of range! Range: ${min??'infinite'} - ${max??'infinite'}`,
+        {
+            badValue:badValue,
+            min:min,
+            max:max,
+        }
+    )
+}
+
+
 /**
  * Send this error whenever you get an error caused by a query or request but is the fault of the server.
  * This error, should never be sent out when everything is working as intended
@@ -45,5 +67,6 @@ function resInternalErr(res,addData=null) {
 
 module.exports = {
     resErrInvalidOption,
-    resInternalErr
+    resInternalErr,
+    resErrArgOutOfRange
 }

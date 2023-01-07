@@ -26,6 +26,21 @@ const {bool} = require("prop-types");
  * @property {number} review_count
  */
 
+/**
+ * Review Type returned by the database
+ * @export
+ * @typedef ReviewType
+ * @property {number} id
+ * @property {number} restaurant_id
+ * @property {number} author_id
+ * @property {string} content
+ * @property {number} rating
+ * @property {string} date_created
+ * @property {string} last_edited
+ * @property {number} like_count
+ * @property {string} username
+ */
+
 
 class RestauRantDatabase {
     /**@type {import('mysql2').Connection}*/
@@ -50,16 +65,16 @@ class RestauRantDatabase {
      * @param orderAsc {boolean} Whether to order by asc or desc
      * @return {Promise<RestaurantType[]>}
      */
-    GetRestaurants(startOffset = 0, limit = 20,sortBy="index", orderAsc = true) {
+    GetRestaurants(startOffset = 0, limit = 20, sortBy = "index", orderAsc = true) {
         const sortByMappings = {
-            "index":"id",
-            "cost":"cost_rating",
-            "rating":"avg_rating",
-            "reviews":"reviews_count"
+            "index": "id",
+            "cost": "cost_rating",
+            "rating": "avg_rating",
+            "reviews": "reviews_count"
         }
         return new Promise((resolve, reject) => {
             let sortByCol = sortByMappings[sortBy]
-            if (!sortByCol){
+            if (!sortByCol) {
                 reject(`Invalid sort ${sortBy}`)
             }
 
@@ -101,7 +116,7 @@ class RestauRantDatabase {
      * @param limit {number} The maximum number of restaurants to return
      * @return
      */
-    GetRestaurantSortDistance(refCoords,startOffset = 0, limit = 20){
+    GetRestaurantSortDistance(refCoords, startOffset = 0, limit = 20) {
         //todo
     }
 
@@ -113,15 +128,38 @@ class RestauRantDatabase {
      * @param limit {number}
      * @param sortBy {"like"|"edit_date"}
      * @param orderAsc {boolean}
-     * @return
+     * @return {Promise<RestaurantType[]>}
      */
-    GetReviewForRestaurant(restaurantId, startOffset = 0, limit = 10,sortBy="like", orderAsc = true) {
+    GetReviewForRestaurant(restaurantId, startOffset = 0, limit = 10, sortBy = "like", orderAsc = true) {
         const sortByMappings = {
-            "like":"like_count",
-            "edit_date":"last_edit"
+            "like": "like_count",
+            "edit_date": "last_edit"
         }
 
-        //todo
+        return new Promise((resolve, reject) => {
+            let sortByCol = sortByMappings[sortBy]
+            if (!sortByCol) {
+                reject(`Invalid sort ${sortBy}`)
+            }
+
+            this.#conn.query(`
+            SELECT
+            *, 
+            (SELECT username FROM cdevrestaurantdatabase.users WHERE users.id=reviews.author_id) as username 
+            FROM cdevrestaurantdatabase.reviews 
+            WHERE reviews.restaurant_id = ?
+             ORDER BY ${sortByCol} ${orderAsc?'ASC':'DESC'}
+             LIMIT ? OFFSET ?;
+            `, // Should be fine to insert order and sortby here because it is not directly exposed
+            [restaurantId, limit, startOffset],
+            (err, result, fields) => {
+                if (err) {
+                    console.warn("Error while executing GetReviewForRestaurant:", err)
+                    reject(err)
+                }
+                resolve(result)
+            })
+        })
     }
 
 

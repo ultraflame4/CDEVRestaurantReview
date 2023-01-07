@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const path = require("path");
 const {setupClientRedirects} = require("./others");
 const restaurantController = require("./controller/restaurantController");
+const reviewsController = require("./controller/reviewsController");
 
 dotenv.config() // load env variables
 
@@ -44,6 +45,7 @@ app.get('/api/test', (req, res) => {
 
 setupClientRedirects(app)
 app.get('/api/restaurants',restaurantController.getRestaurants)
+app.get('/api/reviews',reviewsController.getReviews)
 
 
 app.listen(port,"localhost", () => {
