@@ -1,4 +1,5 @@
 const {RestauRantDB} = require("../database");
+const {resErrInvalidOption, resInternalErr} = require("../tools");
 
 
 /**
@@ -21,11 +22,12 @@ function getRestaurants(req,res) {
 
     sortBy = sortByMappings[sortBy]
     if (!sortBy){
-        res.status(400).send(`Invalid option '${req.query.sortBy}' for parameter sortBy. Valid options: [${Object.keys(sortByMappings)}]`)
+
+        resErrInvalidOption(res,req.query.sortBy,"sortBy",Object.keys(sortByMappings))
         return
     }
     if (!(order==="ASC"||order==="DESC")){
-        res.status(400).send(`Invalid option '${req.query.order}' for parameter sortBy. Valid options: 'ASC','DESC'`)
+        resErrInvalidOption(res,req.query.order,"order",["asc","desc"])
         return
     }
 
@@ -39,10 +41,7 @@ function getRestaurants(req,res) {
             })
         })
         .catch(reason => {
-            res.status(200).json({
-                code: 500,
-                error: reason
-            })
+            resInternalErr(res,{sqlError:reason})
         })
 }
 

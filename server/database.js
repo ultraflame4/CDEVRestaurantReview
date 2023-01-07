@@ -26,7 +26,7 @@ const mysql = require("mysql2")
  */
 class RestauRantDatabase {
     /**@type {import('mysql2').Connection}*/
-    #conn
+    #conn;
 
     /**
      *
