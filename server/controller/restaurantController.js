@@ -13,17 +13,17 @@ function getRestaurants(req,res) {
     let sortBy = req.query.sortBy ?? "index"
     let order = (req.query.order ?? "ASC").toUpperCase()
 
-    let sortByMappings = {
-        "index":"id",
-        "cost":"cost_rating",
-        "rating":"avg_rating",
-        "reviews":"reviews_count"
-    }
+    const sortByValidValues = [
+        "index",
+        "cost",
+        "rating",
+        "reviews"
+    ]
 
-    sortBy = sortByMappings[sortBy]
-    if (!sortBy){
 
-        resErrInvalidOption(res,req.query.sortBy,"sortBy",Object.keys(sortByMappings))
+    if (!sortByValidValues.includes(sortBy)){
+
+        resErrInvalidOption(res,sortBy,"sortBy",sortByValidValues)
         return
     }
     if (!(order==="ASC"||order==="DESC")){
@@ -31,7 +31,7 @@ function getRestaurants(req,res) {
         return
     }
 
-    RestauRantDB.GetRestaurants(startOffset,limit,sortBy,order)
+    RestauRantDB.GetRestaurants(startOffset,limit,sortBy,order==="ASC")
         .then(value => {
             res.json({
                 start: startOffset,

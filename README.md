@@ -40,3 +40,5 @@ The express server will use the files in `./dist/` folder for its static html pa
 
 - Use geocoding to convert addresses to coordinates. Do this manually and store it in the database. Google Map Api use requires $$$ :(
   - and then store both the location string and coordinates in the database
+
+- Sorting. All sorting shld be done by the database using sql queries.

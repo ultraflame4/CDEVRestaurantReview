@@ -1,4 +1,5 @@
 const mysql = require("mysql2")
+const {bool} = require("prop-types");
 
 /**
  * Contains basic information about the user
@@ -24,6 +25,8 @@ const mysql = require("mysql2")
  * @property {number} avg_rating
  * @property {number} review_count
  */
+
+
 class RestauRantDatabase {
     /**@type {import('mysql2').Connection}*/
     #conn;
@@ -41,14 +44,27 @@ class RestauRantDatabase {
 
     /**
      * Gets and returns a list of restaurants with specified parameters
-     * @param startOffset The offset to start getting the restaurants from.
-     * @param limit The maximum number of restaurants to return
+     * @param startOffset {number} The offset to start getting the restaurants from.
+     * @param limit {number} The maximum number of restaurants to return
+     * @param sortBy {"index"|"cost"|"rating"|"reviews"} How to sort the data
+     * @param orderAsc {boolean} Whether to order by asc or desc
      * @return {Promise<RestaurantType[]>}
      */
-    GetRestaurants(startOffset = 0, limit = 20, sortby = "cdevrestaurantdatabase.restaurant.id", order = "asc") {
+    GetRestaurants(startOffset = 0, limit = 20,sortBy="index", orderAsc = true) {
+        const sortByMappings = {
+            "index":"id",
+            "cost":"cost_rating",
+            "rating":"avg_rating",
+            "reviews":"reviews_count"
+        }
         return new Promise((resolve, reject) => {
+            let sortByCol = sortByMappings[sortBy]
+            if (!sortByCol){
+                reject(`Invalid sort ${sortBy}`)
+            }
+
             this.#conn.query(`
-            SELECT 
+            SELECT
             cdevrestaurantdatabase.restaurant.id,
             cdevrestaurantdatabase.restaurant.name,
             cdevrestaurantdatabase.restaurant.description,
@@ -63,9 +79,9 @@ class RestauRantDatabase {
              FROM cdevrestaurantdatabase.restaurant
              LEFT OUTER JOIN cdevrestaurantdatabase.reviews ON cdevrestaurantdatabase.restaurant.id=cdevrestaurantdatabase.reviews.restaurant_id
              GROUP BY restaurant_id
-             ORDER BY ${sortby} ${order}
+             ORDER BY ${sortByCol} ${orderAsc?'ASC':'DESC'}
              LIMIT ? OFFSET ?;
-            `, // Should be find to insert sortby & orderbu here because it is not directly exposed
+            `, // Should be fine to insert order and sortby here because it is not directly exposed
                 [limit, startOffset],
                 (err, result, fields) => {
                     if (err) {
@@ -77,7 +93,23 @@ class RestauRantDatabase {
         })
     }
 
+    /**
+     * Returns the list of restaurants sort by distance in descending order
+     * @param refCoords {{x:number,y:number}} The coords to use against the restaurants' coords when calculating the distance
+     * @param startOffset {number} The offset to start getting the restaurants from.
+     * @param limit {number} The maximum number of restaurants to return
+     * @return
+     */
+    GetRestaurantSortDistance(refCoords,startOffset = 0, limit = 20){
+        //todo
+    }
 
+    /**
+     * Gets and returns a list of reviews for a specified restuarant
+     */
+    GetReviewForRestaurant(restaurantId, startOffset = 0, limit = 10) {
+        //todo
+    }
 
 }
 
