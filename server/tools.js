@@ -32,12 +32,13 @@ function GetSelectRangeQueryParams(req, res, defaultLimit=20, defaultOffset=0){
  * @param max {number,null} The upper inclusive number for the range. Leave null for infinite / no upper bound
  */
 function IsWithinRange(value,min=null,max=null){
-    if (min){
+
+    if (min!==null){
         if (value<min){
             return false
         }
     }
-    if (max){
+    if (max!==null){
         if (value>max){
             return false
         }
