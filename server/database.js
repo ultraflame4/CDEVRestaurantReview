@@ -121,8 +121,8 @@ class RestauRantDatabase {
             this.#conn.query(`
             SELECT
             ST_Distance_Sphere(
-                point(?, ?),
-                point(-73.9898293, 40.7628267)
+                POINT(?, ?),
+                cdevrestaurantdatabase.restaurant.coordinates
                 ) as distance,
                 
             cdevrestaurantdatabase.restaurant.id,
@@ -139,7 +139,7 @@ class RestauRantDatabase {
              FROM cdevrestaurantdatabase.restaurant
              LEFT OUTER JOIN cdevrestaurantdatabase.reviews ON cdevrestaurantdatabase.restaurant.id=cdevrestaurantdatabase.reviews.restaurant_id
              GROUP BY restaurant_id
-             ORDER BY distance DESC
+             ORDER BY distance ASC
              LIMIT ? OFFSET ?;
             `, // Should be fine to insert order and sortby here because it is not directly exposed
                 [refCoords.x,refCoords.y,limit, startOffset],

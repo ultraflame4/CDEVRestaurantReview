@@ -52,8 +52,15 @@ function GetQueryParams(req, res, queryParams) {
         let queryValType = GetStringValueType(queryVal);
 
         if (queryValType!==paramValidateOption.type){
-            resErrInvalidType(res,queryVal,queryValType,paramName,paramValidateOption.type)
-            return null
+
+            if (!( // Check for special condition when they are both numbers . _ .
+                (queryValType==="int"&&paramValidateOption.type==="float")||
+                (queryValType==="float"&&paramValidateOption.type==="int")
+            )){
+                resErrInvalidType(res,queryVal,queryValType,paramName,paramValidateOption.type)
+                return null
+            }
+
         }
 
         // Check range
