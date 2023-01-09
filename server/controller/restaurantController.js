@@ -1,5 +1,6 @@
 const {RestauRantDB} = require("../database");
-const {resErrInvalidOption, resInternalErr} = require("../tools");
+const {resErrInvalidOption, resInternalErr, GetSelectRangeQueryParams, resErrInvalidType, sendErrRes} = require("../tools");
+const {GetQueryParams} = require("../validateQuery");
 
 
 /**
@@ -8,34 +9,22 @@ const {resErrInvalidOption, resInternalErr} = require("../tools");
  * @param res {import("express").Response}
  */
 function getRestaurants(req,res) {
-    let limit = parseInt(req.query.limit ?? "20")
-    let startOffset = parseInt(req.query.start ?? "0")
-    let sortBy = req.query.sortBy ?? "index"
-    let order = (req.query.order ?? "ASC").toUpperCase()
+    let queryParams = GetQueryParams(req,res,{
+        start:{default:0,type:"int"},
+        limit:{default:20,type:"int"},
+        order:{default:"asc",type:"string",enumOptions:["asc","desc"]},
+        sortBy:{default:"index",type:"string",enumOptions:["index","cost","rating","reviews"]},
+    })
 
-    const sortByValidValues = [
-        "index",
-        "cost",
-        "rating",
-        "reviews"
-    ]
+    if (!queryParams) return;
 
 
-    if (!sortByValidValues.includes(sortBy)){
-
-        resErrInvalidOption(res,sortBy,"sortBy",sortByValidValues)
-        return
-    }
-    if (!(order==="ASC"||order==="DESC")){
-        resErrInvalidOption(res,req.query.order,"order",["asc","desc"])
-        return
-    }
-
-    RestauRantDB.GetRestaurants(startOffset,limit,sortBy,order==="ASC")
+    RestauRantDB.GetRestaurants(queryParams.start,queryParams.limit,queryParams.sortBy,queryParams.order==="asc")
         .then(value => {
             res.json({
-                start: startOffset,
-                limit: limit,
+                data:queryParams,
+                start: queryParams.start,
+                limit: queryParams.limit,
                 total: value.length,
                 results:value
             })
@@ -45,9 +34,35 @@ function getRestaurants(req,res) {
         })
 }
 
+/**
+ * Gets list of restaurant from the database.
+ * @param req {import("express").Request}
+ * @param res {import("express").Response}
+ */
+function getNearestRestaurants(req,res) {
+    let queryRange = GetSelectRangeQueryParams(req,res)
+    if (!queryRange) return
 
+    let x_longtitude;
+    let y_latititude;
+    try {
+        x_longtitude = parseFloat(req.query.x)
+        y_latititude = parseFloat(req.query.y)
+    }
+    catch (e){
+        sendErrRes(res,400,"InvalidParameterTypeError","Invalid Parameter Type for x or y. Expected: float")
+        return
+    }
+
+    RestauRantDB.GetRestaurantSortDistance(
+        {x:x_longtitude,y:y_latititude},
+        queryRange.startOffset,
+        queryRange.limit
+    )
+}
 
 
 module.exports = {
-    getRestaurants
+    getRestaurants,
+    getNearestRestaurants
 }

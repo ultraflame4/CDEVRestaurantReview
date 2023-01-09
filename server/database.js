@@ -111,13 +111,47 @@ class RestauRantDatabase {
 
     /**
      * Returns the list of restaurants sort by distance in descending order
-     * @param refCoords {{x:number,y:number}} The coords to use against the restaurants' coords when calculating the distance
+     * @param refCoords {{x:number,y:number}} The coords to use against the restaurants' coords when calculating the distance (x: longitude, y: latitude)
      * @param startOffset {number} The offset to start getting the restaurants from.
      * @param limit {number} The maximum number of restaurants to return
      * @return
      */
     GetRestaurantSortDistance(refCoords, startOffset = 0, limit = 20) {
-        //todo
+        return new Promise((resolve, reject)=>{
+            this.#conn.query(`
+            SELECT
+            ST_Distance_Sphere(
+                point(?, ?),
+                point(-73.9898293, 40.7628267)
+                ) as distance,
+                
+            cdevrestaurantdatabase.restaurant.id,
+            cdevrestaurantdatabase.restaurant.name,
+            cdevrestaurantdatabase.restaurant.description,
+            cdevrestaurantdatabase.restaurant.coordinates,
+            cdevrestaurantdatabase.restaurant.location,
+            cdevrestaurantdatabase.restaurant.phone_no,
+            cdevrestaurantdatabase.restaurant.website,
+            cdevrestaurantdatabase.restaurant.cost_rating,               
+            AVG(rating) as avg_rating,
+            COUNT(cdevrestaurantdatabase.reviews.id) as reviews_count 
+            
+             FROM cdevrestaurantdatabase.restaurant
+             LEFT OUTER JOIN cdevrestaurantdatabase.reviews ON cdevrestaurantdatabase.restaurant.id=cdevrestaurantdatabase.reviews.restaurant_id
+             GROUP BY restaurant_id
+             ORDER BY distance DESC
+             LIMIT ? OFFSET ?;
+            `, // Should be fine to insert order and sortby here because it is not directly exposed
+                [refCoords.x,refCoords.y,limit, startOffset],
+                (err, result, fields) => {
+                    if (err) {
+                        console.warn("Error while executing GetRestaurants:", err)
+                        reject(err)
+                    }
+                    resolve(result)
+                })
+        })
+
     }
 
     /**

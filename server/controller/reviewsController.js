@@ -1,4 +1,4 @@
-const {resErrArgOutOfRange, resErrInvalidOption, resInternalErr} = require("../tools");
+const {resErrArgOutOfRange, resErrInvalidOption, resInternalErr, GetSelectRangeQueryParams} = require("../tools");
 const {RestauRantDB} = require("../database");
 
 /**
@@ -7,11 +7,13 @@ const {RestauRantDB} = require("../database");
  * @param res {import("express").Response}
  */
 function getReviews(req, res) {
-    let limit = parseInt(req.query.limit ?? "20")
-    let startOffset = parseInt(req.query.start ?? "0")
+    let queryRange = GetSelectRangeQueryParams(req,res)
+    if (!queryRange) return
+
     let sortBy = req.query.sortBy ?? "like"
     let order = (req.query.order ?? "ASC").toUpperCase()
     let restaurantId = parseInt(req.query.id ?? "-1")
+
 
     if (restaurantId < 1) {
         resErrArgOutOfRange(res, restaurantId, "id", 1)
@@ -34,11 +36,11 @@ function getReviews(req, res) {
     }
 
 
-    RestauRantDB.GetReviewForRestaurant(restaurantId, startOffset, limit, sortBy, order)
+    RestauRantDB.GetReviewForRestaurant(restaurantId, queryRange.startOffset, queryRange.limit, sortBy, order)
         .then(value => [
             res.json({
-                start: startOffset,
-                limit: limit,
+                start: queryRange.startOffset,
+                limit: queryRange.limit,
                 total: value.length,
                 results: value
             })
