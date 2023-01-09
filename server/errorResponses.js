@@ -4,7 +4,12 @@
  * @param parameterName {string} The parameter/query name that the option was passed to.
  */
 function resErrMissingQueryParameter(res, parameterName) {
-    sendErrRes(res, 400, "MissingQueryParameter", `Missing Query Parameter ${parameterName} for this method!`)
+    sendErrRes(
+        res,
+        400,
+        "MissingQueryParameter",
+        `Missing Query Parameter '${parameterName}' for this method!`
+        )
 }
 
 /**
@@ -15,8 +20,12 @@ function resErrMissingQueryParameter(res, parameterName) {
  * @param expectedType {string}
  */
 function resErrInvalidType(res, badValue,badType, parameterName, expectedType) {
-    sendErrRes(res, 400, "InvalidParameterType",
-        `Invalid Parameter Type for ${parameterName}. Expected Type: ${expectedType}. Got Type: ${badType}. Bad value: ${badValue}`)
+    sendErrRes(res,
+        400,
+        "InvalidParameterType",
+        `Invalid Parameter Type for ${parameterName}. Expected Type: ${expectedType}. Got Type: ${badType}. Bad value: ${badValue}`,
+        {expectedType:expectedType}
+        )
 }
 
 /**

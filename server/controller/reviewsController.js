@@ -1,5 +1,6 @@
-const {resErrArgOutOfRange, resErrInvalidOption, resInternalErr, GetSelectRangeQueryParams} = require("../tools");
+const {resInternalErr} = require("../errorResponses");
 const {RestauRantDB} = require("../database");
+const {GetQueryParams} = require("../validateQuery");
 
 /**
  * Get list of reviews for a specific restaurant
@@ -7,40 +8,22 @@ const {RestauRantDB} = require("../database");
  * @param res {import("express").Response}
  */
 function getReviews(req, res) {
-    let queryRange = GetSelectRangeQueryParams(req,res)
-    if (!queryRange) return
+    let queryParams = GetQueryParams(req,res,{
+        start:{default:0,type:"int",min:0},
+        limit:{default:10,type:"int",min:0},
+        order:{default:"asc",type:"string",enumOptions:["asc","desc"]},
+        sortBy:{default:"likes",type:"string",enumOptions:["likes","edit_date"]},
+        restaurant_id:{type:"int",min:1},
+    })
 
-    let sortBy = req.query.sortBy ?? "like"
-    let order = (req.query.order ?? "ASC").toUpperCase()
-    let restaurantId = parseInt(req.query.id ?? "-1")
-
-
-    if (restaurantId < 1) {
-        resErrArgOutOfRange(res, restaurantId, "id", 1)
-        return;
-    }
-
-    const sortByValidValues = [
-        "like",
-        "edit_date"
-    ]
+    if (!queryParams)return
 
 
-    if (!sortByValidValues.includes(sortBy)) {
-        resErrInvalidOption(res, sortBy, "sortBy", sortByValidValues)
-        return
-    }
-    if (!(order === "ASC" || order === "DESC")) {
-        resErrInvalidOption(res, req.query.order, "order", ["asc", "desc"])
-        return
-    }
-
-
-    RestauRantDB.GetReviewForRestaurant(restaurantId, queryRange.startOffset, queryRange.limit, sortBy, order)
+    RestauRantDB.GetReviewForRestaurant(queryParams.restaurant_id, queryParams.start, queryParams.limit, queryParams.sortBy, queryParams.order)
         .then(value => [
             res.json({
-                start: queryRange.startOffset,
-                limit: queryRange.limit,
+                start: queryParams.start,
+                limit: queryParams.limit,
                 total: value.length,
                 results: value
             })

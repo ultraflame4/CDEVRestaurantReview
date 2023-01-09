@@ -1,5 +1,5 @@
 const {RestauRantDB} = require("../database");
-const {resErrInvalidOption, resInternalErr, GetSelectRangeQueryParams, resErrInvalidType, sendErrRes} = require("../tools");
+const {resErrInvalidOption, resInternalErr, GetSelectRangeQueryParams, resErrInvalidType, sendErrRes} = require("../errorResponses");
 const {GetQueryParams} = require("../validateQuery");
 
 
@@ -10,14 +10,12 @@ const {GetQueryParams} = require("../validateQuery");
  */
 function getRestaurants(req,res) {
     let queryParams = GetQueryParams(req,res,{
-        start:{default:0,type:"int"},
-        limit:{default:20,type:"int"},
+        start:{default:0,type:"int",min:0},
+        limit:{default:20,type:"int",min:0},
         order:{default:"asc",type:"string",enumOptions:["asc","desc"]},
         sortBy:{default:"index",type:"string",enumOptions:["index","cost","rating","reviews"]},
     })
-
     if (!queryParams) return;
-
 
     RestauRantDB.GetRestaurants(queryParams.start,queryParams.limit,queryParams.sortBy,queryParams.order==="asc")
         .then(value => {
@@ -40,24 +38,18 @@ function getRestaurants(req,res) {
  * @param res {import("express").Response}
  */
 function getNearestRestaurants(req,res) {
-    let queryRange = GetSelectRangeQueryParams(req,res)
-    if (!queryRange) return
-
-    let x_longtitude;
-    let y_latititude;
-    try {
-        x_longtitude = parseFloat(req.query.x)
-        y_latititude = parseFloat(req.query.y)
-    }
-    catch (e){
-        sendErrRes(res,400,"InvalidParameterTypeError","Invalid Parameter Type for x or y. Expected: float")
-        return
-    }
+    let queryParams = GetQueryParams(req,res,{
+        start:{default:0,type:"int",min:0},
+        limit:{default:20,type:"int",min:0},
+        x:{type:"float"},
+        y:{type:"float"}
+    })
+    if (!queryParams) return;
 
     RestauRantDB.GetRestaurantSortDistance(
-        {x:x_longtitude,y:y_latititude},
-        queryRange.startOffset,
-        queryRange.limit
+        {x:queryParams.x,y:queryParams.y},
+        queryParams.start,
+        queryParams.limit
     )
 }
 

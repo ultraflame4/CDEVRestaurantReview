@@ -28,10 +28,10 @@ function GetStringValueType(value) {
 
 
 /**
- * An easy way to validate types and get query. Note that this will also attempt to parse and convert to the different types
+ * An easy way to design query parameters and do validation. Note that this will also attempt to parse and convert to the different types
  * @param req {import("express").Request}
  * @param res {import("express").Response}
- * @param queryParams {Record<string,QueryParameterOption>}
+ * @param queryParams {Record<string,QueryParameterOption>} Query parameters for the api path
  * @return {Record<string,string>,null} A dictionary / record / object with the keys as names and values as values. Returns null on failure
  */
 function GetQueryParams(req, res, queryParams) {
@@ -40,7 +40,7 @@ function GetQueryParams(req, res, queryParams) {
         let paramValidateOption = queryParams[paramName]
 
         let queryVal = req.query[paramName] ?? paramValidateOption.default
-        console.log(queryVal,paramName)
+
         // Check param is in query
         if (queryVal === undefined) {
             resErrMissingQueryParameter(res, paramName)
@@ -58,7 +58,9 @@ function GetQueryParams(req, res, queryParams) {
 
         // Check range
         if ((queryValType==="int"||queryValType==="float")) {
+
             if (!IsWithinRange(queryVal,paramValidateOption.min,paramValidateOption.max)){
+
                 resErrArgOutOfRange(res,queryVal,paramName,paramValidateOption.min,paramValidateOption.max)
                 return null
             }

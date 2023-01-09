@@ -166,7 +166,7 @@ class RestauRantDatabase {
      */
     GetReviewForRestaurant(restaurantId, startOffset = 0, limit = 10, sortBy = "like", orderAsc = true) {
         const sortByMappings = {
-            "like": "like_count",
+            "likes": "like_count",
             "edit_date": "last_edit"
         }
 
