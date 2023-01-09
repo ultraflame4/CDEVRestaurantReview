@@ -37,15 +37,17 @@ function GetStringValueType(value) {
 function GetQueryParams(req, res, queryParams) {
     let validated = {}
     for (let paramName in queryParams) {
-        const paramValidateOption = queryParams[paramName]
+        let paramValidateOption = queryParams[paramName]
 
-        let queryVal = req.query[paramName] ?? (paramValidateOption.default+"")//Force convert string
-
+        let queryVal = req.query[paramName] ?? paramValidateOption.default
+        console.log(queryVal,paramName)
         // Check param is in query
-        if (!queryVal) {
+        if (queryVal === undefined) {
             resErrMissingQueryParameter(res, paramName)
             return null
         }
+        // Force convert string here because the code below was designed for checking strings.
+        queryVal=queryVal+""
 
         let queryValType = GetStringValueType(queryVal);
 
