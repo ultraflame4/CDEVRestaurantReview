@@ -50,8 +50,6 @@ function TestUserLoggedIn(req, res) {
  * @param res {import("express").Response}
  */
 function LoginUser(req, res) {
-   console.log(req.user,req.isAuthenticated())
-
    res.status(200).json({success:IsLoggedIn(req)})
 
 }

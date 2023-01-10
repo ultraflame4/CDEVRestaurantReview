@@ -61,14 +61,12 @@ passport.use(new Strategy({
    })
 }))
 
-passport.serializeUser((user, done) => {
-   console.log("A",user.id)
-
+passport.serializeUser((_user, done) => {
+   /**@type {import("user").User}*/
+   let user = _user
    return done(null, user.id);
 })
 passport.deserializeUser((id, done) => {
-   console.log("B",id)
-
    return done(null, {id:id});
 })
 
