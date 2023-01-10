@@ -63,21 +63,40 @@ function isInteger(value){
     return Number.isInteger(+value)
 }
 
+
 /**
  * Returns the current time now
  * @return {string}
  */
 function GetNowTimestamp(){
-    return new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    return FormatTimestamp(new Date())
 }
+/**
+ * Formats the date into a timestamp for database
+ * @param date {Date}
+ * @return {string}
+ */
+function FormatTimestamp(date){
+    return date.toISOString().replace(/T/, ' ').replace(/\..+/, '')
+}
+
+/**
+ * Check if user is logged in.
+ *
+ * @param req {import("express").Request} Request of the route
+ */
+function IsLoggedIn(req){
+    return req.user!==undefined
+}
+
 
 module.exports = {
     resErrArgOutOfRange,
     GetSelectRangeQueryParams,
-    GetNowTimestamp,
     IsWithinRange,
     isNumeric,
-    isInteger
-
-
+    isInteger,
+    IsLoggedIn,
+    GetNowTimestamp,
+    FormatTimestamp
 }

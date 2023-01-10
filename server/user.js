@@ -1,4 +1,5 @@
 const crypto = require("crypto")
+const {FormatTimestamp} = require("./tools");
 
 /**
  * This class represents a User in a database.
@@ -9,8 +10,11 @@ class User {
    #id
    /** @type {string}*/
    #pwd_hash;
+   /** @type {string}*/
    #username;
+   /** @type {string}*/
    #email;
+   /** @type {Date}*/
    #date_created;
 
 
@@ -44,7 +48,9 @@ class User {
     * @return {Promise<boolean>}
     */
    async ComparePassword(password) {
-      let hashed = await User.HashUserPassword(password,this.date_created)
+
+      let hashed = await User.HashUserPassword(password,FormatTimestamp(this.date_created))
+
       return hashed===this.#pwd_hash;
    }
 
@@ -57,10 +63,7 @@ class User {
    static HashUserPassword(password,date_created){
       let salt = date_created
       return new Promise((resolve) => {
-
          let hashedPassword = crypto.pbkdf2Sync(password,salt,2000,127,"sha512")
-
-
          resolve(hashedPassword.toString("hex"))
       })
    }

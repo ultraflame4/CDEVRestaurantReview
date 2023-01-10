@@ -1,7 +1,8 @@
 const mysql = require("mysql2")
 const crypto = require('crypto')
 const {User} = require("./user")
-const {GetNowTimestamp} = require("./tools");
+const {GetNowTimestamp, FormatTimestamp} = require("./tools");
+const {Form} = require("react-router-dom");
 
 /**
  * Contains basic information about the user
@@ -221,8 +222,18 @@ class RestauRantDatabase {
                return
             }
             let user_row = results[0]
+            /**@type{Date}*/
+            let created_date = new Date(user_row.date_created)
+            // Convert back to 00:00 time zone. Because the database returns a date with a timezone offset
+            created_date.setMinutes(-created_date.getTimezoneOffset() + created_date.getMinutes())
 
-            resolve(new User(user_row.id,user_row.pwd_hash,user_row.username,user_row.email,user_row.date_created))
+            resolve(new User(
+               user_row.id,
+               user_row.password_hash,
+               user_row.username,
+               user_row.email,
+               created_date
+            ))
 
          })
       })
@@ -277,6 +288,7 @@ class RestauRantDatabase {
 
       return new Promise((resolve, reject) => {
 
+         //need to set timezone so that it doesn't convert to utc again
          this.#conn.query(`
             INSERT INTO cdevrestaurantdatabase.users (email,password_hash,username,date_created)
             VALUES (?,?,?,?);
@@ -290,6 +302,12 @@ class RestauRantDatabase {
 
 
             if (err) {
+
+               if (err.code==="ER_DUP_ENTRY"){
+                  reject(err)
+                  return;
+               }
+
                console.warn("Error while executing CreateUser:", err)
                reject(err)
                return
