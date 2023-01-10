@@ -3,12 +3,12 @@
  * @param res {import("express").Response} The express response to use
  * @param parameterName {string} The parameter/query name that the option was passed to.
  */
-function resErrMissingQueryParameter(res, parameterName) {
+function resErrMissingParameter(res, parameterName) {
     sendErrRes(
         res,
         400,
-        "MissingQueryParameter",
-        `Missing Query Parameter '${parameterName}' for this method!`
+        "MissingParameter",
+        `Missing Parameter '${parameterName}' for this method!`
         )
 }
 
@@ -97,6 +97,6 @@ module.exports={
     resErrInvalidOption,
     resErrArgOutOfRange,
     resErrInvalidType,resInternalErr,
-    resErrMissingQueryParameter,
+    resErrMissingParameter,
 
 }

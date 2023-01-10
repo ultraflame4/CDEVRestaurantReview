@@ -1,5 +1,7 @@
 const mysql = require("mysql2")
-const {bool} = require("prop-types");
+const crypto = require('crypto')
+const {User} = require("./user")
+const {GetNowTimestamp} = require("./tools");
 
 /**
  * Contains basic information about the user
@@ -13,7 +15,7 @@ const {bool} = require("prop-types");
 /**
  * Restaurant Type returned by the database
  * @export
- * @typedef RestaurantType
+ * @typedef DBRestaurantType
  * @property {number} id
  * @property {string} name
  * @property {string} description
@@ -29,7 +31,7 @@ const {bool} = require("prop-types");
 /**
  * Review Type returned by the database
  * @export
- * @typedef ReviewType
+ * @typedef DBReviewType
  * @property {number} id
  * @property {number} restaurant_id
  * @property {number} author_id
@@ -41,44 +43,52 @@ const {bool} = require("prop-types");
  * @property {string} username
  */
 
+/**
+ * User Type returned by the database
+ * @export
+ * @typedef DBUserType
+ * @property {number} id
+ * @property {string} email
+ * @property {string} password_hash
+ * @property {string} username
+ * @property {string} date_created
+ */
+
+
 
 class RestauRantDatabase {
-    /**@type {import('mysql2').Connection}*/
-    #conn;
+   /**@type {import('mysql2').Connection}*/
+   #conn;
 
-    /**
-     *
-     * @param {import('mysql2').ConnectionOptions} options
-     * @constructor
-     */
-    constructor(options) {
+   /**
+    * @param {import('mysql2').ConnectionOptions} options
+    * @constructor
+    */
+   constructor(options) {
 
-        this.#conn = mysql.createConnection(options)
-    }
+      this.#conn = mysql.createConnection(options)
+   }
 
 
-    /**
-     * Gets and returns a list of restaurants with specified parameters
-     * @param startOffset {number} The offset to start getting the restaurants from.
-     * @param limit {number} The maximum number of restaurants to return
-     * @param sortBy {"index"|"cost"|"rating"|"reviews"} How to sort the data
-     * @param orderAsc {boolean} Whether to order by asc or desc
-     * @return {Promise<RestaurantType[]>}
-     */
-    GetRestaurants(startOffset = 0, limit = 20, sortBy = "index", orderAsc = true) {
-        const sortByMappings = {
-            "index": "id",
-            "cost": "cost_rating",
-            "rating": "avg_rating",
-            "reviews": "reviews_count"
-        }
-        return new Promise((resolve, reject) => {
-            let sortByCol = sortByMappings[sortBy]
-            if (!sortByCol) {
-                reject(`Invalid sort ${sortBy}`)
-            }
+   /**
+    * Gets and returns a list of restaurants with specified parameters
+    * @param startOffset {number} The offset to start getting the restaurants from.
+    * @param limit {number} The maximum number of restaurants to return
+    * @param sortBy {"index"|"cost"|"rating"|"reviews"} How to sort the data
+    * @param orderAsc {boolean} Whether to order by asc or desc
+    * @return {Promise<DBRestaurantType[]>}
+    */
+   GetRestaurants(startOffset = 0, limit = 20, sortBy = "index", orderAsc = true) {
+      const sortByMappings = {
+         "index": "id", "cost": "cost_rating", "rating": "avg_rating", "reviews": "reviews_count"
+      }
+      return new Promise((resolve, reject) => {
+         let sortByCol = sortByMappings[sortBy]
+         if (!sortByCol) {
+            reject(`Invalid sort ${sortBy}`)
+         }
 
-            this.#conn.query(`
+         this.#conn.query(`
             SELECT
             cdevrestaurantdatabase.restaurant.id,
             cdevrestaurantdatabase.restaurant.name,
@@ -97,28 +107,27 @@ class RestauRantDatabase {
              ORDER BY ${sortByCol} ${orderAsc?'ASC':'DESC'}
              LIMIT ? OFFSET ?;
             `, // Should be fine to insert order and sortby here because it is not directly exposed
-                [limit, startOffset],
-                (err, result, fields) => {
-                    if (err) {
-                        console.warn("Error while executing GetRestaurants:", err)
-                        reject(err)
-                    }
-                    resolve(result)
-                })
-        })
-    }
+            [limit, startOffset], (err, result, fields) => {
+               if (err) {
+                  console.warn("Error while executing GetRestaurants:", err)
+                  reject(err)
+               }
+               resolve(result)
+            })
+      })
+   }
 
 
-    /**
-     * Returns the list of restaurants sort by distance in descending order
-     * @param refCoords {{x:number,y:number}} The coords to use against the restaurants' coords when calculating the distance (x: longitude, y: latitude)
-     * @param startOffset {number} The offset to start getting the restaurants from.
-     * @param limit {number} The maximum number of restaurants to return
-     * @return
-     */
-    GetRestaurantSortDistance(refCoords, startOffset = 0, limit = 20) {
-        return new Promise((resolve, reject)=>{
-            this.#conn.query(`
+   /**
+    * Returns the list of restaurants sort by distance in descending order
+    * @param refCoords {{x:number,y:number}} The coords to use against the restaurants' coords when calculating the distance (x: longitude, y: latitude)
+    * @param startOffset {number} The offset to start getting the restaurants from.
+    * @param limit {number} The maximum number of restaurants to return
+    * @return
+    */
+   GetRestaurantSortDistance(refCoords, startOffset = 0, limit = 20) {
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`
             SELECT
             ST_Distance_Sphere(
                 POINT(?, ?),
@@ -142,41 +151,39 @@ class RestauRantDatabase {
              ORDER BY distance ASC
              LIMIT ? OFFSET ?;
             `, // Should be fine to insert order and sortby here because it is not directly exposed
-                [refCoords.x,refCoords.y,limit, startOffset],
-                (err, result, fields) => {
-                    if (err) {
-                        console.warn("Error while executing GetRestaurants:", err)
-                        reject(err)
-                    }
-                    resolve(result)
-                })
-        })
+            [refCoords.x, refCoords.y, limit, startOffset], (err, result, fields) => {
+               if (err) {
+                  console.warn("Error while executing GetRestaurants:", err)
+                  reject(err)
+               }
+               resolve(result)
+            })
+      })
 
-    }
+   }
 
-    /**
-     * Gets and returns a list of reviews for a specified restuarant
-     *
-     * @param restaurantId {number}
-     * @param startOffset {number}
-     * @param limit {number}
-     * @param sortBy {"like"|"edit_date"}
-     * @param orderAsc {boolean}
-     * @return {Promise<RestaurantType[]>}
-     */
-    GetReviewForRestaurant(restaurantId, startOffset = 0, limit = 10, sortBy = "like", orderAsc = true) {
-        const sortByMappings = {
-            "likes": "like_count",
-            "edit_date": "last_edit"
-        }
+   /**
+    * Gets and returns a list of reviews for a specified restuarant
+    *
+    * @param restaurantId {number}
+    * @param startOffset {number}
+    * @param limit {number}
+    * @param sortBy {"like"|"edit_date"}
+    * @param orderAsc {boolean}
+    * @return {Promise<DBRestaurantType[]>}
+    */
+   GetReviewForRestaurant(restaurantId, startOffset = 0, limit = 10, sortBy = "like", orderAsc = true) {
+      const sortByMappings = {
+         "likes": "like_count", "edit_date": "last_edit"
+      }
 
-        return new Promise((resolve, reject) => {
-            let sortByCol = sortByMappings[sortBy]
-            if (!sortByCol) {
-                reject(`Invalid sort ${sortBy}`)
-            }
+      return new Promise((resolve, reject) => {
+         let sortByCol = sortByMappings[sortBy]
+         if (!sortByCol) {
+            reject(`Invalid sort ${sortBy}`)
+         }
 
-            this.#conn.query(`
+         this.#conn.query(`
             SELECT
             *, 
             (SELECT username FROM cdevrestaurantdatabase.users WHERE users.id=reviews.author_id) as username 
@@ -193,20 +200,111 @@ class RestauRantDatabase {
                 }
                 resolve(result)
             })
-        })
-    }
+      })
+   }
+
+   /**
+    * Finds a user by their email in the database
+    * @param email {string}
+    * @return {Promise<User|null>} Returns a promise containing ,the User object, or ,null if user not found.
+    */
+   FindUser(email) {
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`SELECT * FROM cdevrestaurantdatabase.users WHERE email=? LIMIT 1`, [email], (err, results) => {
+            if (err) {
+               console.warn("Error while executing FindUser:", err)
+               reject(err)
+               return
+            }
+            if (results.length < 1) {
+               resolve(null)
+               return
+            }
+            let user_row = results[0]
+
+            resolve(new User(user_row.id,user_row.pwd_hash,user_row.username,user_row.email,user_row.date_created))
+
+         })
+      })
+   }
+
+   /**
+    * Finds a user by their email in the database
+    * @param id {number}
+    * @return {Promise<User|null>} Returns a promise containing ,the User object, or ,null if user not found.
+    */
+   GetUser(id) {
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`SELECT * FROM cdevrestaurantdatabase.users WHERE id=? LIMIT 1`,
+            [id], (err, results) => {
+            if (err) {
+               console.warn("Error while executing GetUser:", err)
+               reject(err)
+               return
+            }
+            if (results.length < 1) {
+               resolve(null)
+               return
+            }
+            let user_row = results[0]
+
+            resolve(new User(user_row.id,user_row.pwd_hash,user_row.username,user_row.email,user_row.date_created))
+
+         })
+      })
+   }
+
+   /**
+    * Creates a new user in the database
+    * @param username {string}
+    * @param password {string}
+    * @param email {string}
+    * @return {Promise<unknown>}
+    */
+   async CreateUser(username,password,email) {
+      let currentTime = GetNowTimestamp()
+      try {
+         let hashedPassword = await User.HashUserPassword(password, currentTime)
+         return await this._CreateUser(username,hashedPassword,email,currentTime)
+      }
+      catch (e){
+         console.error(e)
+      }
+      throw "Error while creating user"
+   }
+
+   _CreateUser(username,hashedpassword,email,currentTime) {
+
+      return new Promise((resolve, reject) => {
+
+         this.#conn.query(`
+            INSERT INTO cdevrestaurantdatabase.users (email,password_hash,username,date_created)
+            VALUES (?,?,?,?);
+            `,
+            [
+               username,
+               hashedpassword,
+               email,
+               currentTime]
+            , (err, results) => {
 
 
+            if (err) {
+               console.warn("Error while executing CreateUser:", err)
+               reject(err)
+               return
+            }
+            resolve(results)
+
+         })
+      })
+   }
 }
 
 const RestauRantDB = new RestauRantDatabase({
-    host: "localhost",
-    port: "3306",
-    user: "root",
-    password: "admin",
-    database: "movie_review"
+   host: "localhost", port: "3306", user: "root", password: "admin", database: "movie_review"
 })
 
 module.exports = {
-    RestauRantDB
+   RestauRantDB
 }

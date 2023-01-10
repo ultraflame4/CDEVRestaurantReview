@@ -63,11 +63,18 @@ function isInteger(value){
     return Number.isInteger(+value)
 }
 
+/**
+ * Returns the current time now
+ * @return {string}
+ */
+function GetNowTimestamp(){
+    return new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+}
+
 module.exports = {
     resErrArgOutOfRange,
     GetSelectRangeQueryParams,
-
-
+    GetNowTimestamp,
     IsWithinRange,
     isNumeric,
     isInteger
