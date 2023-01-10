@@ -40,7 +40,7 @@ function CreateUser(req, res) {
  */
 function TestUserLoggedIn(req, res) {
 
-   res.status(200).json({isLoggedIn:IsLoggedIn(req),isAuth:req.isAuthenticated(),userid:req.user.id})
+   res.status(200).json({isLoggedIn:IsLoggedIn(req),isAuth:req.isAuthenticated(),userid:req.user?.id})
 
 
 }
