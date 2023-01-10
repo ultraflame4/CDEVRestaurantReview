@@ -10,7 +10,7 @@
  */
 
 const {sendErrRes, resErrArgOutOfRange, isNumeric, isInteger, IsWithinRange} = require("./tools");
-const {resErrMissingQueryParameter, resErrInvalidType, resErrInvalidOption} = require("./errorResponses");
+const {resErrMissingParameter, resErrInvalidType, resErrInvalidOption} = require("./errorResponses");
 
 /**
  * Checks the type of the value of the string (eg. "1")
@@ -32,18 +32,19 @@ function GetStringValueType(value) {
  * @param req {import("express").Request}
  * @param res {import("express").Response}
  * @param queryParams {Record<string,QueryParameterOption>} Query parameters for the api path
+ * @param key {(req:import("express").Request,paramName:string)=>string} The callback used to get the value of a parameter
  * @return {Record<string,string>,null} A dictionary / record / object with the keys as names and values as values. Returns null on failure
  */
-function GetQueryParams(req, res, queryParams) {
+function GetQueryParams(req, res, queryParams,key=(r,n)=>r.query[n]) {
     let validated = {}
     for (let paramName in queryParams) {
         let paramValidateOption = queryParams[paramName]
 
-        let queryVal = req.query[paramName] ?? paramValidateOption.default
+        let queryVal = key(req,paramName) ?? paramValidateOption.default
 
         // Check param is in query
         if (queryVal === undefined) {
-            resErrMissingQueryParameter(res, paramName)
+            resErrMissingParameter(res, paramName)
             return null
         }
         // Force convert string here because the code below was designed for checking strings.
@@ -51,7 +52,7 @@ function GetQueryParams(req, res, queryParams) {
 
         let queryValType = GetStringValueType(queryVal);
 
-        if (queryValType!==paramValidateOption.type){
+        if (queryValType!==paramValidateOption.type && paramValidateOption.type!=="string"){
 
             if (!( // Check for special condition when they are both numbers . _ .
                 (queryValType==="int"&&paramValidateOption.type==="float")||
@@ -60,6 +61,8 @@ function GetQueryParams(req, res, queryParams) {
                 resErrInvalidType(res,queryVal,queryValType,paramName,paramValidateOption.type)
                 return null
             }
+
+
 
         }
 
@@ -83,7 +86,7 @@ function GetQueryParams(req, res, queryParams) {
 
 
 
-        switch (queryValType){
+        switch (paramValidateOption.type){
             case "int":
             case "float":
                 validated[paramName] = (+queryVal)
@@ -99,8 +102,21 @@ function GetQueryParams(req, res, queryParams) {
 }
 
 
+/**
+ * An easy way to design json body parameters and do validation. Note that this will also attempt to parse and convert to the different types
+ * @param req {import("express").Request}
+ * @param res {import("express").Response}
+ * @param queryParams {Record<string,QueryParameterOption>} Query parameters for the api path
+ * @return {Record<string,string>,null} A dictionary / record / object with the keys as names and values as values. Returns null on failure
+ */
+function GetJsonParams(req, res, queryParams) {
+    return GetQueryParams(req,res,queryParams,(req1, paramName) => req1.body[paramName])
+}
+
+
 
 
 module.exports = {
-    GetQueryParams
+    GetQueryParams,
+    GetJsonParams
 }
