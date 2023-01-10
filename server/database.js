@@ -282,9 +282,9 @@ class RestauRantDatabase {
             VALUES (?,?,?,?);
             `,
             [
-               username,
-               hashedpassword,
                email,
+               hashedpassword,
+               username,
                currentTime]
             , (err, results) => {
 
