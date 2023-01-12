@@ -378,7 +378,6 @@ class RestauRantDatabase {
                   reject(err)
                   return
                }
-               console.log(result)
                resolve(result)
             }
          )
