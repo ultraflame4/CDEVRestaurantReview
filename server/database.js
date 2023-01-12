@@ -118,7 +118,6 @@ class RestauRantDatabase {
       })
    }
 
-
    /**
     * Returns the list of restaurants sort by distance in descending order
     * @param refCoords {{x:number,y:number}} The coords to use against the restaurants' coords when calculating the distance (x: longitude, y: latitude)
@@ -240,32 +239,6 @@ class RestauRantDatabase {
    }
 
    /**
-    * Finds a user by their email in the database
-    * @param id {number}
-    * @return {Promise<User|null>} Returns a promise containing ,the User object, or ,null if user not found.
-    */
-   GetUser(id) {
-      return new Promise((resolve, reject) => {
-         this.#conn.query(`SELECT * FROM cdevrestaurantdatabase.users WHERE id=? LIMIT 1`,
-            [id], (err, results) => {
-            if (err) {
-               console.warn("Error while executing GetUser:", err)
-               reject(err)
-               return
-            }
-            if (results.length < 1) {
-               resolve(null)
-               return
-            }
-            let user_row = results[0]
-
-            resolve(new User(user_row.id,user_row.pwd_hash,user_row.username,user_row.email,user_row.date_created))
-
-         })
-      })
-   }
-
-   /**
     * Creates a new user in the database
     * @param username {string}
     * @param password {string}
@@ -315,6 +288,100 @@ class RestauRantDatabase {
             resolve(results)
 
          })
+      })
+   }
+
+   /**
+    * Creates a review for a restaurant in the database
+    * @param userId {number}
+    * @param restaurantId {number}
+    * @param reviewContent {string}
+    * @param rating {number}
+    * @return {Promise<any>}
+    */
+   CreateReview(userId, restaurantId, reviewContent, rating){
+      let timestamp = GetNowTimestamp()
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`
+         INSERT INTO cdevrestaurantdatabase.reviews
+          (restaurant_id,author_id,content,rating,date_created,last_edit,like_count)
+            VALUES (?,?,?,?,?,?,?);
+         `,
+            [
+               restaurantId,
+               userId,
+               reviewContent,
+               rating,
+               timestamp,
+               timestamp,
+               0
+            ],
+            (err, result, fields) => {
+               if (err) {
+                  console.warn("Error while executing CreateReview:", err)
+                  reject(err)
+                  return
+               }
+               resolve(result)
+            }
+         )
+      })
+   }
+
+   /**
+    * Updates an existing review for a restaurant in the database
+    * @param reviewId {number}
+    * @param reviewContent {string}
+    * @param rating {number}
+    * @return {Promise<any>}
+    */
+   UpdateReview(reviewId,reviewContent, rating){
+      let timestamp = GetNowTimestamp()
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`
+            UPDATE cdevrestaurantdatabase.reviews
+            SET content = ?, rating = ?, last_edit=?
+            WHERE id = ?
+         `,
+            [
+               reviewContent,
+               rating,
+               timestamp,
+               reviewId
+            ],
+            (err, result, fields) => {
+               if (err) {
+                  console.warn("Error while executing UpdateReview:", err)
+                  reject(err)
+                  return
+               }
+               resolve(result)
+            }
+         )
+      })
+   }
+
+   /**
+    * Retrieves an existing review in the database
+    * @param reviewId {number}
+    * @param reviewContent {string}
+    * @param rating {number}
+    * @return {Promise<DBReviewType[]>}
+    */
+   GetReview(reviewId){
+      let timestamp = GetNowTimestamp()
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`SELECT * FROM cdevrestaurantdatabase.reviews WHERE id=? LIMIT 1`, [reviewId],
+            (err, result, fields) => {
+               if (err) {
+                  console.warn("Error while executing GetReview:", err)
+                  reject(err)
+                  return
+               }
+               console.log(result)
+               resolve(result)
+            }
+         )
       })
    }
 }

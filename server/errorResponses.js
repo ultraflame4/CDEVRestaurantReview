@@ -93,10 +93,19 @@ function resInternalErr(res,addData=null) {
     sendErrRes(res,500,"Internal Server Error","An Unknown error has occurred in the server. This should not be happening in production.",addData)
 }
 
+function resUnauthorised(res,addData=null) {
+   sendErrRes(res,401,"NotAuthorisedErr","You are not authorised to access this method",addData)
+}
+function resNotFound(res,message,addData=null) {
+   sendErrRes(res,404,"ResourceNotFound",message,addData)
+}
+
 module.exports={
     resErrInvalidOption,
     resErrArgOutOfRange,
     resErrInvalidType,resInternalErr,
     resErrMissingParameter,
+   resUnauthorised,
+   resNotFound
 
 }

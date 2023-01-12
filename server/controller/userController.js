@@ -39,11 +39,9 @@ function CreateUser(req, res) {
  * @param res {import("express").Response}
  */
 function TestUserLoggedIn(req, res) {
-
    res.status(200).json({isLoggedIn:IsLoggedIn(req),isAuth:req.isAuthenticated(),userid:req.user?.id})
-
-
 }
+
 /**
  *
  * @param req {import("express").Request}
@@ -51,8 +49,8 @@ function TestUserLoggedIn(req, res) {
  */
 function LoginUser(req, res) {
    res.status(200).json({success:IsLoggedIn(req)})
-
 }
+
 /**
  *
  * @param req {import("express").Request}
