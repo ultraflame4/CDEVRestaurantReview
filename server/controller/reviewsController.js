@@ -60,7 +60,7 @@ function createReview(req, res){
     resUnauthorised(res)
 }
 /**
- * create a review for a restaurant
+ * updates a review
  * @param req {import("express").Request}
  * @param res {import("express").Response}
  */
@@ -100,7 +100,45 @@ function updateReview(req, res){
     resUnauthorised(res)
 
 }
+/**
+ * deletes a review
+ * @param req {import("express").Request}
+ * @param res {import("express").Response}
+ */
 function deleteReview(req, res){
+    let queryParams = GetJsonParams(req,res,{
+        review_id:{type:"int",min:1}
+    })
+    if (!queryParams)return
+
+    if (req.isAuthenticated()){
+
+        RestauRantDB.GetReview(queryParams.review_id).then(reviews => {
+
+            if (reviews.length<1){
+                resNotFound(res,`Error could not find review with id: ${queryParams.review_id}`,{bad:queryParams.review_id})
+                return
+            }
+
+            let review = reviews[0]
+            if (review.author_id !== req.user.id){
+                resUnauthorised(res, {message:"You are not author of this review!"})
+                return
+            }
+
+            RestauRantDB.DeleteReview(review.id).then(value1 => {
+                res.json({
+                    success:true,
+                    sqlData:value1
+                })
+            }).catch(reason => {
+                resInternalErr(res,{sql:reason})
+            })
+        })
+
+        return
+    }
+    resUnauthorised(res)
 
 }
 

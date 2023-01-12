@@ -383,6 +383,29 @@ class RestauRantDatabase {
          )
       })
    }
+
+   /**
+    * Updates an existing review for a restaurant in the database
+    * @param reviewId {number}
+    * @return {Promise<any>}
+    */
+   DeleteReview(reviewId){
+
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`
+            DELETE FROM cdevrestaurantdatabase.reviews WHERE id = ?
+         `, [reviewId],
+            (err, result, fields) => {
+               if (err) {
+                  console.warn("Error while executing DeleteReview:", err)
+                  reject(err)
+                  return
+               }
+               resolve(result)
+            }
+         )
+      })
+   }
 }
 
 const RestauRantDB = new RestauRantDatabase({
