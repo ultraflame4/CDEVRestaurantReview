@@ -95,6 +95,7 @@ app.get('/api/test', (req, res) => {
 
 setupClientRedirects(app)
 app.get('/api/restaurants', restaurantController.getRestaurants)
+app.get('/api/restaurants/tags', restaurantController.getRestaurantsTags)
 app.get('/api/nearest_restaurants', restaurantController.getNearestRestaurants)
 app.get('/api/reviews', reviewsController.getReviews)
 app.post('/api/reviews/create',passport.session()  , reviewsController.createReview)

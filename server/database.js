@@ -54,6 +54,14 @@ const {Form} = require("react-router-dom");
  * @property {string} username
  * @property {string} date_created
  */
+/**
+ * Restaurant Tags Type returned by the database
+ * @export
+ * @typedef DBRestaurantTagType
+ * @property {number} id
+ * @property {string} tag_name
+ * @property {number} restaurant_id
+ */
 
 
 
@@ -424,6 +432,29 @@ class RestauRantDatabase {
             (err, result, fields) => {
                if (err) {
                   console.warn("Error while executing DeleteReview:", err)
+                  reject(err)
+                  return
+               }
+               resolve(result)
+            }
+         )
+      })
+   }
+
+   /**
+    * Updates an existing review for a restaurant in the database
+    * @param restaurantId {number}
+    * @return {Promise<DBRestaurantTagType[]>}
+    */
+   GetTagsForRestaurant(restaurantId){
+
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`
+            SELECT * FROM cdevrestaurantdatabase.restauranttags WHERE restaurant_id = ?
+         `, [restaurantId],
+            (err, result, fields) => {
+               if (err) {
+                  console.warn("Error while executing GetTagsForRestaurant:", err)
                   reject(err)
                   return
                }
