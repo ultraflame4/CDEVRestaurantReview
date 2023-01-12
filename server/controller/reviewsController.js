@@ -139,8 +139,8 @@ function deleteReview(req, res){
         return
     }
     resUnauthorised(res)
-
 }
+
 
 module.exports = {
     getReviews,

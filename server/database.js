@@ -257,6 +257,32 @@ class RestauRantDatabase {
       throw "Error while creating user"
    }
 
+
+   /**
+    * Retrieves an existing review in the database
+    * @param userId {number}
+    * @param startOffset {number}
+    * @param limit {number}
+    * @return {Promise<DBReviewType[]>}
+    */
+   GetUserReviews(userId, startOffset = 0, limit = 10){
+
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`SELECT * FROM cdevrestaurantdatabase.reviews WHERE author_id=? LIMIT ? OFFSET ?`,
+            [userId,limit,startOffset],
+            (err, result, fields) => {
+               if (err) {
+                  console.warn("Error while executing GetUserReviews:", err)
+                  reject(err)
+                  return
+               }
+
+               resolve(result)
+            }
+         )
+      })
+   }
+
    _CreateUser(username,hashedpassword,email,currentTime) {
 
       return new Promise((resolve, reject) => {

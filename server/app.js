@@ -104,6 +104,7 @@ app.post('/api/user/create', userController.CreateUser)
 app.get('/api/user/test',passport.session(), userController.TestUserLoggedIn)
 app.get('/api/user/login',passport.authenticate('local',{failureMessage:true}),userController.LoginUser)
 app.get('/api/user/logout',userController.LogoutUser)
+app.get('/api/user/reviews',passport.session(),userController.GetAllReviews)
 
 app.listen(port, "localhost", () => {
    console.log(`CDEV Restau-Rant app server started at http://localhost:${port}`)
