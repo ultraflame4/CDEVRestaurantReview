@@ -1,8 +1,6 @@
 const mysql = require("mysql2")
-const crypto = require('crypto')
 const {User} = require("./user")
-const {GetNowTimestamp, FormatTimestamp} = require("./tools");
-const {Form} = require("react-router-dom");
+const {GetNowTimestamp} = require("./tools");
 
 /**
  * Contains basic information about the user
@@ -66,7 +64,6 @@ const {Form} = require("react-router-dom");
  */
 
 
-
 class RestauRantDatabase {
    /**@type {import('mysql2').Connection}*/
    #conn;
@@ -90,7 +87,10 @@ class RestauRantDatabase {
     */
    GetRestaurants(startOffset = 0, limit = 10, sortBy = "index", orderAsc = true) {
       const sortByMappings = {
-         "index": "id", "cost": "cost_rating", "rating": "avg_rating", "reviews": "reviews_count"
+         "index": "id",
+         "cost": "cost_rating",
+         "rating": "avg_rating",
+         "reviews": "reviews_count"
       }
       return new Promise((resolve, reject) => {
          let sortByCol = sortByMappings[sortBy]
@@ -185,7 +185,8 @@ class RestauRantDatabase {
     */
    GetReviewForRestaurant(restaurantId, startOffset = 0, limit = 10, sortBy = "like", orderAsc = true) {
       const sortByMappings = {
-         "likes": "like_count", "edit_date": "last_edit"
+         "likes": "like_count",
+         "edit_date": "last_edit"
       }
 
       return new Promise((resolve, reject) => {
@@ -203,13 +204,12 @@ class RestauRantDatabase {
              ORDER BY ${sortByCol} ${orderAsc?'ASC':'DESC'}
              LIMIT ? OFFSET ?;
             `, // Should be fine to insert order and sortby here because it is not directly exposed
-            [restaurantId, limit, startOffset],
-            (err, result, fields) => {
-                if (err) {
-                    console.warn("Error while executing GetReviewForRestaurant:", err)
-                    reject(err)
-                }
-                resolve(result)
+            [restaurantId, limit, startOffset], (err, result, fields) => {
+               if (err) {
+                  console.warn("Error while executing GetReviewForRestaurant:", err)
+                  reject(err)
+               }
+               resolve(result)
             })
       })
    }
@@ -237,13 +237,7 @@ class RestauRantDatabase {
             // Convert back to 00:00 time zone. Because the database returns a date with a timezone offset
             created_date.setMinutes(-created_date.getTimezoneOffset() + created_date.getMinutes())
 
-            resolve(new User(
-               user_row.id,
-               user_row.password_hash,
-               user_row.username,
-               user_row.email,
-               created_date
-            ))
+            resolve(new User(user_row.id, user_row.password_hash, user_row.username, user_row.email, created_date))
 
          })
       })
@@ -256,13 +250,12 @@ class RestauRantDatabase {
     * @param email {string}
     * @return {Promise<unknown>}
     */
-   async CreateUser(username,password,email) {
+   async CreateUser(username, password, email) {
       let currentTime = GetNowTimestamp()
       try {
          let hashedPassword = await User.HashUserPassword(password, currentTime)
-         return await this._CreateUser(username,hashedPassword,email,currentTime)
-      }
-      catch (e){
+         return await this._CreateUser(username, hashedPassword, email, currentTime)
+      } catch (e) {
          console.error(e)
       }
       throw "Error while creating user"
@@ -276,25 +269,22 @@ class RestauRantDatabase {
     * @param limit {number}
     * @return {Promise<DBReviewType[]>}
     */
-   GetUserReviews(userId, startOffset = 0, limit = 10){
+   GetUserReviews(userId, startOffset = 0, limit = 10) {
 
       return new Promise((resolve, reject) => {
-         this.#conn.query(`SELECT * FROM cdevrestaurantdatabase.reviews WHERE author_id=? LIMIT ? OFFSET ?`,
-            [userId,limit,startOffset],
-            (err, result, fields) => {
-               if (err) {
-                  console.warn("Error while executing GetUserReviews:", err)
-                  reject(err)
-                  return
-               }
-
-               resolve(result)
+         this.#conn.query(`SELECT * FROM cdevrestaurantdatabase.reviews WHERE author_id=? LIMIT ? OFFSET ?`, [userId, limit, startOffset], (err, result, fields) => {
+            if (err) {
+               console.warn("Error while executing GetUserReviews:", err)
+               reject(err)
+               return
             }
-         )
+
+            resolve(result)
+         })
       })
    }
 
-   _CreateUser(username,hashedpassword,email,currentTime) {
+   _CreateUser(username, hashedpassword, email, currentTime) {
 
       return new Promise((resolve, reject) => {
 
@@ -302,18 +292,12 @@ class RestauRantDatabase {
          this.#conn.query(`
             INSERT INTO cdevrestaurantdatabase.users (email,password_hash,username,date_created)
             VALUES (?,?,?,?);
-            `,
-            [
-               email,
-               hashedpassword,
-               username,
-               currentTime]
-            , (err, results) => {
+            `, [email, hashedpassword, username, currentTime], (err, results) => {
 
 
             if (err) {
 
-               if (err.code==="ER_DUP_ENTRY"){
+               if (err.code === "ER_DUP_ENTRY") {
                   reject(err)
                   return;
                }
@@ -336,32 +320,21 @@ class RestauRantDatabase {
     * @param rating {number}
     * @return {Promise<any>}
     */
-   CreateReview(userId, restaurantId, reviewContent, rating){
+   CreateReview(userId, restaurantId, reviewContent, rating) {
       let timestamp = GetNowTimestamp()
       return new Promise((resolve, reject) => {
          this.#conn.query(`
          INSERT INTO cdevrestaurantdatabase.reviews
           (restaurant_id,author_id,content,rating,date_created,last_edit,like_count)
             VALUES (?,?,?,?,?,?,?);
-         `,
-            [
-               restaurantId,
-               userId,
-               reviewContent,
-               rating,
-               timestamp,
-               timestamp,
-               0
-            ],
-            (err, result, fields) => {
-               if (err) {
-                  console.warn("Error while executing CreateReview:", err)
-                  reject(err)
-                  return
-               }
-               resolve(result)
+         `, [restaurantId, userId, reviewContent, rating, timestamp, timestamp, 0], (err, result, fields) => {
+            if (err) {
+               console.warn("Error while executing CreateReview:", err)
+               reject(err)
+               return
             }
-         )
+            resolve(result)
+         })
       })
    }
 
@@ -372,52 +345,40 @@ class RestauRantDatabase {
     * @param rating {number}
     * @return {Promise<any>}
     */
-   UpdateReview(reviewId,reviewContent, rating){
+   UpdateReview(reviewId, reviewContent, rating) {
       let timestamp = GetNowTimestamp()
       return new Promise((resolve, reject) => {
          this.#conn.query(`
             UPDATE cdevrestaurantdatabase.reviews
             SET content = ?, rating = ?, last_edit=?
             WHERE id = ?
-         `,
-            [
-               reviewContent,
-               rating,
-               timestamp,
-               reviewId
-            ],
-            (err, result, fields) => {
-               if (err) {
-                  console.warn("Error while executing UpdateReview:", err)
-                  reject(err)
-                  return
-               }
-               resolve(result)
+         `, [reviewContent, rating, timestamp, reviewId], (err, result, fields) => {
+            if (err) {
+               console.warn("Error while executing UpdateReview:", err)
+               reject(err)
+               return
             }
-         )
+            resolve(result)
+         })
       })
    }
 
    /**
     * Retrieves an existing review in the database
     * @param reviewId {number}
-    * @param reviewContent {string}
-    * @param rating {number}
     * @return {Promise<DBReviewType[]>}
     */
-   GetReview(reviewId){
-      let timestamp = GetNowTimestamp()
+   GetReview(reviewId) {
+
       return new Promise((resolve, reject) => {
-         this.#conn.query(`SELECT * FROM cdevrestaurantdatabase.reviews WHERE id=? LIMIT 1`, [reviewId],
-            (err, result, fields) => {
-               if (err) {
-                  console.warn("Error while executing GetReview:", err)
-                  reject(err)
-                  return
-               }
-               resolve(result)
+         this.#conn.query(`SELECT * FROM cdevrestaurantdatabase.reviews WHERE id=? LIMIT 1`, [reviewId], (err, result, fields) => {
+            if (err) {
+               console.warn("Error while executing GetReview:", err)
+               reject(err)
+               return
             }
-         )
+            resolve(result)
+         })
       })
    }
 
@@ -426,21 +387,19 @@ class RestauRantDatabase {
     * @param reviewId {number}
     * @return {Promise<any>}
     */
-   DeleteReview(reviewId){
+   DeleteReview(reviewId) {
 
       return new Promise((resolve, reject) => {
          this.#conn.query(`
             DELETE FROM cdevrestaurantdatabase.reviews WHERE id = ?
-         `, [reviewId],
-            (err, result, fields) => {
-               if (err) {
-                  console.warn("Error while executing DeleteReview:", err)
-                  reject(err)
-                  return
-               }
-               resolve(result)
+         `, [reviewId], (err, result, fields) => {
+            if (err) {
+               console.warn("Error while executing DeleteReview:", err)
+               reject(err)
+               return
             }
-         )
+            resolve(result)
+         })
       })
    }
 
@@ -449,21 +408,19 @@ class RestauRantDatabase {
     * @param restaurantId {number}
     * @return {Promise<Array<{image_url:string}>>}
     */
-   GetPhotosForRestaurant(restaurantId){
+   GetPhotosForRestaurant(restaurantId) {
 
       return new Promise((resolve, reject) => {
          this.#conn.query(`
             SELECT image_url FROM cdevrestaurantdatabase.restaurant_photos WHERE restaurant_id = ?
-         `, [restaurantId],
-            (err, result, fields) => {
-               if (err) {
-                  console.warn("Error while executing GetPhotosForRestaurant:", err)
-                  reject(err)
-                  return
-               }
-               resolve(result)
+         `, [restaurantId], (err, result, fields) => {
+            if (err) {
+               console.warn("Error while executing GetPhotosForRestaurant:", err)
+               reject(err)
+               return
             }
-         )
+            resolve(result)
+         })
       })
    }
 
@@ -472,27 +429,29 @@ class RestauRantDatabase {
     * @param restaurantId {number}
     * @return {Promise<DBRestaurantTagType[]>}
     */
-   GetTagsForRestaurant(restaurantId){
+   GetTagsForRestaurant(restaurantId) {
 
       return new Promise((resolve, reject) => {
          this.#conn.query(`
             SELECT * FROM cdevrestaurantdatabase.restauranttags WHERE restaurant_id = ?
-         `, [restaurantId],
-            (err, result, fields) => {
-               if (err) {
-                  console.warn("Error while executing GetTagsForRestaurant:", err)
-                  reject(err)
-                  return
-               }
-               resolve(result)
+         `, [restaurantId], (err, result, fields) => {
+            if (err) {
+               console.warn("Error while executing GetTagsForRestaurant:", err)
+               reject(err)
+               return
             }
-         )
+            resolve(result)
+         })
       })
    }
 }
 
 const RestauRantDB = new RestauRantDatabase({
-   host: "localhost", port: "3306", user: "root", password: "admin", database: "movie_review"
+   host: "localhost",
+   port: "3306",
+   user: "root",
+   password: "admin",
+   database: "movie_review"
 })
 
 module.exports = {

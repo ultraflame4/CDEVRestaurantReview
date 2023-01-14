@@ -1,4 +1,8 @@
 /**
+ * Standardise system to ,check and validate parameters/arguments from request, and , return standard errors when invalid
+ */
+
+/**
  * Query Param Type to used to validate queries parameters
  * @export
  * @typedef QueryParameterOption
