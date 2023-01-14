@@ -27,6 +27,7 @@ const {Form} = require("react-router-dom");
  * @property {number} cost_rating
  * @property {number} avg_rating
  * @property {number} review_count
+ * @property {string} photo_url
  */
 
 /**
@@ -108,11 +109,13 @@ class RestauRantDatabase {
             cdevrestaurantdatabase.restaurant.website,
             cdevrestaurantdatabase.restaurant.cost_rating,
             AVG(rating) as avg_rating,
-            COUNT(cdevrestaurantdatabase.reviews.id) as reviews_count 
-            
+            COUNT(cdevrestaurantdatabase.reviews.id) as reviews_count,
+            (SELECT image_url FROM cdevrestaurantdatabase.restaurant_photos WHERE restaurant_id = cdevrestaurantdatabase.restaurant.id ORDER BY id DESC LIMIT 1) as photo_url,
+            (SELECT JSON_ARRAYAGG(tag_name) FROM cdevrestaurantdatabase.restauranttags WHERE restaurant_id = cdevrestaurantdatabase.restaurant.id GROUP BY restaurant_id) as tags
              FROM cdevrestaurantdatabase.restaurant
-             LEFT OUTER JOIN cdevrestaurantdatabase.reviews ON cdevrestaurantdatabase.restaurant.id=cdevrestaurantdatabase.reviews.restaurant_id
-             GROUP BY restaurant_id
+             LEFT OUTER JOIN cdevrestaurantdatabase.reviews ON cdevrestaurantdatabase.restaurant.id=cdevrestaurantdatabase.reviews.restaurant_id 
+             LEFT OUTER JOIN cdevrestaurantdatabase.restauranttags ON cdevrestaurantdatabase.restaurant.id=cdevrestaurantdatabase.reviews.restaurant_id 
+             GROUP BY cdevrestaurantdatabase.restaurant.id
              ORDER BY ${sortByCol} ${orderAsc?'ASC':'DESC'}
              LIMIT ? OFFSET ?;
             `, // Should be fine to insert order and sortby here because it is not directly exposed
