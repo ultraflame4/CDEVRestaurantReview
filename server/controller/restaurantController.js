@@ -15,6 +15,7 @@ const {GetQueryParams} = require("../validateQuery");
  * @param res {import("express").Response}
  */
 function getRestaurants(req, res) {
+
     let queryParams = GetQueryParams(req, res, {
         start: {default: 0, type: "int", min: 0},
         limit: {default: 10, type: "int", min: 0, max:20},

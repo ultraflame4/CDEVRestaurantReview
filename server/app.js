@@ -60,6 +60,7 @@ app.use("/app", express.static(path.join(__dirname, '../dist/')))
 app.use(expressSession)
 app.use(passport.initialize())
 passport.use(passportStrategy)
+app.use(passport.session())
 
 
 passport.serializeUser((_user, done) => {
@@ -95,12 +96,12 @@ app.get('/api/test', (req, res) => {
 
 setupClientRedirects(app)
 
-app.get('/api/restaurants', restaurantController.getRestaurants)
-app.get('/api/restaurants/tags', restaurantController.getRestaurantsTags)
-app.get('/api/restaurants/photos', restaurantController.getRestaurantsPhotos)
-app.get('/api/nearest_restaurants', restaurantController.getNearestRestaurants)
+app.get('/api/restaurants',middlewares.cached(), restaurantController.getRestaurants)
+app.get('/api/restaurants/tags',middlewares.cached(), restaurantController.getRestaurantsTags)
+app.get('/api/restaurants/photos',middlewares.cached(), restaurantController.getRestaurantsPhotos)
+app.get('/api/nearest_restaurants',middlewares.cached(), restaurantController.getNearestRestaurants)
 
-app.get('/api/reviews', reviewsController.getReviews)
+app.get('/api/reviews',middlewares.cached(3), reviewsController.getReviews)
 app.post('/api/reviews/create', middlewares.authenticated(), reviewsController.createReview)
 app.put('/api/reviews/update', middlewares.authenticated(), reviewsController.updateReview)
 app.delete('/api/reviews/delete', middlewares.authenticated(), reviewsController.deleteReview)
@@ -109,7 +110,7 @@ app.post('/api/user/create', userController.CreateUser)
 app.get('/api/user/test', passport.session(), userController.TestUserLoggedIn)
 app.post('/api/user/login', passport.authenticate('local', {failureMessage: true}), userController.LoginUser)
 app.delete('/api/user/logout', userController.LogoutUser)
-app.get('/api/user/reviews', middlewares.authenticated(), userController.GetAllReviews)
+app.get('/api/user/reviews',middlewares.cached(3), middlewares.authenticated(), userController.GetAllReviews)
 
 app.listen(port, "localhost", () => {
    console.log(`CDEV Restau-Rant app server started at http://localhost:${port}`)
