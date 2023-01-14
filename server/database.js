@@ -444,6 +444,29 @@ class RestauRantDatabase {
    /**
     * Updates an existing review for a restaurant in the database
     * @param restaurantId {number}
+    * @return {Promise<Array<{image_url:string}>>}
+    */
+   GetPhotosForRestaurant(restaurantId){
+
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`
+            SELECT image_url FROM cdevrestaurantdatabase.restaurant_photos WHERE restaurant_id = ?
+         `, [restaurantId],
+            (err, result, fields) => {
+               if (err) {
+                  console.warn("Error while executing GetPhotosForRestaurant:", err)
+                  reject(err)
+                  return
+               }
+               resolve(result)
+            }
+         )
+      })
+   }
+
+   /**
+    * Updates an existing review for a restaurant in the database
+    * @param restaurantId {number}
     * @return {Promise<DBRestaurantTagType[]>}
     */
    GetTagsForRestaurant(restaurantId){

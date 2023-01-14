@@ -92,9 +92,34 @@ function getRestaurantsTags(req, res) {
     })
 }
 
+/**
+ * Gets list of photos for the restaurant
+ * @param req {import("express").Request}
+ * @param res {import("express").Response}
+ */
+function getRestaurantsPhotos(req, res) {
+    let queryParams = GetQueryParams(req, res, {
+        restaurantId: {type: "int", min: 1},
+    })
+    if (!queryParams) return;
+
+    RestauRantDB.GetPhotosForRestaurant(
+        queryParams.restaurantId
+    ).then(value => {
+        res.json({
+            restaurantId:queryParams.restaurantId,
+            total: value.length,
+            results: value
+        })
+    }).catch(reason => {
+        resInternalErr(res, {sqlError: reason})
+    })
+}
+
 
 module.exports = {
     getRestaurants,
     getNearestRestaurants,
-    getRestaurantsTags
+    getRestaurantsTags,
+    getRestaurantsPhotos
 }
