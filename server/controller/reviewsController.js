@@ -10,7 +10,7 @@ const {GetQueryParams, GetJsonParams} = require("../validateQuery");
 function getReviews(req, res) {
     let queryParams = GetQueryParams(req,res,{
         start:{default:0,type:"int",min:0},
-        limit:{default:10,type:"int",min:0},
+        limit:{default:5,type:"int",min:0,max:15},
         order:{default:"asc",type:"string",enumOptions:["asc","desc"]},
         sortBy:{default:"likes",type:"string",enumOptions:["likes","edit_date"]},
         restaurant_id:{type:"int",min:1},

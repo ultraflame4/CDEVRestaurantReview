@@ -17,7 +17,7 @@ const {GetQueryParams} = require("../validateQuery");
 function getRestaurants(req, res) {
     let queryParams = GetQueryParams(req, res, {
         start: {default: 0, type: "int", min: 0},
-        limit: {default: 20, type: "int", min: 0},
+        limit: {default: 10, type: "int", min: 0, max:20},
         order: {default: "asc", type: "string", enumOptions: ["asc", "desc"]},
         sortBy: {default: "index", type: "string", enumOptions: ["index", "cost", "rating", "reviews"]},
     })
@@ -45,7 +45,7 @@ function getRestaurants(req, res) {
 function getNearestRestaurants(req, res) {
     let queryParams = GetQueryParams(req, res, {
         start: {default: 0, type: "int", min: 0},
-        limit: {default: 20, type: "int", min: 0},
+        limit: {default: 10, type: "int", min: 0, max:20},
         x: {type: "float"},
         y: {type: "float"}
     })

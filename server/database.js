@@ -89,7 +89,7 @@ class RestauRantDatabase {
     * @param orderAsc {boolean} Whether to order by asc or desc
     * @return {Promise<DBRestaurantType[]>}
     */
-   GetRestaurants(startOffset = 0, limit = 20, sortBy = "index", orderAsc = true) {
+   GetRestaurants(startOffset = 0, limit = 10, sortBy = "index", orderAsc = true) {
       const sortByMappings = {
          "index": "id", "cost": "cost_rating", "rating": "avg_rating", "reviews": "reviews_count"
       }

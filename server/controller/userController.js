@@ -67,7 +67,7 @@ function LogoutUser(req, res) {
 function GetAllReviews(req, res) {
    let queryParams = GetQueryParams(req,res,{
       start:{default:0,type:"int",min:0},
-      limit:{default:10,type:"int",min:0}
+      limit:{default:10,type:"int",min:15}
    })
    if (req.isAuthenticated()) {
       RestauRantDB.GetUserReviews(req.user.id,queryParams.start,queryParams.limit).then(value => {
