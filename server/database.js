@@ -80,7 +80,6 @@ class RestauRantDatabase {
       this.#conn = mysql.createConnection(options)
    }
 
-
    /**
     * Gets and returns a list of restaurants with specified parameters
     * @param startOffset {number} The offset to start getting the restaurants from.

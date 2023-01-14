@@ -56,7 +56,6 @@ function LogoutUser(req, res) {
    req.logout(err => {
    })
    res.redirect("/api/user/test")
-
 }
 
 /**
@@ -69,21 +68,20 @@ function GetAllReviews(req, res) {
       start:{default:0,type:"int",min:0},
       limit:{default:10,type:"int",min:0,max:15}
    })
-   if (req.isAuthenticated()) {
-      RestauRantDB.GetUserReviews(req.user.id,queryParams.start,queryParams.limit).then(value => {
-         res.json({
-            start: queryParams.start,
-            limit: queryParams.limit,
-            total: value.length,
-            reviews: value
-         })
-      }).catch(err => {
-         resInternalErr(res, {success: false, sqlErrors: err})
-      })
+   if (!queryParams) return
 
-      return
-   }
-   resUnauthorised(res)
+   RestauRantDB.GetUserReviews(req.user.id,queryParams.start,queryParams.limit).then(value => {
+      res.json({
+         start: queryParams.start,
+         limit: queryParams.limit,
+         total: value.length,
+         reviews: value
+      })
+   }).catch(err => {
+      resInternalErr(res, {success: false, sqlErrors: err})
+   })
+
+
 }
 
 

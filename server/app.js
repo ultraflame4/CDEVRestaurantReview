@@ -11,6 +11,7 @@ const {setupClientRedirects} = require("./others");
 const restaurantController = require("./controller/restaurantController");
 const reviewsController = require("./controller/reviewsController");
 const userController = require("./controller/userController");
+const middlewares = require("./middlewares");
 const {RestauRantDB} = require("./database");
 
 
@@ -94,19 +95,22 @@ app.get('/api/test', (req, res) => {
 })
 
 setupClientRedirects(app)
+
 app.get('/api/restaurants', restaurantController.getRestaurants)
 app.get('/api/restaurants/tags', restaurantController.getRestaurantsTags)
 app.get('/api/restaurants/photos', restaurantController.getRestaurantsPhotos)
 app.get('/api/nearest_restaurants', restaurantController.getNearestRestaurants)
+
 app.get('/api/reviews', reviewsController.getReviews)
-app.post('/api/reviews/create',passport.session()  , reviewsController.createReview)
-app.put('/api/reviews/update',passport.session()  , reviewsController.updateReview)
-app.delete('/api/reviews/delete',passport.session()  , reviewsController.deleteReview)
+app.post('/api/reviews/create',middlewares.authenticated(), reviewsController.createReview)
+app.put('/api/reviews/update',middlewares.authenticated() , reviewsController.updateReview)
+app.delete('/api/reviews/delete',middlewares.authenticated()  , reviewsController.deleteReview)
+
 app.post('/api/user/create', userController.CreateUser)
 app.get('/api/user/test',passport.session(), userController.TestUserLoggedIn)
 app.post('/api/user/login',passport.authenticate('local',{failureMessage:true}),userController.LoginUser)
 app.delete('/api/user/logout',userController.LogoutUser)
-app.get('/api/user/reviews',passport.session(),userController.GetAllReviews)
+app.get('/api/user/reviews',middlewares.authenticated(),userController.GetAllReviews)
 
 app.listen(port, "localhost", () => {
    console.log(`CDEV Restau-Rant app server started at http://localhost:${port}`)
