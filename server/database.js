@@ -28,6 +28,7 @@ const {Form} = require("react-router-dom");
  * @property {number} avg_rating
  * @property {number} review_count
  * @property {string} photo_url
+ * @property {string[]} tags
  */
 
 /**
