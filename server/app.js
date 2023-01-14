@@ -15,7 +15,6 @@ const middlewares = require("./middlewares");
 const {RestauRantDB} = require("./database");
 
 
-
 dotenv.config() // load env variables
 
 const app = express()
@@ -24,21 +23,13 @@ const port = process.env.VITE_EXPRESS_PORT
 // Set up cross site origin so that the client development server can access api
 const allowedOrigins = [`http://localhost:${process.env.VITE_DEV_PORT}`, `http://127.0.0.1:${process.env.VITE_DEV_PORT}`,]
 
-app.use(express.json())
-
-// Serve the static files (the react client) on /app
-app.use("/app", express.static(path.join(__dirname, '../dist/')))
-
-app.use(session({
-   secret:crypto.randomBytes(512).toString("base64"), // dynamically generate the scret for 'enhanced' security
-   resave: false,
-   saveUninitialized: false
-}))
-app.use(passport.initialize())
-
+const expressSession = session({
+   secret: crypto.randomBytes(512).toString("base64"), // dynamically generate the scret for 'enhanced' security
+   resave: false, saveUninitialized: false
+})
 
 // configure passport js
-passport.use(new Strategy({
+const passportStrategy = new Strategy({
    usernameField: "email", passwordField: "pwd"
 }, (email, password, done) => {
    RestauRantDB.FindUser(email).then(usr => {
@@ -47,20 +38,29 @@ passport.use(new Strategy({
 
          usr.ComparePassword(password).then(value => {
 
-            if (value){
+            if (value) {
 
-               done(null,usr)
-            }
-            else{
-               done(null,false,{message:"Invalid Email or Password. No matches found!"})
+               done(null, usr)
+            } else {
+               done(null, false, {message: "Invalid Email or Password. No matches found!"})
             }
          })
          return
       }
 
-      done(null,false,{message:"Invalid Email or Password. No matches found!"})
+      done(null, false, {message: "Invalid Email or Password. No matches found!"})
    })
-}))
+})
+
+app.use(express.json())
+
+// Serve the static files (the react client) on /app
+app.use("/app", express.static(path.join(__dirname, '../dist/')))
+
+app.use(expressSession)
+app.use(passport.initialize())
+passport.use(passportStrategy)
+
 
 passport.serializeUser((_user, done) => {
    /**@type {import("user").User}*/
@@ -68,9 +68,8 @@ passport.serializeUser((_user, done) => {
    return done(null, user.id);
 })
 passport.deserializeUser((id, done) => {
-   return done(null, {id:id});
+   return done(null, {id: id});
 })
-
 
 
 // Cross-site origin configuration
@@ -102,15 +101,15 @@ app.get('/api/restaurants/photos', restaurantController.getRestaurantsPhotos)
 app.get('/api/nearest_restaurants', restaurantController.getNearestRestaurants)
 
 app.get('/api/reviews', reviewsController.getReviews)
-app.post('/api/reviews/create',middlewares.authenticated(), reviewsController.createReview)
-app.put('/api/reviews/update',middlewares.authenticated() , reviewsController.updateReview)
-app.delete('/api/reviews/delete',middlewares.authenticated()  , reviewsController.deleteReview)
+app.post('/api/reviews/create', middlewares.authenticated(), reviewsController.createReview)
+app.put('/api/reviews/update', middlewares.authenticated(), reviewsController.updateReview)
+app.delete('/api/reviews/delete', middlewares.authenticated(), reviewsController.deleteReview)
 
 app.post('/api/user/create', userController.CreateUser)
-app.get('/api/user/test',passport.session(), userController.TestUserLoggedIn)
-app.post('/api/user/login',passport.authenticate('local',{failureMessage:true}),userController.LoginUser)
-app.delete('/api/user/logout',userController.LogoutUser)
-app.get('/api/user/reviews',middlewares.authenticated(),userController.GetAllReviews)
+app.get('/api/user/test', passport.session(), userController.TestUserLoggedIn)
+app.post('/api/user/login', passport.authenticate('local', {failureMessage: true}), userController.LoginUser)
+app.delete('/api/user/logout', userController.LogoutUser)
+app.get('/api/user/reviews', middlewares.authenticated(), userController.GetAllReviews)
 
 app.listen(port, "localhost", () => {
    console.log(`CDEV Restau-Rant app server started at http://localhost:${port}`)
