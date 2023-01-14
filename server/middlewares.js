@@ -40,7 +40,7 @@ function cached(duration=200,maxItems=50) {
       max:maxItems,
       ttl:duration*1000,
       allowStale: false,
-      updateAgeOnGet: true
+      updateAgeOnGet: false
    })
 
    return (req, res, next) => {
