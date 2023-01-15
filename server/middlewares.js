@@ -16,7 +16,7 @@ const LRU = require("lru-cache")
 
 
 /**
- *
+ * Checks if user is authenticated and also refreshes the cookie token periodically
  * @return {ExpressMiddleware}
  */
 function authenticated() {

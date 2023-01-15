@@ -251,6 +251,34 @@ class RestauRantDatabase {
          })
       })
    }
+   /**
+    * Finds a user by their id in the database
+    * @param id {number}
+    * @return {Promise<User|null>} Returns a promise containing ,the User object, or ,null if user not found.
+    */
+   FindUserById(id) {
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`SELECT * FROM cdevrestaurantdatabase.users WHERE id=? LIMIT 1`, [id], (err, results) => {
+            if (err) {
+               console.warn("Error while executing FindUserById:", err)
+               reject(err)
+               return
+            }
+            if (results.length < 1) {
+               resolve(null)
+               return
+            }
+            let user_row = results[0]
+            /**@type{Date}*/
+            let created_date = new Date(user_row.date_created)
+            // Convert back to 00:00 time zone. Because the database returns a date with a timezone offset
+            created_date.setMinutes(-created_date.getTimezoneOffset() + created_date.getMinutes())
+
+            resolve(new User(user_row.id, user_row.password_hash, user_row.username, user_row.email, created_date))
+
+         })
+      })
+   }
 
    /**
     * Creates a new user in the database
@@ -445,6 +473,70 @@ class RestauRantDatabase {
          `, [restaurantId], (err, result, fields) => {
             if (err) {
                console.warn("Error while executing GetTagsForRestaurant:", err)
+               reject(err)
+               return
+            }
+            resolve(result)
+         })
+      })
+   }
+
+   /**
+    * Updates a user's username
+    * @param userId {number}
+    * @param newUsername {string}
+    * @constructor
+    */
+   UpdateUsername(userId,newUsername){
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`
+            UPDATE cdevrestaurantdatabase.users SET username = ? WHERE id = ?
+         `, [newUsername,userId], (err, result, fields) => {
+            if (err) {
+               console.warn("Error while executing UpdateUsername:", err)
+               reject(err)
+               return
+            }
+            resolve(result)
+         })
+      })
+   }
+
+   /**
+    * Updates a user's password
+    * @param userId {number}
+    * @param newPasswordHash {string}
+    * @constructor
+    */
+   UpdatePassword(userId,newPasswordHash){
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`
+            UPDATE cdevrestaurantdatabase.users SET password_hash = ? WHERE id = ?
+         `, [newPasswordHash,userId], (err, result, fields) => {
+            if (err) {
+               console.warn("Error while executing UpdatePassword:", err)
+               reject(err)
+               return
+            }
+            resolve(result)
+         })
+      })
+   }
+
+   /**
+    * Updates a user's email
+    * @param userId {number}
+    * @param newEmail {string}
+    * @return {Promise<void>}
+    * @constructor
+    */
+   async UpdateEmail(userId, newEmail) {
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`
+            UPDATE cdevrestaurantdatabase.users SET email = ? WHERE id = ?
+         `, [newEmail,userId], (err, result, fields) => {
+            if (err) {
+               console.warn("Error while executing UpdateEmail:", err)
                reject(err)
                return
             }

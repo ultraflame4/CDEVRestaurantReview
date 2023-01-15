@@ -28,7 +28,8 @@ const expressSession = session({
    resave: false,
    saveUninitialized: false,
    cookie:{
-
+      maxAge:20*60*1000,
+      rolling:true
    }
 })
 
@@ -111,6 +112,10 @@ app.get('/api/user/test', userController.TestUserLoggedIn)
 app.post('/api/user/login', passport.authenticate('local', {failureMessage: true}), userController.LoginUser)
 app.delete('/api/user/logout', userController.LogoutUser)
 app.get('/api/user/reviews', middlewares.authenticated(),middlewares.cached(3), userController.GetAllReviews)
+
+app.put('/api/user/email', middlewares.authenticated(), userController.UpdateEmail)
+app.put('/api/user/password', middlewares.authenticated(), userController.UpdatePassword)
+app.put('/api/user/username', middlewares.authenticated(), userController.UpdateUsername)
 
 app.listen(port, "localhost", () => {
    console.log(`CDEV Restau-Rant app server started at http://localhost:${port}`)
