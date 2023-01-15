@@ -15,6 +15,7 @@ const {GetNowTimestamp} = require("./tools");
  * Restaurant Type returned by the database
  * @export
  * @typedef DBRestaurantType
+ * @property {number} distance
  * @property {number} id
  * @property {string} name
  * @property {string} description
@@ -79,18 +80,20 @@ class RestauRantDatabase {
 
    /**
     * Gets and returns a list of restaurants with specified parameters
+    * @param refCoords {{x:number,y:number}} The coords to use against the restaurants' coords when calculating the distance (x: longitude, y: latitude)
     * @param startOffset {number} The offset to start getting the restaurants from.
     * @param limit {number} The maximum number of restaurants to return
     * @param sortBy {"index"|"cost"|"rating"|"reviews"} How to sort the data
     * @param orderAsc {boolean} Whether to order by asc or desc
     * @return {Promise<DBRestaurantType[]>}
     */
-   GetRestaurants(startOffset = 0, limit = 10, sortBy = "index", orderAsc = true) {
+   GetRestaurants(refCoords,startOffset = 0, limit = 10, sortBy = "index", orderAsc = true) {
       const sortByMappings = {
          "index": "id",
          "cost": "cost_rating",
          "rating": "avg_rating",
-         "reviews": "reviews_count"
+         "reviews": "reviews_count",
+         "distance": "distance"
       }
       return new Promise((resolve, reject) => {
          let sortByCol = sortByMappings[sortBy]
@@ -100,6 +103,10 @@ class RestauRantDatabase {
 
          this.#conn.query(`
             SELECT
+            ST_Distance_Sphere(
+                POINT(?, ?),
+                cdevrestaurantdatabase.restaurant.coordinates
+            ) as distance,
             cdevrestaurantdatabase.restaurant.id,
             cdevrestaurantdatabase.restaurant.name,
             cdevrestaurantdatabase.restaurant.description,
@@ -113,13 +120,12 @@ class RestauRantDatabase {
             (SELECT image_url FROM cdevrestaurantdatabase.restaurant_photos WHERE restaurant_id = cdevrestaurantdatabase.restaurant.id ORDER BY id DESC LIMIT 1) as photo_url,
             (SELECT JSON_ARRAYAGG(tag_name) FROM cdevrestaurantdatabase.restauranttags WHERE restaurant_id = cdevrestaurantdatabase.restaurant.id GROUP BY restaurant_id) as tags
              FROM cdevrestaurantdatabase.restaurant
-             LEFT OUTER JOIN cdevrestaurantdatabase.reviews ON cdevrestaurantdatabase.restaurant.id=cdevrestaurantdatabase.reviews.restaurant_id 
-             LEFT OUTER JOIN cdevrestaurantdatabase.restauranttags ON cdevrestaurantdatabase.restaurant.id=cdevrestaurantdatabase.reviews.restaurant_id 
+             LEFT OUTER JOIN cdevrestaurantdatabase.reviews ON cdevrestaurantdatabase.restaurant.id=cdevrestaurantdatabase.reviews.restaurant_id  
              GROUP BY cdevrestaurantdatabase.restaurant.id
              ORDER BY ${sortByCol} ${orderAsc?'ASC':'DESC'}
              LIMIT ? OFFSET ?;
             `, // Should be fine to insert order and sortby here because it is not directly exposed
-            [limit, startOffset], (err, result, fields) => {
+            [refCoords.x,refCoords.y,limit, startOffset], (err, result, fields) => {
                if (err) {
                   console.warn("Error while executing GetRestaurants:", err)
                   reject(err)
@@ -130,21 +136,22 @@ class RestauRantDatabase {
    }
 
    /**
-    * Returns the list of restaurants sort by distance in descending order
+    * Gets a specific restaurant's data
+    * @param restaurantId {number} The id of the restaurant
     * @param refCoords {{x:number,y:number}} The coords to use against the restaurants' coords when calculating the distance (x: longitude, y: latitude)
-    * @param startOffset {number} The offset to start getting the restaurants from.
-    * @param limit {number} The maximum number of restaurants to return
-    * @return
+    * @return {Promise<any>}
     */
-   GetRestaurantSortDistance(refCoords, startOffset = 0, limit = 20) {
+   GetRestaurantById(refCoords,restaurantId) {
+
       return new Promise((resolve, reject) => {
+
+
          this.#conn.query(`
             SELECT
             ST_Distance_Sphere(
                 POINT(?, ?),
                 cdevrestaurantdatabase.restaurant.coordinates
-                ) as distance,
-                
+            ) as distance,
             cdevrestaurantdatabase.restaurant.id,
             cdevrestaurantdatabase.restaurant.name,
             cdevrestaurantdatabase.restaurant.description,
@@ -152,26 +159,28 @@ class RestauRantDatabase {
             cdevrestaurantdatabase.restaurant.location,
             cdevrestaurantdatabase.restaurant.phone_no,
             cdevrestaurantdatabase.restaurant.website,
-            cdevrestaurantdatabase.restaurant.cost_rating,               
+            cdevrestaurantdatabase.restaurant.cost_rating,
             AVG(rating) as avg_rating,
-            COUNT(cdevrestaurantdatabase.reviews.id) as reviews_count 
-            
+            COUNT(cdevrestaurantdatabase.reviews.id) as reviews_count,
+            (SELECT json_arrayagg(image_url) FROM cdevrestaurantdatabase.restaurant_photos WHERE restaurant_id = ?) as photo_url,
+            (SELECT json_arrayagg(tag_name) FROM cdevrestaurantdatabase.restauranttags WHERE restaurant_id = ? GROUP BY restaurant_id) as tags
              FROM cdevrestaurantdatabase.restaurant
-             LEFT OUTER JOIN cdevrestaurantdatabase.reviews ON cdevrestaurantdatabase.restaurant.id=cdevrestaurantdatabase.reviews.restaurant_id
-             GROUP BY restaurant_id
-             ORDER BY distance ASC
-             LIMIT ? OFFSET ?;
-            `, // Should be fine to insert order and sortby here because it is not directly exposed
-            [refCoords.x, refCoords.y, limit, startOffset], (err, result, fields) => {
-               if (err) {
-                  console.warn("Error while executing GetRestaurants:", err)
-                  reject(err)
-               }
-               resolve(result)
-            })
-      })
+             LEFT OUTER JOIN cdevrestaurantdatabase.reviews ON cdevrestaurantdatabase.restaurant.id=cdevrestaurantdatabase.reviews.restaurant_id 
+             WHERE cdevrestaurantdatabase.restaurant.id=?
+             GROUP BY cdevrestaurantdatabase.restaurant.id
 
+            `, // Should be fine to insert order and sortby here because it is not directly exposed
+             [refCoords.x,refCoords.y,restaurantId,restaurantId,restaurantId],
+             (err, result, fields) => {
+                if (err) {
+                   console.warn("Error while executing GetRestaurantById:", err)
+                   reject(err)
+                }
+                resolve(result)
+             })
+      })
    }
+
 
    /**
     * Gets and returns a list of reviews for a specified restuarant
@@ -260,7 +269,6 @@ class RestauRantDatabase {
       }
       throw "Error while creating user"
    }
-
 
    /**
     * Retrieves an existing review in the database

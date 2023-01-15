@@ -92,9 +92,10 @@ app.get('/api/test', (req, res) => {
 setupClientRedirects(app)
 
 app.get('/api/restaurants',middlewares.cached(), restaurantController.getRestaurants)
+app.get('/api/restaurants/id',middlewares.cached(), restaurantController.getRestaurantsById)
 app.get('/api/restaurants/tags',middlewares.cached(), restaurantController.getRestaurantsTags)
 app.get('/api/restaurants/photos',middlewares.cached(), restaurantController.getRestaurantsPhotos)
-app.get('/api/nearest_restaurants',middlewares.cached(), restaurantController.getNearestRestaurants)
+
 
 app.get('/api/reviews',middlewares.cached(3), reviewsController.getReviews)
 app.post('/api/reviews/create', middlewares.authenticated(), reviewsController.createReview)
