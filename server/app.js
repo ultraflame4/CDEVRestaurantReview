@@ -25,7 +25,11 @@ const allowedOrigins = [`http://localhost:${process.env.VITE_DEV_PORT}`, `http:/
 
 const expressSession = session({
    secret: crypto.randomBytes(512).toString("base64"), // dynamically generate the scret for 'enhanced' security
-   resave: false, saveUninitialized: false
+   resave: false,
+   saveUninitialized: false,
+   cookie:{
+
+   }
 })
 
 // configure passport js
@@ -103,10 +107,10 @@ app.put('/api/reviews/update', middlewares.authenticated(), reviewsController.up
 app.delete('/api/reviews/delete', middlewares.authenticated(), reviewsController.deleteReview)
 
 app.post('/api/user/create', userController.CreateUser)
-app.get('/api/user/test', passport.session(), userController.TestUserLoggedIn)
+app.get('/api/user/test', userController.TestUserLoggedIn)
 app.post('/api/user/login', passport.authenticate('local', {failureMessage: true}), userController.LoginUser)
 app.delete('/api/user/logout', userController.LogoutUser)
-app.get('/api/user/reviews',middlewares.cached(3), middlewares.authenticated(), userController.GetAllReviews)
+app.get('/api/user/reviews', middlewares.authenticated(),middlewares.cached(3), userController.GetAllReviews)
 
 app.listen(port, "localhost", () => {
    console.log(`CDEV Restau-Rant app server started at http://localhost:${port}`)
