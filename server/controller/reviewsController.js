@@ -1,13 +1,17 @@
-const {resInternalErr, resUnauthorised, resNotFound} = require("../errorResponses");
+const {
+   resInternalErr, resUnauthorised, resNotFound
+} = require("../errorResponses");
 const {RestauRantDB} = require("../database");
-const {GetQueryParams, GetJsonParams} = require("../validateQuery");
+const {
+   GetQueryParams, GetJsonParams
+} = require("../validateQuery");
 
 /**
  * Get list of reviews for a specific restaurant
  * @param req {import("express").Request}
  * @param res {import("express").Response}
  */
-function getReviews(req, res) {
+async function getReviews(req, res) {
    let queryParams = GetQueryParams(req, res, {
       start: {default: 0, type: "int", min: 0},
       limit: {default: 5, type: "int", min: 0, max: 15},
@@ -17,15 +21,13 @@ function getReviews(req, res) {
    })
 
    if (!queryParams) return
+   try {
+      let value = await RestauRantDB.GetReviewForRestaurant(queryParams.restaurant_id, queryParams.start, queryParams.limit, queryParams.sortBy, queryParams.order)
+      res.json({start: queryParams.start, limit: queryParams.limit, total: value.length, results: value})
+   } catch (err) {
+      resInternalErr(res, {sqlError: err})
+   }
 
-
-   RestauRantDB.GetReviewForRestaurant(queryParams.restaurant_id, queryParams.start, queryParams.limit, queryParams.sortBy, queryParams.order)
-      .then(value => [res.json({
-         start: queryParams.start, limit: queryParams.limit, total: value.length, results: value
-      })])
-      .catch(reason => {
-         resInternalErr(res, {sqlError: reason})
-      })
 }
 
 /**
@@ -33,19 +35,24 @@ function getReviews(req, res) {
  * @param req {import("express").Request}
  * @param res {import("express").Response}
  */
-function createReview(req, res) {
+async function createReview(req, res) {
    let queryParams = GetJsonParams(req, res, {
-      restaurant_id: {type: "int", min: 1}, content: {type: "string"}, rating: {type: "int", min: 1, max: 10}
+      restaurant_id: {
+         type: "int", min: 1
+      }, content: {type: "string"}, rating: {
+         type: "int", min: 1, max: 10
+      }
    })
    if (!queryParams) return
 
-   RestauRantDB.CreateReview(req.user.id, queryParams.restaurant_id, queryParams.content, queryParams.rating).then(value => {
+   try {
+      let value = RestauRantDB.CreateReview(req.user.id, queryParams.restaurant_id, queryParams.content, queryParams.rating)
       res.json({
          success: true, sqlData: value
       })
-   }).catch(reason => {
-      resInternalErr(res, {sql: reason})
-   })
+   } catch (err) {
+      resInternalErr(res, {sql: err})
+   }
 
 }
 
@@ -54,33 +61,39 @@ function createReview(req, res) {
  * @param req {import("express").Request}
  * @param res {import("express").Response}
  */
-function updateReview(req, res) {
+async function updateReview(req, res) {
    let queryParams = GetJsonParams(req, res, {
-      review_id: {type: "int", min: 1}, content: {type: "string"}, rating: {type: "int", min: 1, max: 10}
+      review_id: {
+         type: "int", min: 1
+      }, content: {type: "string"}, rating: {
+         type: "int", min: 1, max: 10
+      }
    })
    if (!queryParams) return
 
-   RestauRantDB.GetReview(queryParams.review_id).then(value => {
+
+   try {
+      let value = await RestauRantDB.GetReview(queryParams.review_id)
+
       if (value.length < 1) {
          resNotFound(res, `Error could not find review with id: ${queryParams.review_id}`, {bad: queryParams.review_id})
          return
       }
-
       let review = value[0]
       if (review.author_id !== req.user.id) {
          resUnauthorised(res, {message: "You are not author of this review!"})
          return
       }
 
-      RestauRantDB.UpdateReview(review.id, queryParams.content, queryParams.rating).then(value1 => {
-         res.json({
-            success: true, sqlData: value
-         })
-      }).catch(reason => {
-         resInternalErr(res, {sql: reason})
-      })
-   })
 
+      let val2 = await RestauRantDB.UpdateReview(review.id, queryParams.content, queryParams.rating)
+      res.json({
+         success: true, sqlData: val2
+      })
+
+   } catch (err) {
+      resInternalErr(res, {sql: err})
+   }
 
 }
 
@@ -89,14 +102,16 @@ function updateReview(req, res) {
  * @param req {import("express").Request}
  * @param res {import("express").Response}
  */
-function deleteReview(req, res) {
+async function deleteReview(req, res) {
    let queryParams = GetJsonParams(req, res, {
-      review_id: {type: "int", min: 1}
+      review_id: {
+         type: "int", min: 1
+      }
    })
    if (!queryParams) return
 
-
-   RestauRantDB.GetReview(queryParams.review_id).then(reviews => {
+   try{
+      let reviews = await RestauRantDB.GetReview(queryParams.review_id)
 
       if (reviews.length < 1) {
          resNotFound(res, `Error could not find review with id: ${queryParams.review_id}`, {bad: queryParams.review_id})
@@ -109,15 +124,14 @@ function deleteReview(req, res) {
          return
       }
 
-      RestauRantDB.DeleteReview(review.id).then(value1 => {
-         res.json({
-            success: true, sqlData: value1
-         })
-      }).catch(reason => {
-         resInternalErr(res, {sql: reason})
+      let value = await RestauRantDB.DeleteReview(review.id)
+      res.json({
+         success: true, sqlData: value
       })
-   })
-
+   }
+   catch (err) {
+      resInternalErr(res, {sql: err})
+   }
 
 }
 
