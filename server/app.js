@@ -31,25 +31,20 @@ const expressSession = session({
 // configure passport js
 const passportStrategy = new Strategy({
    usernameField: "email", passwordField: "pwd"
-}, (email, password, done) => {
-   RestauRantDB.FindUser(email).then(usr => {
-
-      if (usr !== null) {
-
-         usr.ComparePassword(password).then(value => {
-
-            if (value) {
-
-               done(null, usr)
-            } else {
-               done(null, false, {message: "Invalid Email or Password. No matches found!"})
-            }
-         })
-         return
-      }
-
+}, async (email, password, done) => {
+   let usr = await RestauRantDB.FindUser(email)
+   if (usr === null) {
       done(null, false, {message: "Invalid Email or Password. No matches found!"})
-   })
+      return
+   }
+   let isLoggedIn = await usr.ComparePassword(password)
+   if (isLoggedIn){
+      done(null, usr)
+   }
+   else{
+      done(null, false, {message: "Invalid Email or Password. No matches found!"})
+   }
+
 })
 
 app.use(express.json())

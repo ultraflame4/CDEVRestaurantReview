@@ -8,25 +8,25 @@ const {IsLoggedIn} = require("../tools");
  * @param req {import("express").Request}
  * @param res {import("express").Response}
  */
-function CreateUser(req, res) {
+async function CreateUser(req, res) {
    let queryParams = GetJsonParams(req, res, {
       username: {type: "string"}, password: {type: "string"}, email: {type: "string"}
    })
    if (!queryParams) return;
 
-   RestauRantDB.FindUser(queryParams.email).then(value => {
-      if (value !== null) {
-         res.status(400).json({success: false})
-         return
-      }
-      RestauRantDB.CreateUser(queryParams.username, queryParams.password, queryParams.email)
-         .then(value => {
-            res.json({success: true, data: value})
-         })
-         .catch(err => {
-            resInternalErr(res, {success: false, sqlErrors: err})
-         })
-   })
+   // Check for existing user
+   let user = await RestauRantDB.FindUser(queryParams.email)
+   if (user !== null) {
+      res.status(400).json({success: false})
+      return
+   }
+   try {
+      let result = await RestauRantDB.CreateUser(queryParams.username, queryParams.password, queryParams.email)
+      res.json({success: true, data: result})
+   } catch (err) {
+      resInternalErr(res, {success: false, sqlErrors: err})
+   }
+
 }
 
 /**
@@ -63,23 +63,20 @@ function LogoutUser(req, res) {
  * @param req {import("express").Request}
  * @param res {import("express").Response}
  */
-function GetAllReviews(req, res) {
-   let queryParams = GetQueryParams(req,res,{
-      start:{default:0,type:"int",min:0},
-      limit:{default:10,type:"int",min:0,max:15}
+async function GetAllReviews(req, res) {
+   let queryParams = GetQueryParams(req, res, {
+      start: {default: 0, type: "int", min: 0}, limit: {default: 10, type: "int", min: 0, max: 15}
    })
    if (!queryParams) return
 
-   RestauRantDB.GetUserReviews(req.user.id,queryParams.start,queryParams.limit).then(value => {
+   try {
+      let usrReviews = await RestauRantDB.GetUserReviews(req.user.id, queryParams.start, queryParams.limit)
       res.json({
-         start: queryParams.start,
-         limit: queryParams.limit,
-         total: value.length,
-         reviews: value
+         start: queryParams.start, limit: queryParams.limit, total: usrReviews.length, reviews: usrReviews
       })
-   }).catch(err => {
+   } catch (err) {
       resInternalErr(res, {success: false, sqlErrors: err})
-   })
+   }
 
 
 }
