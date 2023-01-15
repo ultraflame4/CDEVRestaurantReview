@@ -14,6 +14,7 @@
     font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     --header-height: min(6rem, 100px);
+
 }
 
 .color-gray{

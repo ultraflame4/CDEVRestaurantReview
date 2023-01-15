@@ -2,7 +2,7 @@ import PropTypes, {func, number} from "prop-types";
 import classes from "./Restaurant.module.css"
 import {InputRangeSlider} from "@/components/InputRangeSlider/InputRangeSlider";
 import {Icon} from "@iconify-icon/react";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {GetRestaurants} from "@/api";
 import {StarRatings} from "@/components/Ratings/StarRatings";
 import {CostRatings} from "@/components/Ratings/CostRatings";
@@ -36,48 +36,35 @@ const FilterSliderItem = (props) => {
         props.callback?.(value, min, max)
     }
 
-    return (
-        <li className={props.className}>
-            <h5>{props.title}</h5>
-            {
-                !props.showValue ? "" :
-                    <span className={classes.filterRangeSliderValue}>
+    return (<li className={props.className}>
+        <h5>{props.title}</h5>
+        {!props.showValue ? "" : <span className={classes.filterRangeSliderValue}>
                         {valueText}
-                        {
-                            props.showValueIcon ?
-                                <Icon icon={props.showValueIcon} className={classes.icon}/> :
-                                ""
-                        }
-                    </span>
-            }
-            <InputRangeSlider min={props.min} max={props.max} step={props.step} defaultValue={props.defaultValue}
-                              onInput={callback}/>
-            {
-                props.noIcon ?
-                    <>
+            {props.showValueIcon ? <Icon icon={props.showValueIcon} className={classes.icon}/> : ""}
+                    </span>}
+        <InputRangeSlider min={props.min} max={props.max} step={props.step} defaultValue={props.defaultValue}
+                          onInput={callback}/>
+        {props.noIcon ? <>
                         <span>
                             {props.minText}
 
                         </span>
-                        <div>
+            <div>
                             <span>
                                 {props.maxText}
                             </span>
-                        </div>
-                    </> :
-                    <>
-                        <Icon icon={props.minIcon ?? props.icon} className={classes.icon}/>
-                        <div>
-                            <Icon icon={props.icon} className={classes.icon}/>
-                            <Icon icon={props.icon} className={classes.icon}/>
-                            <Icon icon={props.icon} className={classes.icon}/>
-                            <Icon icon={props.icon} className={classes.icon}/>
-                            <Icon icon={props.icon} className={classes.icon}/>
-                        </div>
-                    </>
-            }
-        </li>
-    )
+            </div>
+        </> : <>
+            <Icon icon={props.minIcon ?? props.icon} className={classes.icon}/>
+            <div>
+                <Icon icon={props.icon} className={classes.icon}/>
+                <Icon icon={props.icon} className={classes.icon}/>
+                <Icon icon={props.icon} className={classes.icon}/>
+                <Icon icon={props.icon} className={classes.icon}/>
+                <Icon icon={props.icon} className={classes.icon}/>
+            </div>
+        </>}
+    </li>)
 }
 
 
@@ -102,46 +89,40 @@ FilterSliderItem.propTypes = {
 
 const RestaurantListItem = (props) => {
 
-    return (
-        <li className={classes.restaurantListContentItem + " card"}>
-            <div className={classes.restaurantListContentItem_Head}>
-                <h3 className={classes.restaurantListContentItem_Name}>
-                    {props.name}
-                </h3>
+    return (<li className={classes.restaurantListContentItem + " card"}>
+        <div className={classes.restaurantListContentItem_Head}>
+            <h3 className={classes.restaurantListContentItem_Name}>
+                {props.name}
+            </h3>
 
-                {/*Tags here*/}
-                <ul className={classes.restaurant_tagslist}>
-                    {
-                        props.tags.map((tagname, tagindex) => {
-                            return (
-                                <li key={tagindex}>
-                                    {tagname}
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-                <div className={classes.restaurant_subInfoBar}>
-                    <StarRatings rating={props.rating}/>
-                    <Icon icon={"ci:dot-03-m"}/>
-                    <CostRatings rating={props.cost}/>
-                    <Icon icon={"ci:dot-03-m"}/>
-                    <span>1km</span>
-                </div>
+            {/*Tags here*/}
+            <ul className={classes.restaurant_tagslist}>
+                {props.tags.map((tagname, tagindex) => {
+                    return (<li key={tagindex}>
+                        {tagname}
+                    </li>)
+                })}
+            </ul>
+            <div className={classes.restaurant_subInfoBar}>
+                <StarRatings rating={props.rating}/>
+                <Icon icon={"ci:dot-03-m"}/>
+                <CostRatings rating={props.cost}/>
+                <Icon icon={"ci:dot-03-m"}/>
+                <span>1km</span>
+            </div>
 
+        </div>
+        <p className={classes.restaurant_desc}>
+            {props.desc}
+        </p>
+        <img className={classes.restaurant_banner_img} alt={"Image of the restaurant"} src={props.imageSrc}/>
+        <div className={classes.restaurant_recentReviews}>
+            <div className={classes.restaurant_recentReviews_header}>
+                <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
+                <h4>Recent Reviews</h4>
             </div>
-            <p className={classes.restaurant_desc}>
-                {props.desc}
-            </p>
-            <img className={classes.restaurant_banner_img} alt={"Image of the restaurant"} src={props.imageSrc}/>
-            <div className={classes.restaurant_recentReviews}>
-                    <div className={classes.restaurant_recentReviews_header}>
-                    <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
-                    <h4>Recent Reviews</h4>
-                </div>
-            </div>
-        </li>
-    )
+        </div>
+    </li>)
 }
 
 RestaurantListItem.propType = {
@@ -154,20 +135,35 @@ RestaurantListItem.propType = {
 }
 
 const RestaurantListContents = (props) => {
+    const [restaurants, setRestaurants] = useState([])
+
+    useEffect(() => {
+        let start = props.start ?? 0
+        GetRestaurants(start)
+            .then(value => {
+
+                setRestaurants(value)
+            })
+
+    }, [props.start])
+
     return (<ul className={classes.restaurantListContent}>
         {
-            GetRestaurants(10).map((value, index) =>
+            restaurants.map((value, index) =>
                 <RestaurantListItem key={index}
                                     tags={value.tags}
-                                    rating={value.rating}
-                                    cost={value.cost}
+                                    rating={value.avg_rating}
+                                    cost={value.cost_rating/2}
                                     name={value.name}
-                                    desc={value.desc}
-                                    imageSrc={value.bannerSrc}
-                />
-            )
+                                    desc={value.description}
+                                    imageSrc={value.photo_url}
+                />)
         }
     </ul>)
+}
+
+RestaurantListContents.propTypes = {
+    start: PropTypes.number
 }
 
 export const RestaurantList = (props) => {
@@ -220,6 +216,5 @@ export const RestaurantList = (props) => {
 }
 
 RestaurantList.propTypes = {
-    title: PropTypes.string.isRequired,
-    className: PropTypes.string
+    title: PropTypes.string.isRequired, className: PropTypes.string
 }

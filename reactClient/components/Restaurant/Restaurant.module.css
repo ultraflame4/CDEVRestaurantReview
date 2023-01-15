@@ -144,6 +144,9 @@
 
 .restaurantListContentItem_Name {
     margin: 0 0.15em 0.2em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 
