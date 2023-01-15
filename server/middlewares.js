@@ -45,7 +45,7 @@ function cached(duration=200,maxItems=50) {
 
    return (req, res, next) => {
       let hashed_ = hash(JSON.stringify([
-         req.user,
+         req.user, // include user object so we can prevent accidentally leaking caches of protected api
          req.path,
          req.method,
          req.body,
