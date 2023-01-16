@@ -485,7 +485,6 @@ class RestauRantDatabase {
     * Updates a user's username
     * @param userId {number}
     * @param newUsername {string}
-    * @constructor
     */
    UpdateUsername(userId,newUsername){
       return new Promise((resolve, reject) => {
@@ -528,7 +527,6 @@ class RestauRantDatabase {
     * @param userId {number}
     * @param newEmail {string}
     * @return {Promise<void>}
-    * @constructor
     */
    async UpdateEmail(userId, newEmail) {
       return new Promise((resolve, reject) => {
