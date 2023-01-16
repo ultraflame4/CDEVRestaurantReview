@@ -21,7 +21,12 @@ const app = express()
 const port = process.env.VITE_EXPRESS_PORT
 
 // Set up cross site origin so that the client development server can access api
-const allowedOrigins = [`http://localhost:${process.env.VITE_DEV_PORT}`, `http://127.0.0.1:${process.env.VITE_DEV_PORT}`,]
+const allowedOrigins = [
+    `http://localhost:${process.env.VITE_EXPRESS_PORT}`,
+    `http://localhost:${process.env.VITE_DEV_PORT}`,
+   `http://127.0.0.1:${process.env.VITE_EXPRESS_PORT}`
+   `http://127.0.0.1:${process.env.VITE_DEV_PORT}`
+]
 
 const expressSession = session({
    secret: crypto.randomBytes(512).toString("base64"), // dynamically generate the scret for 'enhanced' security
