@@ -164,7 +164,6 @@ export const RestaurantList = (props) => {
     useEffect(() => {
         let start = props.start ?? 0
         GetRestaurants(start).then(value => {
-            console.log(value)
             setRestaurants(value)
         })
 
