@@ -108,7 +108,7 @@ const RestaurantListItem = (props) => {
                 <Icon icon={"ci:dot-03-m"}/>
                 <CostRatings rating={props.cost}/>
                 <Icon icon={"ci:dot-03-m"}/>
-                <span>1km</span>
+                <span>{props.distance}km</span>
             </div>
 
         </div>
@@ -132,41 +132,45 @@ RestaurantListItem.propType = {
     cost: PropTypes.number.isRequired,
     desc: PropTypes.string.isRequired,
     imageSrc: PropTypes.string.isRequired,
+    distance: PropTypes.number.isRequired
 }
 
 const RestaurantListContents = (props) => {
-    const [restaurants, setRestaurants] = useState([])
-
-    useEffect(() => {
-        let start = props.start ?? 0
-        GetRestaurants(start)
-            .then(value => {
-
-                setRestaurants(value)
-            })
-
-    }, [props.start])
 
     return (<ul className={classes.restaurantListContent}>
         {
-            restaurants.map((value, index) =>
+            props.restaurants.map((value, index) =>
                 <RestaurantListItem key={index}
                                     tags={value.tags}
                                     rating={value.avg_rating}
-                                    cost={value.cost_rating/2}
+                                    cost={value.cost_rating / 2}
                                     name={value.name}
                                     desc={value.description}
                                     imageSrc={value.photo_url}
+                                    distance={Math.round(value.distance/1000)}
                 />)
         }
     </ul>)
 }
 
-RestaurantListContents.propTypes = {
-    start: PropTypes.number
+RestaurantListContents.propTypes={
+    restaurants:PropTypes.array.isRequired
 }
 
 export const RestaurantList = (props) => {
+
+    const [restaurants, setRestaurants] = useState([])
+
+    useEffect(() => {
+        let start = props.start ?? 0
+        GetRestaurants(start).then(value => {
+            console.log(value)
+            setRestaurants(value)
+        })
+
+    }, [props.start])
+
+
     return <div className={classes.RestaurantList}>
         <h1 className={classes.title}>
             {props.title}
@@ -211,7 +215,7 @@ export const RestaurantList = (props) => {
             </ul>
             <h4>Sort by</h4>
         </aside>
-        <RestaurantListContents/>
+        <RestaurantListContents restaurants={restaurants}/>
     </div>;
 }
 

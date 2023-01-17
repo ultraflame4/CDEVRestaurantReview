@@ -22,6 +22,15 @@ const host = import.meta.env.DEV ? `localhost:${import.meta.env.VITE_EXPRESS_POR
  */
 
 
+class ApiError extends Error {
+    constructor(apiPath, jsonData) {
+        super(`ApiError: Error while fetching ${apiPath}\nApi results:\n${JSON.stringify(jsonData, null, 2)}`);
+        this.name = "ApiError"
+
+    }
+
+}
+
 /**
  * Wraps the fetch function to add the base URL for the host
  * @param {string} path_
@@ -35,17 +44,22 @@ async function fetchApi(path_, init = {}, queryParams = {}) {
     try {
         response = await fetch(url, init);
     } catch (err) {
-        console.error(`Error while fetching api ${path_}:`, err)
+        console.error(`Error while fetching api ${url}:`, err)
         throw new Error("Unable to fetch api")
     }
-
+    let jsonData;
     try {
-        let jsonData = await response.json();
-        return jsonData
+        jsonData = await response.json();
     } catch (err) {
         console.error(`Error while decoding response ${path_}:`, response)
         throw new Error("Unable to decode response")
     }
+
+    if (jsonData.error) {
+        throw new ApiError(url, jsonData)
+    }
+
+    return jsonData
 
 
 }
@@ -69,16 +83,45 @@ export const UserAccountInfo = {
 }
 
 /**
+ * A Promisefied version of navigator.geolocation.getCurrentPosition
+ * @return {Promise<GeolocationPosition>}
+ */
+function getCurrentGeoPosition(){
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(position => {
+            resolve(position)
+        },positionError => {
+            reject(positionError)
+        },{enableHighAccuracy:true})
+    })
+}
+
+/**
  *
  * @param start {number}
  * @return {Promise<DBRestaurantType>}
  */
 export async function GetRestaurants(start) {
 
+    let pos = {x:0,y:0}
+
+    if (navigator.geolocation){
+        let geoPosition = await getCurrentGeoPosition()
+        pos.x=geoPosition.coords.longitude
+        pos.y=geoPosition.coords.latitude
+    }
+
+
     let response;
     try {
-        response = await fetchApi("/api/restaurants", {}, {start: start})
-        return response.results
+        response = await fetchApi("/api/restaurants", {},
+            {
+                start: start,
+                x:pos.x,
+                y:pos.y
+            })
+
+        return response.results;
     } catch (err) {
         console.error(err)
         return []
