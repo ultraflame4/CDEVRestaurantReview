@@ -24,7 +24,7 @@ const port = process.env.VITE_EXPRESS_PORT
 const allowedOrigins = [
     `http://localhost:${process.env.VITE_EXPRESS_PORT}`,
     `http://localhost:${process.env.VITE_DEV_PORT}`,
-   `http://127.0.0.1:${process.env.VITE_EXPRESS_PORT}`
+   `http://127.0.0.1:${process.env.VITE_EXPRESS_PORT}`,
    `http://127.0.0.1:${process.env.VITE_DEV_PORT}`
 ]
 
