@@ -29,7 +29,7 @@ const allowedOrigins = [
 ]
 
 const expressSession = session({
-   secret: crypto.randomBytes(512).toString("base64"), // dynamically generate the scret for 'enhanced' security
+   secret: crypto.randomBytes(512).toString("base64"), // dynamically generate the secret for 'enhanced' security
    resave: false,
    saveUninitialized: false,
    cookie:{
