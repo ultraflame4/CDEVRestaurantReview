@@ -549,7 +549,7 @@ const RestauRantDB = new RestauRantDatabase({
    port: "3306",
    user: "root",
    password: "admin",
-   database: "movie_review"
+   database: "cdevrestaurantdatabase"
 })
 
 module.exports = {
