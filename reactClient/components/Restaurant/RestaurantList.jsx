@@ -6,6 +6,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {GetRestaurants} from "@/api";
 import {StarRatings} from "@/components/Ratings/StarRatings";
 import {CostRatings} from "@/components/Ratings/CostRatings";
+import {LineBreaker} from "@/components/LineBreaker";
 
 /**
  * @param {{
@@ -113,7 +114,7 @@ const RestaurantListItem = (props) => {
 
         </div>
         <p className={classes.restaurant_desc}>
-            {props.desc}
+            <LineBreaker text={props.desc} sep={"<br>"}/>
         </p>
         <img className={classes.restaurant_banner_img} alt={"Image of the restaurant"} src={props.imageSrc}/>
         <div className={classes.restaurant_recentReviews}>
