@@ -58,6 +58,8 @@
 
 .filterRangeSliderValue > .icon {
     margin: 0;
+    font-size: 1.5em;
+    justify-content: center;
 }
 
 
@@ -65,16 +67,31 @@
     color: var(--red);
 }
 
-.filterpanel li:nth-child(2)  .icon {
+.filterpanel li:nth-child(2) .icon {
     color: var(--gold);
     margin-top: 0.2em;
     margin-left: 0;
-    font-size: 1.5em;
+    font-size: 1.3em;
 }
 
-.filterpanel li:nth-child(3)  .icon {
+.filterpanel li:nth-child(3) .icon {
     color: var(--green);
     margin-left: 0.25em;
+}
+
+/*Show value styles*/
+
+.filterpanel li span {
+    padding-right: 2rem;
+    position: relative;
+}
+
+.filterpanel li span > .icon {
+    position: absolute;
+    right: 0;
+
+    font-size: 1.5rem;
+
 }
 
 .icon {

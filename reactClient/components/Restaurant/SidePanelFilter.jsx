@@ -37,13 +37,10 @@ const FilterSliderItem = (props) => {
     return (<li className={props.className}>
         <h5>{props.title}</h5>
 
-        {!props.showValue ?
-            "" :
-            <span className={classes.filterRangeSliderValue}>
+        <span className={classes.filterRangeSliderValue}>
                 {valueText}
-                {props.showValueIcon ? <Icon icon={props.showValueIcon} className={classes.icon}/> : ""}
-            </span>
-        }
+            {props.showValueIcon ? <Icon icon={props.showValueIcon} className={classes.icon}/> : ""}
+        </span>
 
         <InputRangeSlider min={props.min} max={props.max} step={props.step} defaultValue={props.defaultValue}
                           onInput={callback}/>
@@ -89,26 +86,22 @@ export const FilterSidepanel = (props) => {
             <h4>Filters</h4>
             <ul>
                 <FilterSliderItem
-                    className={classes.costSection}
                     title={"Cost"}
                     icon={"fa:dollar"}
                     min={1}
                     max={5}
+                    showValueIcon={"fa:dollar"}
                 />
                 <FilterSliderItem
-                    className={classes.starsSection}
                     title={"Min. Ratings"}
                     minIcon={"material-symbols:star-outline"}
                     icon={"material-symbols:star"}
                     showValueIcon={"material-symbols:star"}
                     min={0}
                     max={5}
-                    showValue={true}
-
                 />
 
                 <FilterSliderItem
-                    className={classes.reviewsSection}
                     title={"Min. Reviews"}
                     minIcon={"material-symbols:star-outline"}
                     icon={"material-symbols:star"}
@@ -118,7 +111,6 @@ export const FilterSidepanel = (props) => {
                     minText={"0"}
                     maxText={"40+"}
                     showValueMaxText={"40+"}
-                    showValue={true}
                     showValueIcon={"material-symbols:chat"}
                 />
 
