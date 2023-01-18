@@ -19,12 +19,10 @@ import classes from "@/components/Restaurant/SidePanelFilter.module.css";
  *     noIcon?: boolean,
  *     minText?: string,
  *     maxText?: string,
- *     showValue?: boolean,
  *     showValueIcon?: string,
  *     showValueMaxText?: string
  * }} props
  * @return {*}
- * @constructor
  */
 const FilterSliderItem = (props) => {
     const [valueText, setValueText] = useState(0)
@@ -37,7 +35,7 @@ const FilterSliderItem = (props) => {
     return (<li className={props.className}>
         <h5>{props.title}</h5>
 
-        <span className={classes.filterRangeSliderValue}>
+        <span className={classes.filterRangeSliderValue} data-hasIcon={props.showValueIcon}>
                 {valueText}
             {props.showValueIcon ? <Icon icon={props.showValueIcon} className={classes.icon}/> : ""}
         </span>
@@ -74,7 +72,6 @@ FilterSliderItem.propTypes = {
     noIcon: PropTypes.bool,
     minText: PropTypes.string,
     maxText: PropTypes.string,
-    showValue: PropTypes.bool,
     showValueIcon: PropTypes.string,
     showValueMaxText: PropTypes.string
 }
