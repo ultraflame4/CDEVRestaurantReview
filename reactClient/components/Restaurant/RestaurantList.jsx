@@ -69,7 +69,7 @@ const RestaurantListContents = (props) => {
                                     name={value.name}
                                     desc={value.description}
                                     imageSrc={value.photo_url}
-                                    distance={Math.round(value.distance / 1000)}
+                                    distance={Math.round(value.distance / 10)/100} // round distance to 2 d.p.
                 />)
         }
     </ul>)
