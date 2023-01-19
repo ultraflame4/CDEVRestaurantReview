@@ -3,12 +3,12 @@ import classes from "./Restaurant.module.css"
 
 import {Icon} from "@iconify-icon/react";
 import React, {useEffect, useRef, useState} from "react";
-import {GetRestaurants} from "@/api";
 import {StarRatings} from "@/components/Ratings/StarRatings";
 import {CostRatings} from "@/components/Ratings/CostRatings";
 import {LineBreaker} from "@/components/LineBreaker";
 import {FilterSidepanel} from "@/components/Restaurant/SidePanelFilter";
-import {PageNumbers} from "@/components/Restaurant/PageNumbers";
+import {GetRestaurants} from "@/api";
+import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 
 const RestaurantListItem = (props) => {
 
@@ -20,7 +20,7 @@ const RestaurantListItem = (props) => {
 
             {/*Tags here*/}
             <ul className={classes.restaurant_tagslist}>
-                {props.tags.map((tagname, tagindex) => {
+                {props.tags?.map((tagname, tagindex) => {
                     return (<li key={tagindex}>
                         {tagname}
                     </li>)
@@ -80,17 +80,21 @@ RestaurantListContents.propTypes = {
     restaurants: PropTypes.array.isRequired
 }
 
-
 export const RestaurantList = (props) => {
 
     const [restaurants, setRestaurants] = useState([])
 
-    useEffect(() => {
-        let start = props.start ?? 0
-        GetRestaurants(start).then(value => {
-            setRestaurants(value)
+    function loadData() {
+        setRestaurants(prevState => {
+            GetRestaurants(prevState.length).then(value => {
+                setRestaurants(prevState.concat(value))
+            })
+            return prevState
         })
+    }
 
+    useEffect(() => {
+        loadData()
     }, [props.start])
 
 
@@ -100,7 +104,7 @@ export const RestaurantList = (props) => {
         </h1>
         <FilterSidepanel/>
         <RestaurantListContents restaurants={restaurants}/>
-        <PageNumbers total={10} current={0}/>
+        <InfiniteScroll loadMore={loadData}/>
     </div>;
 }
 RestaurantList.propTypes = {

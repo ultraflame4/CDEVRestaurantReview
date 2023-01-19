@@ -99,7 +99,7 @@ function getCurrentGeoPosition(){
 /**
  *
  * @param start {number}
- * @return {Promise<DBRestaurantType>}
+ * @return {Promise<DBRestaurantType[]>}
  */
 export async function GetRestaurants(start) {
 
@@ -130,7 +130,7 @@ export async function GetRestaurants(start) {
 
 
     let a = []
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < 15; i++) {
         a.push({
             name: "Restaurant#" + i,
             tags: ["Chinese", "Halal", "Western"],
@@ -144,9 +144,4 @@ export async function GetRestaurants(start) {
         })
     }
     return a
-}
-
-export default {
-    fetch: fetchApi,
-    GetRestaurants
 }
