@@ -8,6 +8,7 @@ import {StarRatings} from "@/components/Ratings/StarRatings";
 import {CostRatings} from "@/components/Ratings/CostRatings";
 import {LineBreaker} from "@/components/LineBreaker";
 import {FilterSidepanel} from "@/components/Restaurant/SidePanelFilter";
+import {PageNumbers} from "@/components/Restaurant/PageNumbers";
 
 const RestaurantListItem = (props) => {
 
@@ -69,7 +70,7 @@ const RestaurantListContents = (props) => {
                                     name={value.name}
                                     desc={value.description}
                                     imageSrc={value.photo_url}
-                                    distance={Math.round(value.distance / 10)/100} // round distance to 2 d.p.
+                                    distance={Math.round(value.distance / 10) / 100} // round distance to 2 d.p.
                 />)
         }
     </ul>)
@@ -99,9 +100,9 @@ export const RestaurantList = (props) => {
         </h1>
         <FilterSidepanel/>
         <RestaurantListContents restaurants={restaurants}/>
+        <PageNumbers total={10} current={0}/>
     </div>;
 }
-
 RestaurantList.propTypes = {
     title: PropTypes.string.isRequired, className: PropTypes.string
 }

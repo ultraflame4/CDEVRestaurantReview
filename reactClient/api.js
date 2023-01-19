@@ -118,7 +118,8 @@ export async function GetRestaurants(start) {
             {
                 start: start,
                 x:pos.x,
-                y:pos.y
+                y:pos.y,
+                limit:15
             })
 
         return response.results;
