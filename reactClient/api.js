@@ -111,7 +111,9 @@ export async function GetRestaurants(start) {
             pos.x=geoPosition.coords.longitude
             pos.y=geoPosition.coords.latitude
         }
-        catch (e){}
+        catch (e){
+            console.log("e")
+        }
     }
 
 

@@ -68,7 +68,7 @@ FilterSliderItem.propTypes = {
     max: PropTypes.number,
     step: PropTypes.number,
     defaultValue: PropTypes.number,
-    callback: PropTypes.object,
+    callback: PropTypes.func,
     noIcon: PropTypes.bool,
     minText: PropTypes.string,
     maxText: PropTypes.string,
@@ -76,6 +76,17 @@ FilterSliderItem.propTypes = {
     showValueMaxText: PropTypes.string
 }
 
+/**
+ *
+ * @param props {{
+ *         maxCostChange?: function (value:number, min:number, max :number) : void,
+ *         minRatingChange?: function (value:number, min:number, max :number) : void,
+ *         minReviewsChange?: function (value:number, min:number, max :number) : void,
+ *         sortByChange ?: function (sortBy:string) : void,
+ * }}
+ * @return {JSX.Element}
+ * @constructor
+ */
 export const FilterSidepanel = (props) => {
 
     return (
@@ -90,6 +101,7 @@ export const FilterSidepanel = (props) => {
                     defaultValue={5}
                     showValueIcon={"fa:dollar"}
                     showValueMaxText={"Any"}
+                    callback={props.maxCostChange}
                 />
                 <FilterSliderItem
                     title={"Min. Ratings"}
@@ -98,6 +110,7 @@ export const FilterSidepanel = (props) => {
                     showValueIcon={"material-symbols:star"}
                     min={0}
                     max={5}
+                    callback={props.minRatingChange}
                 />
 
                 <FilterSliderItem
@@ -111,10 +124,18 @@ export const FilterSidepanel = (props) => {
                     maxText={"40+"}
                     showValueMaxText={"40+"}
                     showValueIcon={"material-symbols:chat"}
+                    callback={props.minReviewsChange}
                 />
 
             </ul>
             <h4>Sort by</h4>
         </aside>
     )
+}
+
+FilterSidepanel.propType = {
+    maxCostChange: PropTypes.func,
+    minRatingChange: PropTypes.func,
+    minReviewsChange: PropTypes.func,
+    sortByChange: PropTypes.func
 }

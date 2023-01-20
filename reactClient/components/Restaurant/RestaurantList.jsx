@@ -98,6 +98,8 @@ export const RestaurantList = (props) => {
         })
     }
 
+
+
     useEffect(() => {
         loadData()
     }, [props.start])
