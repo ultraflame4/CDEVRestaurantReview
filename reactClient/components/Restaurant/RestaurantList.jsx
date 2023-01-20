@@ -38,7 +38,9 @@ const RestaurantListItem = (props) => {
         <p className={classes.restaurant_desc}>
             <LineBreaker text={props.desc} sep={"<br>"}/>
         </p>
-        <img className={classes.restaurant_banner_img} alt={"Image of the restaurant"} src={props.imageSrc}/>
+        <img className={classes.restaurant_banner_img}
+             alt={`Image of restaurant ${props.name}`}
+             src={props.imageSrc }/>
         <div className={classes.restaurant_recentReviews}>
             <div className={classes.restaurant_recentReviews_header}>
                 <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
@@ -81,13 +83,16 @@ RestaurantListContents.propTypes = {
 }
 
 export const RestaurantList = (props) => {
-
+    const [isAllLoaded,setIsAllLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
 
     function loadData() {
         setRestaurants(prevState => {
             GetRestaurants(prevState.length).then(value => {
                 setRestaurants(prevState.concat(value))
+                if (value.length == 0){
+                    setIsAllLoaded(true)
+                }
             })
             return prevState
         })
@@ -104,7 +109,7 @@ export const RestaurantList = (props) => {
         </h1>
         <FilterSidepanel/>
         <RestaurantListContents restaurants={restaurants}/>
-        <InfiniteScroll loadMore={loadData}/>
+        <InfiniteScroll loadMore={loadData} className={classes.infiniteScrollStyle} hide={isAllLoaded} />
     </div>;
 }
 RestaurantList.propTypes = {

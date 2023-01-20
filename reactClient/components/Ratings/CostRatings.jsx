@@ -21,6 +21,10 @@ export const CostRatings = (props) => {
      */
     let stars = []
 
+    if (props.rating<1){
+        return <div className={classes.costRating}>?</div>
+    }
+
     for (let i = 0; i < props.rating; i++) {
         stars.push(<Icon icon={"fa:dollar"} className={classes.costRating}/>)
     }

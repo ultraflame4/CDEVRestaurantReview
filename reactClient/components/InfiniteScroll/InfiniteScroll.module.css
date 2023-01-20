@@ -1,0 +1,32 @@
+.infiniteScroll {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Poppins";
+    height: 12rem;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+
+}
+
+.infiniteScroll > span {
+    animation: spin 1.8s ease infinite;
+
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+        letter-spacing: 0.1rem;
+    }
+    50%{
+        letter-spacing: 0.5rem;
+        color: var(--gold);
+
+    }
+    to {
+        transform: rotate(720deg);
+        letter-spacing: 0.1rem;
+    }
+}
+

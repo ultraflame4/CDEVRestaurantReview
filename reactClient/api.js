@@ -106,9 +106,12 @@ export async function GetRestaurants(start) {
     let pos = {x:0,y:0}
 
     if (navigator.geolocation){
-        let geoPosition = await getCurrentGeoPosition()
-        pos.x=geoPosition.coords.longitude
-        pos.y=geoPosition.coords.latitude
+        try{
+            let geoPosition = await getCurrentGeoPosition()
+            pos.x=geoPosition.coords.longitude
+            pos.y=geoPosition.coords.latitude
+        }
+        catch (e){}
     }
 
 
