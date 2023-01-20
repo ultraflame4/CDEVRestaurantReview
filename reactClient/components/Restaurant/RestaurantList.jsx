@@ -67,7 +67,7 @@ const RestaurantListContents = (props) => {
             props.restaurants.map((value, index) =>
                 <RestaurantListItem key={index}
                                     tags={value.tags}
-                                    rating={value.avg_rating}
+                                    rating={parseFloat(value.avg_rating)}
                                     cost={value.cost_rating / 2}
                                     name={value.name}
                                     desc={value.description}

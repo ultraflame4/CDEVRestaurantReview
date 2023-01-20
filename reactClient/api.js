@@ -15,7 +15,7 @@ const host = import.meta.env.DEV ? `localhost:${import.meta.env.VITE_EXPRESS_POR
  * @property {string} phone_no
  * @property {string} website
  * @property {number} cost_rating
- * @property {number} avg_rating
+ * @property {string} avg_rating although returned as a string, this is actually a number (float)
  * @property {number} review_count
  * @property {string} photo_url
  * @property {string[]} tags
@@ -137,7 +137,7 @@ export async function GetRestaurants(start) {
         a.push({
             name: "Restaurant#" + i,
             tags: ["Chinese", "Halal", "Western"],
-            avg_rating: 7,
+            avg_rating: "7",
             cost_rating: 4,
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac urna porttitor, suscipit enim sit amet, dignissim libero. Sed a leo et massa consectetur tempor sit amet a justo. Donec bibendum nisl eu orci efficitur ultricies. Duis porta mi at ante cursus, sed pellentesque enim lobortis. Curabitur vitae venenatis purus. Aenean efficitur venenatis tempor. In pellentesque interdum mi, ut fringilla nisi interdum a. Praesent feugiat nunc sit amet purus molestie blandit. Sed felis sapien, semper fringilla suscipit eget, pulvinar quis mi. Etiam suscipit vel tellus ac egestas. Vivamus felis ex, aliquam ac interdum nec, eleifend nec massa. Suspendisse fringilla nisl nisl, nec rhoncus lorem gravida sit amet.\n" +
                 "\n" +
