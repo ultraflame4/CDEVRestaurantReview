@@ -35,7 +35,7 @@ const FilterSliderItem = (props) => {
     return (<li className={props.className}>
         <h5>{props.title}</h5>
 
-        <span className={classes.filterRangeSliderValue} data-hasIcon={props.showValueIcon}>
+        <span className={classes.filterRangeSliderValue} data-hasicon={props.showValueIcon}>
                 {valueText}
             {props.showValueIcon ? <Icon icon={props.showValueIcon} className={classes.icon}/> : ""}
         </span>

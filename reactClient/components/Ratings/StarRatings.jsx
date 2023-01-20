@@ -23,13 +23,13 @@ export const StarRatings = (props) => {
     let stars_count = props.rating / 2
     for (let i = 0; i < 5; i++) {
         if (stars_count === 0.5) {
-            stars.push(<Icon icon={"material-symbols:star-half"} className={classes.starRating}/>)
+            stars.push(<Icon key={i} icon={"material-symbols:star-half"} className={classes.starRating}/>)
         }
         else if (stars_count > 0) {
-            stars.push(<Icon icon={"material-symbols:star"} className={classes.starRating}/>)
+            stars.push(<Icon key={i} icon={"material-symbols:star"} className={classes.starRating}/>)
         }
         else{
-            stars.push(<Icon icon={"material-symbols:star-outline"} className={classes.starRating}/>)
+            stars.push(<Icon key={i} icon={"material-symbols:star-outline"} className={classes.starRating}/>)
         }
         stars_count--;
     }

@@ -81,7 +81,7 @@
 
 /*Show value styles*/
 
-.filterpanel li span[data-hasIcon] {
+.filterpanel li span[data-hasicon] {
     padding-right: 2rem;
     position: relative;
 }

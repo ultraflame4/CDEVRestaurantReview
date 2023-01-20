@@ -26,7 +26,7 @@ export const CostRatings = (props) => {
     }
 
     for (let i = 0; i < props.rating; i++) {
-        stars.push(<Icon icon={"fa:dollar"} className={classes.costRating}/>)
+        stars.push(<Icon icon={"fa:dollar"} className={classes.costRating} key={i}/>)
     }
 
     return stars
