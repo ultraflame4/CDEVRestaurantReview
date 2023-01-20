@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import classes from "./InputRangeSlider.module.css"
 import PropTypes from "prop-types";
 
@@ -25,13 +25,13 @@ import PropTypes from "prop-types";
  * @constructor
  */
 export const InputRangeSlider = function (props) {
+    const inputElementRef = useRef(null)
 
-
-    function OnInput(/**@type {React.FormEvent<HTMLInputElement>}*/e) {
+    function OnInput(e) {
         /**
          * @type {HTMLInputElement}
          */
-        let inputElement = e.currentTarget
+        let inputElement = inputElementRef.current
         let min = parseFloat(inputElement.min.length !== 0 ? inputElement.min : "0")
         let max = parseFloat(inputElement.max.length !== 0 ? inputElement.max : "100")
         let current = parseFloat(inputElement.value)
@@ -42,12 +42,17 @@ export const InputRangeSlider = function (props) {
         props.onInput?.(current,min,max)
     }
 
+    useEffect(()=>{
+        OnInput(null)
+    },[props.defaultValue])
+
     return (
         <input type={"range"} className={props.className ?? "" + " " + classes.slider} onInput={OnInput}
                min={props.min??0}
                max={props.max??100}
                step={props.step??1}
                defaultValue={props.defaultValue??0}
+               ref={inputElementRef}
         />
     )
 }

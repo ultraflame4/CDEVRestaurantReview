@@ -83,11 +83,13 @@ export const FilterSidepanel = (props) => {
             <h4>Filters</h4>
             <ul>
                 <FilterSliderItem
-                    title={"Cost"}
+                    title={"Max Cost"}
                     icon={"fa:dollar"}
-                    min={1}
+                    min={0}
                     max={5}
+                    defaultValue={5}
                     showValueIcon={"fa:dollar"}
+                    showValueMaxText={"Any"}
                 />
                 <FilterSliderItem
                     title={"Min. Ratings"}
