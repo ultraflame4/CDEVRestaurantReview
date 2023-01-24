@@ -2,7 +2,7 @@ import {defComponent} from "@/tools/define";
 import classes from "./HeaderNav.module.css";
 import {Icon} from "@iconify-icon/react";
 import {IconLink} from "@/components/Links/IconLink";
-import {useContext, useRef} from "react";
+import {useContext, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {useOverlayToggle, useToggle, useWatchableValue} from "@/tools/hooks";
 import {UserAccountInfo} from "@/api";
@@ -63,6 +63,13 @@ const HeaderNavAccount = (props) => {
 
 
 export default defComponent((props) => {
+    const [hamburgerToggled, setHamburgerToggled] = useState(false)
+
+    function toggleHamburger(){
+        setHamburgerToggled(prevState => !prevState)
+    }
+
+
     return (
         <header className={classes.HeaderNav}>
             <a href={"/"} className={classes.HeaderNavTitle}>
@@ -84,6 +91,20 @@ export default defComponent((props) => {
                 </li>
             </ul>
             <HeaderNavAccount/>
+
+            <div className={classes.HeaderHamburger} data-toggled={hamburgerToggled} >
+                <Icon icon={"ph:hamburger"} className={classes.HeaderHamburgerIcon} onClick={toggleHamburger}/>
+                <div className={classes.HeaderHamburgerContent}>
+                    <ul className={classes.HeaderNavLinks}>
+                        <li>
+                            <IconLink to={"/search?sort=0"} text={"Nearby"} icon={"oi:map-marker"}/>
+                        </li>
+                        <li>
+                            <IconLink to={"/search?sort=1"} text={"Top Rated"} icon={"ic:stars"}/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </header>
     )
 })
