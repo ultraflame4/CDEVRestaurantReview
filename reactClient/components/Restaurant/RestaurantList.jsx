@@ -40,7 +40,7 @@ const RestaurantListItem = (props) => {
         </p>
         <img className={classes.restaurant_banner_img}
              alt={`Image of restaurant ${props.name}`}
-             src={props.imageSrc }/>
+             src={props.imageSrc}/>
         <div className={classes.restaurant_recentReviews}>
             <div className={classes.restaurant_recentReviews_header}>
                 <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
