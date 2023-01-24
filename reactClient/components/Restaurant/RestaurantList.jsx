@@ -12,7 +12,7 @@ import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 
 const RestaurantListItem = (props) => {
 
-    return (<li className={classes.restaurantListContentItem + " card"}>
+    return (<li className={classes.restaurantListContentItem + " card"} onClick={()=>console.log(props.id)}>
         <div className={classes.restaurantListContentItem_Head}>
             <h3 className={classes.restaurantListContentItem_Name}>
                 {props.name}
@@ -51,6 +51,7 @@ const RestaurantListItem = (props) => {
 }
 
 RestaurantListItem.propType = {
+    id: PropTypes.number.isRequired,
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,
     name: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
@@ -66,6 +67,7 @@ const RestaurantListContents = (props) => {
         {
             props.restaurants.map((value, index) =>
                 <RestaurantListItem key={index}
+                                    id={value.id}
                                     tags={value.tags}
                                     rating={parseFloat(value.avg_rating)}
                                     cost={value.cost_rating / 2}

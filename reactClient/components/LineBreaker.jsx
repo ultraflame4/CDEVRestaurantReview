@@ -13,7 +13,7 @@ export function LineBreaker(props){
         {
             props.text.split(sep).map((value, index) => {
                 if (index===0){
-                    return value
+                    return <span key={index}>{value}</span>
                 }
                 return <span key={index}><br/>{value}</span>
             })
