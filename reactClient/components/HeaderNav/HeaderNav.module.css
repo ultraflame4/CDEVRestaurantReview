@@ -271,8 +271,8 @@
 .HeaderHamburgerContent{
     position: fixed;
     background: var(--black);
-    width: 18rem;
-    right: -20rem;
+    width: 45%;
+    right: -50%; /*50% so that it does not cover scrollbar*/
     top:0;
     border: 1px solid var(--gray);
     height: 100vh;
