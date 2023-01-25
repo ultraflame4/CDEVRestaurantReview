@@ -105,9 +105,17 @@ export default defComponent((props) => {
                     }
                     <InfiniteScroll loadMore={loadMoreReviews} hide={allReviewsShown}/>
                 </ul>
-
             </div>
             <div>
+                <div className={"restaurant-photos"}>
+                    <img src={data.photo_url[0]} alt={"An image of the restaurant"}/>
+                    <img src={data.photo_url[1]} alt={"An image of the restaurant"}/>
+                    <button>
+                        <img src={data.photo_url[2]} alt={"An image of the restaurant"}/>
+                        <p>{data.photo_url.length-3}+</p>
+                    </button>
+                </div>
+
 
             </div>
         </main>

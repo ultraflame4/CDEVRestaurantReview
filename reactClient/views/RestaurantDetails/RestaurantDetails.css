@@ -2,8 +2,9 @@
 main{
     background-color: var(--black);
     display: grid;
-    grid-template-columns: auto 28rem;
+    grid-template-columns: auto 32rem;
     padding: 1rem 6rem;
+    grid-column-gap: 4rem;
 }
 
 main > div:nth-child(1){
@@ -161,3 +162,58 @@ main h5{
 main > div:nth-child(2){
 
 }
+
+.restaurant-photos{
+    display: flex;
+    height: fit-content;
+    overflow: hidden;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    box-sizing: border-box;
+}
+
+.restaurant-photos img{
+    border-radius: 0.5rem;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+
+.restaurant-photos img:nth-child(1){
+    width: 100%;
+}
+
+.restaurant-photos img:nth-child(2){
+    flex-grow: 1;
+}
+.restaurant-photos button{
+    flex-grow: 1;
+    padding: 0;
+    position: relative;
+    background: black;
+}
+.restaurant-photos button:hover img{
+    opacity: .3;
+}
+.restaurant-photos button p{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: "Poppins";
+    color: white;
+    overflow: hidden;
+
+}
+.restaurant-photos button img{
+    transition: opacity 200ms;
+    height: 100%;
+    width: 100%;
+    opacity: .4;
+    filter: brightness(45%) contrast(0.8) grayscale(0.5);
+}
+
