@@ -25,6 +25,10 @@ const ReviewItem = (props) => {
         </div>
         <div className={"review-item-rating"}><StarRatings rating={props.rating}/></div>
         <p><LineBreaker text={props.content} sep={"<br>"}/></p>
+        <div className={"like"}>
+            <Icon icon={"ic:baseline-thumb-up"} />
+            <span>{props.likes}</span>
+        </div>
     </li>
 }
 

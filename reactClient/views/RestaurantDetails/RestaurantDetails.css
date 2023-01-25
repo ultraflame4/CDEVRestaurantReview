@@ -138,6 +138,21 @@ main h5{
     margin-top: 0;
     margin-left: 0.5rem;
 }
+#reviews-list li >.like{
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#reviews-list li >.like span{
+    font-family: "Poppins";
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--slight-gray);
+}
 
 #reviews-list:last-child{
     font-size: 1.2rem;
