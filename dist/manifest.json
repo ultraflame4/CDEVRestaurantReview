@@ -1,32 +1,41 @@
 {
   "index.html": {
-    "file": "assets/index.9e241710.js",
+    "file": "assets/index.ecb97f6d.js",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "reactClient/views/Home/Home.jsx"
+      "reactClient/views/Home/Home.jsx",
+      "reactClient/views/RestaurantDetails/RestaurantDetails.jsx"
     ],
     "css": [
-      "assets/index.01204552.css"
+      "assets/index.382809fb.css"
     ]
   },
   "reactClient/views/Home/Home.jsx": {
-    "file": "assets/Home.062b6382.js",
+    "file": "assets/Home.99d34dee.js",
     "src": "reactClient/views/Home/Home.jsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html"
     ],
     "css": [
-      "assets/Home.03e9a2fd.css"
+      "assets/Home.de5acb2f.css"
+    ]
+  },
+  "reactClient/views/RestaurantDetails/RestaurantDetails.jsx": {
+    "file": "assets/RestaurantDetails.60973acc.js",
+    "src": "reactClient/views/RestaurantDetails/RestaurantDetails.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
     ]
   },
   "reactClient/views/Home/Home.css": {
-    "file": "assets/Home.03e9a2fd.css",
+    "file": "assets/Home.de5acb2f.css",
     "src": "reactClient/views/Home/Home.css"
   },
   "index.css": {
-    "file": "assets/index.01204552.css",
+    "file": "assets/index.382809fb.css",
     "src": "index.css"
   }
 }

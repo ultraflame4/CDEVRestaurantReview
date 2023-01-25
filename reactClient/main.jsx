@@ -6,6 +6,7 @@ import {createBrowserRouter, RouterProvider, Route} from "react-router-dom";
 import App from "@/views/App";
 
 const Home = React.lazy(() => import("@/views/Home/Home"))
+const RestaurantDetails = React.lazy(() => import("@/views/RestaurantDetails/RestaurantDetails"))
 
 const router = createBrowserRouter([
         {
@@ -15,6 +16,11 @@ const router = createBrowserRouter([
                 {
                     path: "/",
                     element: <Home/>
+                },
+                {
+                    path: "/restaurant/:id",
+                    element: <RestaurantDetails/>,
+                    loader: async ({params})=>params.id
                 }
             ]
         },
