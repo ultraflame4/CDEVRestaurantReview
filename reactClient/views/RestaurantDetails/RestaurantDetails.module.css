@@ -3,7 +3,7 @@
     background-color: var(--black);
     display: grid;
     grid-template-columns: auto 32rem;
-    padding: 1rem 6rem;
+    padding: 1rem min(6rem,4vw);
     grid-column-gap: 4rem;
 }
 
