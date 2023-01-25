@@ -12,9 +12,12 @@ import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 import {useNavigate} from "react-router-dom";
 
 const RestaurantListItem = (props) => {
-    const navigate = useNavigate();
 
-    return (<li className={classes.restaurantListContentItem + " card"} onClick={()=>navigate(`/restaurant/${props.id}`)}>
+    function open() {
+        window.open(`/app/restaurant/${props.id}`,"_blank")
+    }
+
+    return (<li className={classes.restaurantListContentItem + " card"} onClick={open}>
         <div className={classes.restaurantListContentItem_Head}>
             <h3 className={classes.restaurantListContentItem_Name}>
                 {props.name}

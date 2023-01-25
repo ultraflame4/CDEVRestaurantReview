@@ -1,0 +1,51 @@
+
+main{
+    background-color: var(--black);
+    display: grid;
+    grid-template-columns: auto 24rem;
+    padding: 1rem 6rem;
+}
+
+main > div:nth-child(1){
+    font-size: 2.25rem;
+}
+
+
+main h1{
+    margin: 1.5rem 0;
+}
+
+main h2{
+    font-size: 2rem;
+    color: var(--off-white);
+    margin: 1.5rem 0;
+}
+
+#other-info{
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+#other-info > *{
+    font-size: 1.75rem;
+}
+#other-info > span{
+    font-weight: 700;
+    color: var(--green);
+    font-size: 1.75rem;
+    font-family: "Poppins";
+
+    margin: 0;
+}
+
+#restaurant-desc{
+    font-family: "Poppins";
+    font-weight: 500;
+    font-size: 1.25rem;
+    color: var(--light-gray);
+}
+
+main > div:nth-child(2){
+
+}

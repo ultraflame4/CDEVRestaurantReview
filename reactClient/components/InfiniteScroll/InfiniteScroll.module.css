@@ -10,7 +10,7 @@
 }
 
 .infiniteScroll > span {
-    animation: spin 1.8s ease infinite;
+    animation: spin 2s ease infinite;
 
 }
 

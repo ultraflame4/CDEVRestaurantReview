@@ -1,5 +1,5 @@
 import HeaderNav from "@/components/HeaderNav/HeaderNav";
-import {Outlet} from "react-router-dom";
+import {Outlet, ScrollRestoration} from "react-router-dom";
 import "./App.css"
 import {Suspense, useEffect} from "react";
 import {UserAccountInfo} from "@/api";

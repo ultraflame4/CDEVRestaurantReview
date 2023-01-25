@@ -15,7 +15,7 @@ export function LineBreaker(props){
                 if (index===0){
                     return <span key={index}>{value}</span>
                 }
-                return <span key={index}><br/>{value}</span>
+                return <span key={index}><br/><br/>{value}</span>
             })
         }
     </>)

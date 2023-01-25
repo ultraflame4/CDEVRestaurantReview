@@ -172,6 +172,7 @@
     height: 1.6rem;
     color: var(--green);
     margin: 0;
+    font-family: "Poppins";
 }
 
 .infiniteScrollStyle{
