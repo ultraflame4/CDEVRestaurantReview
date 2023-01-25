@@ -1,27 +1,60 @@
 import {defComponent} from "@/tools/define";
 import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {GetRestaurantById} from "@/api";
+import {GetRestaurantById, GetRestaurantReviews} from "@/api";
 import "./RestaurantDetails.css"
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 import {StarRatings} from "@/components/Ratings/StarRatings";
 import {Icon} from "@iconify-icon/react";
 import {CostRatings} from "@/components/Ratings/CostRatings";
 import {LineBreaker} from "@/components/LineBreaker";
+import PropTypes from "prop-types";
+
+const ReviewItem = (props) => {
+    let date = new Date(props.last_edit)
+
+    return <li>
+        <div className={"review-item-head"}>
+            <Icon icon={"ic:baseline-account-circle"} className={"icon"}/>
+            <h4>{props.username}</h4>
+            <h5>
+                {date.toLocaleDateString(undefined, {dateStyle: "short"})}
+                {" "}
+                {date.toLocaleTimeString(undefined, {timeStyle: "short"})}
+            </h5>
+        </div>
+        <div className={"review-item-rating"}><StarRatings rating={props.rating}/></div>
+        <p><LineBreaker text={props.content} sep={"<br>"}/></p>
+    </li>
+}
+
+ReviewItem.propTypes = {
+    username: PropTypes.string.isRequired,
+    last_edit: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    content: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired,
+}
+
 
 export default defComponent((props) => {
     const params = useParams()
     const restaurantId = params.id
     const [data, setData] = useState(null)
+    const [reviews, setReviews] = useState([])
 
     useEffect(() => {
         GetRestaurantById(restaurantId)
             .then(value => {
                 setData(value)
             })
-    })
+        GetRestaurantReviews(restaurantId)
+            .then(value => {
+                setReviews(value)
+            })
+    }, [restaurantId])
 
-    if (data === null){
+    if (data === null) {
         return <div><InfiniteScroll/></div>
     }
 
@@ -30,9 +63,9 @@ export default defComponent((props) => {
         <main>
             <div>
                 <h1>{data.name}</h1>
-                <StarRatings rating={data.avg_rating}/>
+                <StarRatings rating={parseFloat(data.avg_rating)}/>
                 <div id={"other-info"}>
-                    <CostRatings rating={data.cost_rating/2}/>
+                    <CostRatings rating={data.cost_rating / 2}/>
                     <Icon icon={"ci:dot-03-m"}/>
                     <span>{Math.round(data.distance / 10) / 100}km</span>
                 </div>
@@ -40,6 +73,22 @@ export default defComponent((props) => {
                 <p id={"restaurant-desc"}>
                     <LineBreaker text={data.description} sep={"<br>"}/>
                 </p>
+                <div id={"reviews-header"}>
+                    <h2>Reviews</h2> <Icon icon={"ic:baseline-chat"} className={"icon"}/>
+                    <button>Write a review <Icon icon={"ic:baseline-edit"} className={"icon"}/></button>
+                </div>
+                <ul id={"reviews-list"}>
+                    {
+                        reviews.map((value, index) =>
+                            <ReviewItem
+                                username={value.username}
+                                last_edit={value.last_edit}
+                                rating={value.rating}
+                                content={value.content}
+                                likes={value.likes ?? 0}/>
+                        )
+                    }
+                </ul>
             </div>
             <div>
 

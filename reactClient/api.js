@@ -22,6 +22,22 @@ const host = import.meta.env.DEV ? `localhost:${import.meta.env.VITE_EXPRESS_POR
  */
 
 
+/**
+ * Review Type returned by the database
+ * @export
+ * @typedef DBReviewType
+ * @property {number} id
+ * @property {number} restaurant_id
+ * @property {number} author_id
+ * @property {string} content
+ * @property {number} rating
+ * @property {string} date_created
+ * @property {string} last_edited
+ * @property {number} like_count
+ * @property {string} username
+ */
+
+
 class ApiError extends Error {
     constructor(apiPath, jsonData) {
         super(`ApiError: Error while fetching ${apiPath}\nApi results:\n${JSON.stringify(jsonData, null, 2)}`);
@@ -180,4 +196,25 @@ export async function GetRestaurantById(id) {
         return null
     }
     return data.results[0] ?? null
+}
+
+
+/**
+ * Gets a the reviews for a restaurant from the server using its id
+ * @param id
+ * @return {Promise<null|DBReviewType[]>}
+ * @constructor
+ */
+export async function GetRestaurantReviews(id){
+    let data;
+    try{
+        data = await fetchApi("/api/reviews",{
+            restaurant_id:id
+        })
+    }
+    catch (e) {
+        console.log(e)
+        return null
+    }
+    return data.results ?? null
 }

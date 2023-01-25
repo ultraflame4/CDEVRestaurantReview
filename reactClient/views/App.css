@@ -58,12 +58,12 @@ button {
     --fore: var(--light-gray);
     --back: var(--gray);
 
-    padding: 0.5em 1em;
+    padding: 0.4em 0.7em;
     border: none;
-    border-radius: 0.4em;
+    border-radius: 0.5em;
     outline: none;
     font-family: "Segoe UI";
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0.5px;
     color: var(--fore);

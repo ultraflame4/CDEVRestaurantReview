@@ -2,7 +2,7 @@
 main{
     background-color: var(--black);
     display: grid;
-    grid-template-columns: auto 24rem;
+    grid-template-columns: auto 28rem;
     padding: 1rem 6rem;
 }
 
@@ -19,6 +19,14 @@ main h2{
     font-size: 2rem;
     color: var(--off-white);
     margin: 1.5rem 0;
+}
+main h4{
+    font-size: 1rem;
+    font-family: "Poppins";
+}
+main h5{
+    font-size: 0.9rem;
+    font-family: "Poppins";
 }
 
 #other-info{
@@ -44,6 +52,91 @@ main h2{
     font-weight: 500;
     font-size: 1.25rem;
     color: var(--light-gray);
+}
+
+#reviews-header{
+    display: flex;
+    align-items: center;
+}
+
+#reviews-header > .icon{
+    color: var(--green);
+    margin-top: 0.25rem;
+    margin-left: 0.5rem;
+    font-size: 1.1em;
+}
+
+#reviews-header > button{
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+#reviews-header > button .icon{
+    font-size: 1.45em;
+    height: 100%;
+    margin-left: 0.5rem;
+    /*position: absolute;*/
+    right: 0;
+}
+
+#reviews-list{
+    list-style-type: none;
+    padding:0;
+    margin: 0;
+}
+
+#reviews-list li{
+    margin-bottom: 1.5rem;
+    border: 0.2rem solid var(--green);
+    padding: 0.5rem;
+    border-radius: 1.2rem;
+}
+
+
+.review-item-head{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: min-content auto;
+    grid-column-gap: 0.75rem;
+}
+
+.review-item-head > .icon{
+    grid-row: 1/-1;
+    grid-column: 1;
+    font-size: 3.5rem;
+    color: var(--light-gray);
+}
+
+.review-item-head > h4{
+    margin: 0;
+    grid-row: 1;
+    grid-column: 2;
+    margin-top: auto;
+}
+
+.review-item-head > h5{
+    margin: 0;
+    grid-row: 2;
+    grid-column: 2;
+    color: var(--slight-gray);
+    margin-bottom: auto;
+}
+
+.review-item-rating{
+    font-size: 1.15rem;
+    margin-top: 0.25rem;
+    margin-left: 0.25rem;
+}
+
+#reviews-list li > p{
+    font-family: "Poppins";
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--light-gray);
+    margin-top: 0;
+    margin-left: 0.5rem;
 }
 
 main > div:nth-child(2){
