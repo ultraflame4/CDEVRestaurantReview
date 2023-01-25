@@ -26,7 +26,7 @@ class ApiError extends Error {
     constructor(apiPath, jsonData) {
         super(`ApiError: Error while fetching ${apiPath}\nApi results:\n${JSON.stringify(jsonData, null, 2)}`);
         this.name = "ApiError"
-
+        this.apiError = jsonData.error
     }
 
 }
@@ -38,7 +38,7 @@ class ApiError extends Error {
  * @param queryParams {Object}
  * @returns {Promise<any|null>} Returns null on failure
  */
-async function fetchApi(path_, init = {}, queryParams = {}) {
+async function fetchApi(path_, queryParams = {}, init = {}) {
     let url = new URL(path_, `http://${host}`) + "?" + new URLSearchParams(queryParams)
     let response;
     try {
@@ -83,16 +83,34 @@ export const UserAccountInfo = {
 }
 
 /**
- * A Promisefied version of navigator.geolocation.getCurrentPosition
- * @return {Promise<GeolocationPosition>}
+ * Returns the current user's location data
+ * @return {Promise<{x:number,y:number,success:boolean}>}
  */
-function getCurrentGeoPosition(){
+function getCurrentGeoPosition() {
     return new Promise((resolve, reject) => {
+        if (!navigator.geolocation){
+            reject({
+                x: 0,
+                y: 0,
+                success: false
+            })
+            return
+        }
+
         navigator.geolocation.getCurrentPosition(position => {
-            resolve(position)
-        },positionError => {
-            reject(positionError)
-        },{enableHighAccuracy:true})
+            resolve({
+                x: position.coords.longitude,
+                y: position.coords.latitude,
+                success: true
+            })
+
+        }, positionError => {
+            reject({
+                x: 0,
+                y: 0,
+                success: false
+            })
+        }, {enableHighAccuracy: true})
     })
 }
 
@@ -103,28 +121,18 @@ function getCurrentGeoPosition(){
  */
 export async function GetRestaurants(start) {
 
-    let pos = {x:0,y:0}
 
-    if (navigator.geolocation){
-        try{
-            let geoPosition = await getCurrentGeoPosition()
-            pos.x=geoPosition.coords.longitude
-            pos.y=geoPosition.coords.latitude
-        }
-        catch (e){
-            console.log("e")
-        }
-    }
+    let pos = await getCurrentGeoPosition()
 
 
     let response;
     try {
-        response = await fetchApi("/api/restaurants", {},
+        response = await fetchApi("/api/restaurants",
             {
                 start: start,
-                x:pos.x,
-                y:pos.y,
-                limit:15
+                x: pos.x,
+                y: pos.y,
+                limit: 15
             })
 
         return response.results;
@@ -145,8 +153,31 @@ export async function GetRestaurants(start) {
                 "\n" +
                 "Etiam eu libero eu enim interdum ullamcorper et non libero. Nulla sollicitudin nunc felis, sit amet imperdiet neque cursus quis. Quisque consectetur sapien eu augue ullamcorper, at molestie quam scelerisque. Quisque quis nunc porttitor, sagittis lectus et, sodales diam. Vestibulum orci libero, dignissim a ipsum ut, sodales sodales arcu. Fusce lacinia ligula quis suscipit rutrum. Pellentesque pulvinar justo vel mi molestie, sit amet sollicitudin augue elementum. Suspendisse consectetur id lorem eget feugiat. Pellentesque sollicitudin sodales dui nec molestie. Vestibulum dolor eros, egestas ac metus at, tristique gravida ex. Nam convallis iaculis quam sit amet convallis. Maecenas odio lorem, finibus vel lacus non, faucibus efficitur lacus. Nam ultrices sapien ut sapien dignissim iaculis. Quisque lobortis risus in ligula tempor ornare.",
             photo_url: "https://picsum.photos/200/300",
-            distance:1000
+            distance: 1000
         })
     }
     return a
+}
+
+/**
+ * Gets a restaurant from the server using its id
+ * @param id
+ * @return {Promise<null|DBRestaurantType>}
+ * @constructor
+ */
+export async function GetRestaurantById(id) {
+    let currentPos = await getCurrentGeoPosition()
+    let data;
+    try{
+        data = await fetchApi("/api/restaurants/id", {
+            restaurantId: id,
+            x: currentPos.x,
+            y: currentPos.y
+        })
+    }
+    catch (e) {
+        console.log(e)
+        return null
+    }
+    return data.results[0] ?? null
 }

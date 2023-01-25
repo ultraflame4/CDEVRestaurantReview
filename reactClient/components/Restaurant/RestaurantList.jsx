@@ -9,10 +9,12 @@ import {LineBreaker} from "@/components/LineBreaker";
 import {FilterSidepanel} from "@/components/Restaurant/SidePanelFilter";
 import {GetRestaurants} from "@/api";
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
+import {useNavigate} from "react-router-dom";
 
 const RestaurantListItem = (props) => {
+    const navigate = useNavigate();
 
-    return (<li className={classes.restaurantListContentItem + " card"} onClick={()=>console.log(props.id)}>
+    return (<li className={classes.restaurantListContentItem + " card"} onClick={()=>navigate(`/restaurant/${props.id}`)}>
         <div className={classes.restaurantListContentItem_Head}>
             <h3 className={classes.restaurantListContentItem_Name}>
                 {props.name}
