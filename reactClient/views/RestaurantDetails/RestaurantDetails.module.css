@@ -175,34 +175,46 @@ main > div:nth-child(2){
 .photos img{
     border-radius: 0.5rem;
     object-fit: cover;
-    flex-shrink: 0;
+
 }
 
 
 .photos img:nth-child(1){
     width: 100%;
+
+    flex-shrink: 0;
 }
 
 .photos img:nth-child(2){
-    flex-grow: 1;
+    width: calc(50% - 0.25rem);
 }
 .photos button{
-    flex-grow: 1;
     padding: 0;
     position: relative;
     background: black;
+    width: calc(50% - 0.25rem);
 }
 .photos button:hover img{
     opacity: .3;
+    width: 100%;
 }
+
+.photos button:hover p{
+    width: 100%;
+
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
 .photos button p{
+    transition: all 500ms ease;
     position: absolute;
     top:50%;
     left:50%;
     transform: translate(-50%, -50%);
     margin: 0;
     padding: 0;
-    font-size: 2rem;
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;
     font-weight: 700;
     font-family: "Poppins";
     color: white;

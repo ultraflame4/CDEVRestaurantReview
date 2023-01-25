@@ -63,8 +63,12 @@ export default defComponent((props) => {
     }
 
     useEffect(() => {
+        document.title="RestauRants - Loading..."
         GetRestaurantById(restaurantId)
             .then(value => {
+                setTimeout(()=> {
+                    document.title = `RestauRants - ${value.name}`
+                },0)
                 setData(value)
             })
         loadMoreReviews()
@@ -97,6 +101,7 @@ export default defComponent((props) => {
                     {
                         reviews.map((value, index) =>
                             <ReviewItem
+                                key={index}
                                 username={value.username}
                                 last_edit={value.last_edit}
                                 rating={value.rating}
@@ -113,7 +118,7 @@ export default defComponent((props) => {
                     <img src={data.photo_url[1]} alt={"An image of the restaurant"}/>
                     <button>
                         <img src={data.photo_url[2]} alt={"An image of the restaurant"}/>
-                        <p>{data.photo_url.length-3}+</p>
+                        <p>See all {data.photo_url.length}</p>
                     </button>
                 </div>
 
