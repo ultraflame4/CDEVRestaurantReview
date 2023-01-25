@@ -1,5 +1,7 @@
-import React, {Suspense} from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
+import Modal from 'react-modal';
+
 import './index.css'
 import {createBrowserRouter, RouterProvider, Route} from "react-router-dom";
 
@@ -29,6 +31,7 @@ const router = createBrowserRouter([
     }
 );
 
+Modal.setAppElement('#modal')
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <RouterProvider router={router}/>

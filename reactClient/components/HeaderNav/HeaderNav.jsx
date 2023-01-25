@@ -6,6 +6,7 @@ import {useContext, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {useOverlayToggle, useToggle, useWatchableValue} from "@/tools/hooks";
 import {UserAccountInfo} from "@/api";
+import Modal from "react-modal";
 
 
 
@@ -18,11 +19,24 @@ const HeaderNavAccount_LoggedInMenu = (props) => {
 }
 
 const HeaderNavAccount_GuestMenu = (props) => {
+    const [currentModal,setModal] = useState(-1) // -1 is none, 0 is login, 1 is signup
+
+    function closeModal() {
+        setModal(-1);
+    }
+
+
     return (
         <>
-            <button type={"button"} className={"btn-primary"}>Sign in</button>
+            <button type={"button"} className={"btn-primary"} onClick={()=>setModal(1)}>Sign in</button>
             <h6 className={"color-lightg no-margin text-center"}>or</h6>
-            <button type={"button"} className={"btn-secondary"}>Sign up</button>
+            <button type={"button"} className={"btn-secondary"} onClick={()=>setModal(0)}>Sign up</button>
+            <Modal isOpen={currentModal===0}>
+                <h1>Login</h1>
+            </Modal>
+            <Modal isOpen={currentModal===1}>
+                <h1>Sign up</h1>
+            </Modal>
         </>
     )
 }
@@ -39,6 +53,7 @@ const HeaderNavAccount = (props) => {
      * @type {MutableRefObject<HTMLDivElement | null>}
      */
     const menuRef = useOverlayToggle(accIconRef);
+
 
 
     return (
@@ -64,7 +79,6 @@ const HeaderNavAccount = (props) => {
 
 export default defComponent((props) => {
     const [hamburgerToggled, setHamburgerToggled] = useState(false)
-
     function toggleHamburger(){
         setHamburgerToggled(prevState => !prevState)
     }
@@ -105,6 +119,7 @@ export default defComponent((props) => {
                     </ul>
                 </div>
             </div>
+
         </header>
     )
 })
