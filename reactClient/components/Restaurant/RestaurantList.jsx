@@ -9,15 +9,13 @@ import {LineBreaker} from "@/components/LineBreaker";
 import {FilterSidepanel} from "@/components/Restaurant/SidePanelFilter";
 import {GetRestaurants} from "@/api";
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const RestaurantListItem = (props) => {
 
-    function open() {
-        window.open(`/app/restaurant/${props.id}`,"_blank")
-    }
 
-    return (<li className={classes.restaurantListContentItem + " card"} onClick={open}>
+    return (<li className={classes.restaurantListContentItem + " card"}>
+        <Link to={`restaurant/${props.id}`}>
         <div className={classes.restaurantListContentItem_Head}>
             <h3 className={classes.restaurantListContentItem_Name}>
                 {props.name}
@@ -52,6 +50,7 @@ const RestaurantListItem = (props) => {
                 <h4>Recent Reviews</h4>
             </div>
         </div>
+        </Link>
     </li>)
 }
 

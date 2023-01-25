@@ -1,5 +1,5 @@
 
-main{
+.main{
     background-color: var(--black);
     display: grid;
     grid-template-columns: auto 32rem;
@@ -7,39 +7,39 @@ main{
     grid-column-gap: 4rem;
 }
 
-main > div:nth-child(1){
+.main > div:nth-child(1){
     font-size: 2.25rem;
 }
 
 
-main h1{
+.main h1{
     margin: 1.5rem 0;
 }
 
-main h2{
+.main h2{
     font-size: 2rem;
     color: var(--off-white);
     margin: 1.5rem 0;
 }
-main h4{
+.main h4{
     font-size: 1rem;
     font-family: "Poppins";
 }
-main h5{
+.main h5{
     font-size: 0.9rem;
     font-family: "Poppins";
 }
 
-#other-info{
+.otherInfo{
     margin-top: 1rem;
     display: flex;
     align-items: center;
 }
 
-#other-info > *{
-    font-size: 1.75rem;
+.otherInfo > *{
+    font-size: 1.75rem !important;
 }
-#other-info > span{
+.otherInfo > span{
     font-weight: 700;
     color: var(--green);
     font-size: 1.75rem;
@@ -48,33 +48,33 @@ main h5{
     margin: 0;
 }
 
-#restaurant-desc{
+.restaurantDesc{
     font-family: "Poppins";
     font-weight: 500;
     font-size: 1.25rem;
     color: var(--light-gray);
 }
 
-#reviews-header{
+.reviewsHeader{
     display: flex;
     align-items: center;
 }
 
-#reviews-header > .icon{
+.reviewsHeader > .icon{
     color: var(--green);
     margin-top: 0.25rem;
     margin-left: 0.5rem;
     font-size: 1.1em;
 }
 
-#reviews-header > button{
+.reviewsHeader > button{
     margin-left: auto;
 
     display: flex;
     align-items: center;
     position: relative;
 }
-#reviews-header > button .icon{
+.reviewsHeader > button .icon{
     font-size: 1.45em;
     height: 100%;
     margin-left: 0.5rem;
@@ -82,13 +82,13 @@ main h5{
     right: 0;
 }
 
-#reviews-list{
+.reviewsList{
     list-style-type: none;
     padding:0;
     margin: 0;
 }
 
-#reviews-list li{
+.reviewsList li{
     margin-bottom: 1.5rem;
     border: 0.2rem solid var(--green);
     padding: 0.5rem;
@@ -96,28 +96,28 @@ main h5{
 }
 
 
-.review-item-head{
+.reviewItemHead {
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: min-content auto;
     grid-column-gap: 0.75rem;
 }
 
-.review-item-head > .icon{
+.reviewItemHead > .icon{
     grid-row: 1/-1;
     grid-column: 1;
     font-size: 3.5rem;
     color: var(--light-gray);
 }
 
-.review-item-head > h4{
+.reviewItemHead > h4{
     margin: 0;
     grid-row: 1;
     grid-column: 2;
     margin-top: auto;
 }
 
-.review-item-head > h5{
+.reviewItemHead > h5{
     margin: 0;
     grid-row: 2;
     grid-column: 2;
@@ -125,13 +125,13 @@ main h5{
     margin-bottom: auto;
 }
 
-.review-item-rating{
+.reviewItemRating {
     font-size: 1.15rem;
     margin-top: 0.25rem;
     margin-left: 0.25rem;
 }
 
-#reviews-list li > p{
+.reviewsList li > p{
     font-family: "Poppins";
     font-size: 1rem;
     font-weight: 500;
@@ -139,7 +139,7 @@ main h5{
     margin-top: 0;
     margin-left: 0.5rem;
 }
-#reviews-list li >.like{
+.reviewsList li >.like{
     font-size: 1.5rem;
     margin-left: 0.5rem;
     color: var(--gray);
@@ -148,14 +148,14 @@ main h5{
     gap: 0.5rem;
 }
 
-#reviews-list li >.like span{
+.reviewsList li >.like span{
     font-family: "Poppins";
     font-weight: 700;
     font-size: 1.25rem;
     color: var(--slight-gray);
 }
 
-#reviews-list:last-child{
+.reviewsList:last-child{
     font-size: 1.2rem;
 }
 
@@ -163,7 +163,7 @@ main > div:nth-child(2){
 
 }
 
-.restaurant-photos{
+.photos {
     display: flex;
     height: fit-content;
     overflow: hidden;
@@ -172,30 +172,30 @@ main > div:nth-child(2){
     box-sizing: border-box;
 }
 
-.restaurant-photos img{
+.photos img{
     border-radius: 0.5rem;
     object-fit: cover;
     flex-shrink: 0;
 }
 
 
-.restaurant-photos img:nth-child(1){
+.photos img:nth-child(1){
     width: 100%;
 }
 
-.restaurant-photos img:nth-child(2){
+.photos img:nth-child(2){
     flex-grow: 1;
 }
-.restaurant-photos button{
+.photos button{
     flex-grow: 1;
     padding: 0;
     position: relative;
     background: black;
 }
-.restaurant-photos button:hover img{
+.photos button:hover img{
     opacity: .3;
 }
-.restaurant-photos button p{
+.photos button p{
     position: absolute;
     top:50%;
     left:50%;
@@ -209,7 +209,7 @@ main > div:nth-child(2){
     overflow: hidden;
 
 }
-.restaurant-photos button img{
+.photos button img{
     transition: opacity 200ms;
     height: 100%;
     width: 100%;

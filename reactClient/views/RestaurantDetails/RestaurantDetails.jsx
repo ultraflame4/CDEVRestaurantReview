@@ -2,19 +2,20 @@ import {defComponent} from "@/tools/define";
 import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {GetRestaurantById, GetRestaurantReviews} from "@/api";
-import "./RestaurantDetails.css"
+import "./RestaurantDetails.module.css"
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 import {StarRatings} from "@/components/Ratings/StarRatings";
 import {Icon} from "@iconify-icon/react";
 import {CostRatings} from "@/components/Ratings/CostRatings";
 import {LineBreaker} from "@/components/LineBreaker";
 import PropTypes from "prop-types";
+import classes from "./RestaurantDetails.module.css";
 
 const ReviewItem = (props) => {
     let date = new Date(props.last_edit)
 
     return <li>
-        <div className={"review-item-head"}>
+        <div className={classes.reviewItemHead}>
             <Icon icon={"ic:baseline-account-circle"} className={"icon"}/>
             <h4>{props.username}</h4>
             <h5>
@@ -23,9 +24,9 @@ const ReviewItem = (props) => {
                 {date.toLocaleTimeString(undefined, {timeStyle: "short"})}
             </h5>
         </div>
-        <div className={"review-item-rating"}><StarRatings rating={props.rating}/></div>
+        <div className={classes.reviewItemRating}><StarRatings rating={props.rating}/></div>
         <p><LineBreaker text={props.content} sep={"<br>"}/></p>
-        <div className={"like"}>
+        <div className={classes.like}>
             <Icon icon={"ic:baseline-thumb-up"} />
             <span>{props.likes}</span>
         </div>
@@ -75,24 +76,24 @@ export default defComponent((props) => {
 
 
     return (<div>
-        <main>
+        <main className={classes.main}>
             <div>
                 <h1>{data.name}</h1>
                 <StarRatings rating={parseFloat(data.avg_rating)}/>
-                <div id={"other-info"}>
+                <div className={classes.otherInfo}>
                     <CostRatings rating={data.cost_rating / 2}/>
                     <Icon icon={"ci:dot-03-m"}/>
                     <span>{Math.round(data.distance / 10) / 100}km</span>
                 </div>
                 <h2>Description</h2>
-                <p id={"restaurant-desc"}>
+                <p className={classes.restaurantDesc}>
                     <LineBreaker text={data.description} sep={"<br>"}/>
                 </p>
-                <div id={"reviews-header"}>
-                    <h2>Reviews</h2> <Icon icon={"ic:baseline-chat"} className={"icon"}/>
-                    <button>Write a review <Icon icon={"ic:baseline-edit"} className={"icon"}/></button>
+                <div className={classes.reviewsHeader}>
+                    <h2>Reviews</h2> <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
+                    <button>Write a review <Icon icon={"ic:baseline-edit"} className={classes.icon}/></button>
                 </div>
-                <ul id={"reviews-list"}>
+                <ul className={classes.reviewsList}>
                     {
                         reviews.map((value, index) =>
                             <ReviewItem
@@ -107,7 +108,7 @@ export default defComponent((props) => {
                 </ul>
             </div>
             <div>
-                <div className={"restaurant-photos"}>
+                <div className={classes.photos}>
                     <img src={data.photo_url[0]} alt={"An image of the restaurant"}/>
                     <img src={data.photo_url[1]} alt={"An image of the restaurant"}/>
                     <button>
