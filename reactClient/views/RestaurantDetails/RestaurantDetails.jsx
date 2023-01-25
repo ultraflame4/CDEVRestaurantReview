@@ -16,7 +16,7 @@ const ReviewItem = (props) => {
 
     return <li>
         <div className={classes.reviewItemHead}>
-            <Icon icon={"ic:baseline-account-circle"} className={"icon"}/>
+            <Icon icon={"ic:baseline-account-circle"} className={classes.icon}/>
             <h4>{props.username}</h4>
             <h5>
                 {date.toLocaleDateString(undefined, {dateStyle: "short"})}
