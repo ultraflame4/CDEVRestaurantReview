@@ -1,5 +1,5 @@
 
-.main{
+.main {
     background-color: var(--black);
     display: grid;
     grid-template-columns: auto 32rem;
@@ -7,39 +7,42 @@
     grid-column-gap: 4rem;
 }
 
-.main > div:nth-child(1){
+.main > div:nth-child(1) {
     font-size: 2.25rem;
 }
 
 
-.main h1{
+.main h1 {
     margin: 1.5rem 0;
 }
 
-.main h2{
+.main h2 {
     font-size: 2rem;
     color: var(--off-white);
     margin: 1.5rem 0;
 }
-.main h4{
+
+.main h4 {
     font-size: 1rem;
     font-family: "Poppins";
 }
-.main h5{
+
+.main h5 {
     font-size: 0.9rem;
     font-family: "Poppins";
 }
 
-.otherInfo{
+.otherInfo {
     margin-top: 1rem;
     display: flex;
     align-items: center;
 }
 
-.otherInfo > *{
+.otherInfo > * {
     font-size: 1.75rem !important;
 }
-.otherInfo > span{
+
+.otherInfo > span {
     font-weight: 700;
     color: var(--green);
     font-size: 1.75rem;
@@ -48,33 +51,34 @@
     margin: 0;
 }
 
-.restaurantDesc{
+.restaurantDesc {
     font-family: "Poppins";
     font-weight: 500;
     font-size: 1.25rem;
     color: var(--light-gray);
 }
 
-.reviewsHeader{
+.reviewsHeader {
     display: flex;
     align-items: center;
 }
 
-.reviewsHeader > .icon{
+.reviewsHeader > .icon {
     color: var(--green);
     margin-top: 0.25rem;
     margin-left: 0.5rem;
     font-size: 1.1em;
 }
 
-.reviewsHeader > button{
+.reviewsHeader > button {
     margin-left: auto;
 
     display: flex;
     align-items: center;
     position: relative;
 }
-.reviewsHeader > button .icon{
+
+.reviewsHeader > button .icon {
     font-size: 1.45em;
     height: 100%;
     margin-left: 0.5rem;
@@ -82,13 +86,13 @@
     right: 0;
 }
 
-.reviewsList{
+.reviewsList {
     list-style-type: none;
-    padding:0;
+    padding: 0;
     margin: 0;
 }
 
-.reviewsList li{
+.reviewsList li {
     margin-bottom: 1.5rem;
     border: 0.2rem solid var(--green);
     padding: 0.5rem;
@@ -103,21 +107,21 @@
     grid-column-gap: 0.75rem;
 }
 
-.reviewItemHead > .icon{
+.reviewItemHead > .icon {
     grid-row: 1/-1;
     grid-column: 1;
     font-size: 3.5rem;
     color: var(--light-gray);
 }
 
-.reviewItemHead > h4{
+.reviewItemHead > h4 {
     margin: 0;
     grid-row: 1;
     grid-column: 2;
     margin-top: auto;
 }
 
-.reviewItemHead > h5{
+.reviewItemHead > h5 {
     margin: 0;
     grid-row: 2;
     grid-column: 2;
@@ -131,7 +135,7 @@
     margin-left: 0.25rem;
 }
 
-.reviewsList li > p{
+.reviewsList li > p {
     font-family: "Poppins";
     font-size: 1rem;
     font-weight: 500;
@@ -139,7 +143,8 @@
     margin-top: 0;
     margin-left: 0.5rem;
 }
-.reviewsList li >.like{
+
+.reviewsList li > .like {
     font-size: 1.5rem;
     margin-left: 0.5rem;
     color: var(--gray);
@@ -148,18 +153,18 @@
     gap: 0.5rem;
 }
 
-.reviewsList li >.like span{
+.reviewsList li > .like span {
     font-family: "Poppins";
     font-weight: 700;
     font-size: 1.25rem;
     color: var(--slight-gray);
 }
 
-.reviewsList:last-child{
+.reviewsList:last-child {
     font-size: 1.2rem;
 }
 
-main > div:nth-child(2){
+.main > div:nth-child(2) {
 
 }
 
@@ -172,44 +177,46 @@ main > div:nth-child(2){
     box-sizing: border-box;
 }
 
-.photos img{
+.photos img {
     border-radius: 0.5rem;
     object-fit: cover;
 
 }
 
 
-.photos img:nth-child(1){
+.photos img:nth-child(1) {
     width: 100%;
 
     flex-shrink: 0;
 }
 
-.photos img:nth-child(2){
+.photos img:nth-child(2) {
     width: calc(50% - 0.25rem);
 }
-.photos button{
+
+.photos button {
     padding: 0;
     position: relative;
     background: black;
     width: calc(50% - 0.25rem);
 }
-.photos button:hover img{
+
+.photos button:hover img {
     opacity: .3;
     width: 100%;
 }
 
-.photos button:hover p{
+.photos button:hover p {
 
     transform: translate(-50%, -50%) scale(1.1);
 }
 
-.photos button p{
+.photos button p {
     width: 100%;
     transition: all 500ms ease;
     position: absolute;
-    top:50%;
-    left:50%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     margin: 0;
     padding: 0;
@@ -221,11 +228,72 @@ main > div:nth-child(2){
     overflow: hidden;
 
 }
-.photos button img{
+
+.photos button img {
     transition: opacity 200ms;
     height: 100%;
     width: 100%;
     opacity: .4;
     filter: brightness(45%) contrast(0.8) grayscale(0.5);
+}
+
+.main > div:nth-child(2) > aside {
+    width: 100%;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    box-sizing: border-box;
+    background: var(--gray);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: sticky;
+}
+.restaurantInfoItem a{
+    text-decoration: underline;
+    cursor: pointer;
+    pointer-events: all;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+
+}
+.restaurantInfoItem {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: min-content 1fr;
+    height: fit-content;
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 0.25rem;
+}
+
+.restaurantInfoItem .icon {
+    grid-column: 1;
+    grid-row: 1;
+    color: var(--green);
+    font-weight: 900;
+    font-size: 2rem;
+    height: fit-content;
+}
+
+.restaurantInfoItem h3 {
+    grid-column: 2;
+    grid-row: 1;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    letter-spacing: 0.05rem;
+}
+
+.restaurantInfoItem p{
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0;
+    font-weight: 600;
+    font-family: "Poppins";
+    font-size: 0.95rem;
 }
 

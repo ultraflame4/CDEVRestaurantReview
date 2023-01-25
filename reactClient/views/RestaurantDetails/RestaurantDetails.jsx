@@ -42,6 +42,24 @@ ReviewItem.propTypes = {
 }
 
 
+const RestaurantInfoItem = (props)=>{
+    return <div className={classes.restaurantInfoItem}>
+        <Icon icon={props.icon} className={classes.icon}/>
+        <h3>
+            {props.title}
+        </h3>
+        <p>{props.children}</p>
+    </div>
+}
+
+RestaurantInfoItem.propTypes = {
+    children: PropTypes.node,
+    icon: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+}
+
+
+
 export default defComponent((props) => {
     const params = useParams()
     const restaurantId = params.id
@@ -100,6 +118,7 @@ export default defComponent((props) => {
                 <ul className={classes.reviewsList}>
                     {
                         reviews.map((value, index) =>
+
                             <ReviewItem
                                 key={index}
                                 username={value.username}
@@ -121,7 +140,17 @@ export default defComponent((props) => {
                         <p>See all {data.photo_url.length}</p>
                     </button>
                 </div>
-
+                <aside className={"card"}>
+                    <RestaurantInfoItem icon={"mdi:link-variant"} title={"Website"}>
+                        <a href={data.website} target={"_blank"}>{data.website}</a>
+                    </RestaurantInfoItem>
+                    <RestaurantInfoItem icon={"ic:baseline-local-phone"} title={"Phone number"}>
+                        {data.phone_no}
+                    </RestaurantInfoItem>
+                    <RestaurantInfoItem icon={"ic:directions"} title={"Location"}>
+                        {data.location}
+                    </RestaurantInfoItem>
+                </aside>
 
             </div>
         </main>
