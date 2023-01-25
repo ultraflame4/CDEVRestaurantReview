@@ -43,6 +43,9 @@ ReviewItem.propTypes = {
 
 
 const RestaurantInfoItem = (props)=>{
+    if (props.hide){
+        return <></>
+    }
     return <div className={classes.restaurantInfoItem}>
         <Icon icon={props.icon} className={classes.icon}/>
         <h3>
@@ -56,6 +59,7 @@ RestaurantInfoItem.propTypes = {
     children: PropTypes.node,
     icon: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    hide: PropTypes.bool
 }
 
 
@@ -141,13 +145,13 @@ export default defComponent((props) => {
                     </button>
                 </div>
                 <aside className={"card"}>
-                    <RestaurantInfoItem icon={"mdi:link-variant"} title={"Website"}>
+                    <RestaurantInfoItem icon={"mdi:link-variant"} title={"Website"} hide={!data.website}>
                         <a href={data.website} target={"_blank"}>{data.website}</a>
                     </RestaurantInfoItem>
-                    <RestaurantInfoItem icon={"ic:baseline-local-phone"} title={"Phone number"}>
+                    <RestaurantInfoItem icon={"ic:baseline-local-phone"} title={"Phone number"} hide={!data.phone_no}>
                         {data.phone_no}
                     </RestaurantInfoItem>
-                    <RestaurantInfoItem icon={"ic:directions"} title={"Location"}>
+                    <RestaurantInfoItem icon={"ic:directions"} title={"Location"} hide={!data.location}>
                         {data.location}
                     </RestaurantInfoItem>
                 </aside>
