@@ -139,6 +139,10 @@ main h5{
     margin-left: 0.5rem;
 }
 
+#reviews-list:last-child{
+    font-size: 1.2rem;
+}
+
 main > div:nth-child(2){
 
 }

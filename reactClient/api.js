@@ -201,15 +201,17 @@ export async function GetRestaurantById(id) {
 
 /**
  * Gets a the reviews for a restaurant from the server using its id
- * @param id
+ * @param id {number} id of restaurant
+ * @param offset {number} Offset to start from
  * @return {Promise<null|DBReviewType[]>}
  * @constructor
  */
-export async function GetRestaurantReviews(id){
+export async function GetRestaurantReviews(id,offset=0){
     let data;
     try{
         data = await fetchApi("/api/reviews",{
-            restaurant_id:id
+            restaurant_id:id,
+            start:offset
         })
     }
     catch (e) {

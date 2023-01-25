@@ -42,16 +42,27 @@ export default defComponent((props) => {
     const restaurantId = params.id
     const [data, setData] = useState(null)
     const [reviews, setReviews] = useState([])
+    const [allReviewsShown, setAllReviewsShown] = useState(false)
+
+
+    function loadMoreReviews(){
+        GetRestaurantReviews(restaurantId,reviews.length)
+            .then(value => {
+                if (value.length===0) {
+                    setAllReviewsShown(true)
+                }
+                setReviews(prevState => {
+                    return prevState.concat(value)
+                })
+            })
+    }
 
     useEffect(() => {
         GetRestaurantById(restaurantId)
             .then(value => {
                 setData(value)
             })
-        GetRestaurantReviews(restaurantId)
-            .then(value => {
-                setReviews(value)
-            })
+        loadMoreReviews()
     }, [restaurantId])
 
     if (data === null) {
@@ -88,7 +99,9 @@ export default defComponent((props) => {
                                 likes={value.likes ?? 0}/>
                         )
                     }
+                    <InfiniteScroll loadMore={loadMoreReviews} hide={allReviewsShown}/>
                 </ul>
+
             </div>
             <div>
 
