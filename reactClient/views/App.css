@@ -104,3 +104,30 @@ button.btn-primary:active, button.btn-secondary:active {
     filter: drop-shadow(0rem 0.1rem 0.4rem black);
     border-radius: 0.6em;
 }
+
+input{
+    background: var(--gray);
+    padding: 0.8rem;
+    border: none;
+    color: var(--off-white);
+    font-size: 1rem;
+    font-family: "Segoe UI";
+    font-weight: 700;
+    outline: none;
+    border-radius: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0.5rem 0;
+}
+
+input::placeholder {
+    color: var(--light-gray);
+}
+
+a {
+    cursor: pointer;
+}
+
+.full-width {
+    width: 100%;
+}

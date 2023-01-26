@@ -19,7 +19,7 @@ const HeaderNavAccount_LoggedInMenu = (props) => {
 }
 
 const HeaderNavAccount_GuestMenu = (props) => {
-    const [currentModal,setModal] = useState(-1) // -1 is none, 0 is login, 1 is signup
+    const [currentModal, setModal] = useState(-1) // -1 is none, 0 is login, 1 is signup
 
     function closeModal() {
         setModal(-1);
@@ -28,20 +28,29 @@ const HeaderNavAccount_GuestMenu = (props) => {
 
     return (
         <>
-            <button type={"button"} className={"btn-primary"} onClick={()=>setModal(0)}>Sign in</button>
+            <button type={"button"} className={"btn-primary"} onClick={() => setModal(0)}>Sign in</button>
             <h6 className={"color-lightg no-margin text-center"}>or</h6>
-            <button type={"button"} className={"btn-secondary"} onClick={()=>setModal(1)}>Sign up</button>
-            <WModal isOpen={currentModal===0} onRequestClose={closeModal}>
-                <h1>Login</h1>
+            <button type={"button"} className={"btn-secondary"} onClick={() => setModal(1)}>Sign up</button>
+            <WModal
+                isOpen={currentModal === 0}
+                onRequestClose={closeModal}
+                title={"Sign In"}
+                icon={"material-symbols:login"}>
+
+                <input placeholder={"Account Email"} type={"email"}/>
+                <input placeholder={"Password"} type={"password"}/>
+                <p className={"full-width"}>New here? <a style={{color:"var(--gold)"}} onClick={()=>setModal(1)}>Create Account</a></p>
+                <p className={"full-width"}><a style={{color:"var(--red)"}}>Forget password</a></p>
+                <button>Sign in</button>
             </WModal>
-            <WModal isOpen={currentModal===1} onRequestClose={closeModal}>
+            <WModal isOpen={currentModal === 1} onRequestClose={closeModal}>
                 <h1>Sign Up</h1>
             </WModal>
         </>
     )
 }
 
-HeaderNavAccount_GuestMenu.propTypes={
+HeaderNavAccount_GuestMenu.propTypes = {
     username: PropTypes.string,
 }
 
@@ -55,7 +64,6 @@ const HeaderNavAccount = (props) => {
     const menuRef = useOverlayToggle(accIconRef);
 
 
-
     return (
         <div className={classes.HeaderNavAccount} data-loggedin={(username != null).toString()} ref={menuRef}>
             <div className={classes.HeaderNavAccountIconBorder}></div>
@@ -63,10 +71,10 @@ const HeaderNavAccount = (props) => {
                 <Icon icon={"ic:account-circle"} className={classes.HeaderNavAccountIcon}/>
             </a>
             <div className={classes.HeaderNavAccountMenu}>
-                <h6 className={classes.HeaderNavAccountMenu_username}>{username??"Guest User"}</h6>
+                <h6 className={classes.HeaderNavAccountMenu_username}>{username ?? "Guest User"}</h6>
                 {
-                    username==null?
-                        <HeaderNavAccount_GuestMenu/>:
+                    username == null ?
+                        <HeaderNavAccount_GuestMenu/> :
                         <HeaderNavAccount_LoggedInMenu/>
                 }
             </div>
@@ -79,7 +87,8 @@ const HeaderNavAccount = (props) => {
 
 export default defComponent((props) => {
     const [hamburgerToggled, setHamburgerToggled] = useState(false)
-    function toggleHamburger(){
+
+    function toggleHamburger() {
         setHamburgerToggled(prevState => !prevState)
     }
 
@@ -106,7 +115,7 @@ export default defComponent((props) => {
             </ul>
             <HeaderNavAccount/>
 
-            <div className={classes.HeaderHamburger} data-toggled={hamburgerToggled} >
+            <div className={classes.HeaderHamburger} data-toggled={hamburgerToggled}>
                 <Icon icon={"ph:hamburger"} className={classes.HeaderHamburgerIcon} onClick={toggleHamburger}/>
                 <div className={classes.HeaderHamburgerContent}>
                     <ul className={classes.HeaderNavLinks}>
