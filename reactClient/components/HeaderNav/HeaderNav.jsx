@@ -6,9 +6,11 @@ import {useContext, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {useOverlayToggle} from "@/tools/hooks";
 
-import {WModal} from "@/components/Modal/WModal";
 import {UserAccountContext} from "@/tools/contexts";
 import authManager from "@/core/authManager";
+import NiceModal from "@ebay/nice-modal-react";
+import {SignInModal, SignUpModal} from "@/components/modals/modals";
+import {WModal} from "@/components/Modal/WModal";
 
 
 const HeaderNavAccount_LoggedInMenu = (props) => {
@@ -37,21 +39,8 @@ const HeaderNavAccount_GuestMenu = (props) => {
             <button type={"button"} className={"btn-primary"} onClick={() => setModal(0)}>Sign in</button>
             <h6 className={"color-lightg no-margin text-center"}>or</h6>
             <button type={"button"} className={"btn-secondary"} onClick={() => setModal(1)}>Sign up</button>
-            <WModal
-                isOpen={currentModal === 0}
-                onRequestClose={closeModal}
-                title={"Sign In"}
-                icon={"material-symbols:login"}>
-
-                <input placeholder={"Account Email"} type={"email"} ref={inpEmailRef}/>
-                <input placeholder={"Password"} type={"password"} ref={inpPwdRef}/>
-                <p className={"full-width"}>New here? <a style={{color:"var(--gold)"}} onClick={()=>setModal(1)}>Create Account</a></p>
-                <p className={"full-width"}><a style={{color:"var(--red)"}}>Forget password</a></p>
-                <button onClick={signIn}>Sign in</button>
-            </WModal>
-            <WModal isOpen={currentModal === 1} onRequestClose={closeModal}>
-                <h1>Sign Up</h1>
-            </WModal>
+            <SignInModal isOpen={currentModal===0} onClose={closeModal} onCreateAccountRedirect={()=>setModal(1)}/>
+            <SignUpModal isOpen={currentModal===1} onClose={closeModal}/>
         </>
     )
 }

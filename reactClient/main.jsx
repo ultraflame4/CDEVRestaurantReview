@@ -6,6 +6,7 @@ import './index.css'
 import {createBrowserRouter, RouterProvider, Route} from "react-router-dom";
 
 import App from "@/views/App";
+import NiceModal from "@ebay/nice-modal-react";
 
 const Home = React.lazy(() => import("@/views/Home/Home"))
 const RestaurantDetails = React.lazy(() => import("@/views/RestaurantDetails/RestaurantDetails"))
@@ -35,7 +36,6 @@ Modal.setAppElement('#root')
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-
         <RouterProvider router={router}/>
     </React.StrictMode>
 )
