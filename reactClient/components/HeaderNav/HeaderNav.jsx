@@ -9,7 +9,7 @@ import {useOverlayToggle} from "@/tools/hooks";
 import {UserAccountContext} from "@/tools/contexts";
 import authManager from "@/core/authManager";
 import NiceModal from "@ebay/nice-modal-react";
-import {SignInModal, SignUpModal} from "@/components/modals/modals";
+import {showModal, SignInModal, SignUpModal} from "@/components/modals/modals";
 import {WModal} from "@/components/Modal/WModal";
 
 
@@ -22,25 +22,18 @@ const HeaderNavAccount_LoggedInMenu = (props) => {
 }
 
 const HeaderNavAccount_GuestMenu = (props) => {
-    const [currentModal, setModal] = useState(-1) // -1 is none, 0 is login, 1 is signup
+
     const inpEmailRef = useRef(null);
     const inpPwdRef = useRef(null);
-    function closeModal() {
-        setModal(-1);
-    }
 
-    function signIn() {
-        authManager.login(inpEmailRef.current.value, inpPwdRef.current.value)
-    }
 
 
     return (
         <>
-            <button type={"button"} className={"btn-primary"} onClick={() => setModal(0)}>Sign in</button>
+            <button type={"button"} className={"btn-primary"} onClick={() => showModal("signin")}>Sign in</button>
             <h6 className={"color-lightg no-margin text-center"}>or</h6>
-            <button type={"button"} className={"btn-secondary"} onClick={() => setModal(1)}>Sign up</button>
-            <SignInModal isOpen={currentModal===0} onClose={closeModal} onCreateAccountRedirect={()=>setModal(1)}/>
-            <SignUpModal isOpen={currentModal===1} onClose={closeModal}/>
+            <button type={"button"} className={"btn-secondary"} onClick={() => showModal("signup")}>Sign up</button>
+
         </>
     )
 }

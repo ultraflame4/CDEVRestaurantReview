@@ -1,6 +1,6 @@
 import {defComponent} from "@/tools/define";
 import {useParams} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {GetRestaurantById, GetRestaurantReviews} from "@/core/api";
 import "./RestaurantDetails.module.css"
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
@@ -10,6 +10,8 @@ import {CostRatings} from "@/components/Ratings/CostRatings";
 import {LineBreaker} from "@/components/LineBreaker";
 import PropTypes from "prop-types";
 import classes from "./RestaurantDetails.module.css";
+import {UserAccountContext} from "@/tools/contexts";
+import {showModal} from "@/components/modals/modals";
 
 const ReviewItem = (props) => {
     let date = new Date(props.last_edit)
@@ -70,6 +72,7 @@ export default defComponent((props) => {
     const [data, setData] = useState(null)
     const [reviews, setReviews] = useState([])
     const [allReviewsShown, setAllReviewsShown] = useState(false)
+    const usrCtx = useContext(UserAccountContext)
 
 
     function loadMoreReviews(){
@@ -101,6 +104,12 @@ export default defComponent((props) => {
     }
 
 
+    function onWriteReview(){
+        if (usrCtx===null){
+            showModal("signin")
+        }
+    }
+
     return (<div>
         <main className={classes.main}>
             <div>
@@ -117,7 +126,7 @@ export default defComponent((props) => {
                 </p>
                 <div className={classes.reviewsHeader}>
                     <h2>Reviews</h2> <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
-                    <button>Write a review <Icon icon={"ic:baseline-edit"} className={classes.icon}/></button>
+                    <button onClick={onWriteReview}>Write a review <Icon icon={"ic:baseline-edit"} className={classes.icon}/></button>
                 </div>
                 <ul className={classes.reviewsList}>
                     {
