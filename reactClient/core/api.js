@@ -1,6 +1,6 @@
 import React from "react";
 
-const host = import.meta.env.DEV ? `localhost:${import.meta.env.VITE_EXPRESS_PORT}` : location.host
+const host = import.meta.env.DEV ? `localhost:${import.meta.env.VITE_DEV_PORT}/app` : location.host
 
 /**
  * Restaurant Type returned by the database
@@ -44,7 +44,6 @@ export class ApiError extends Error {
         this.apiError = jsonData?.error
         this.code = errCode
     }
-
 }
 
 /**
@@ -55,8 +54,10 @@ export class ApiError extends Error {
  * @returns {Promise<any|null>} Returns null on failure
  */
 export async function fetchApi(path_, queryParams = {}, init = {}) {
-    let url = new URL(path_, `http://${host}`) + "?" + new URLSearchParams(queryParams)
+    let url = new URL(path_, `http://${window.location.host}`) + "?" + new URLSearchParams(queryParams)
     let response;
+
+
     try {
         response = await fetch(url, init);
     } catch (err) {
@@ -211,3 +212,4 @@ export async function GetRestaurantReviews(id,offset=0){
     }
     return data.results ?? null
 }
+

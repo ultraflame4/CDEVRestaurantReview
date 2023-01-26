@@ -33,5 +33,5 @@ export default defineConfig({
             "@": path.resolve(__dirname, "reactClient")
         }
     },
-    base: "/app"
+    base: "/app/"
 })

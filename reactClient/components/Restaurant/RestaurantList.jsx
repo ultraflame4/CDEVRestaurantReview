@@ -7,7 +7,7 @@ import {StarRatings} from "@/components/Ratings/StarRatings";
 import {CostRatings} from "@/components/Ratings/CostRatings";
 import {LineBreaker} from "@/components/LineBreaker";
 import {FilterSidepanel} from "@/components/Restaurant/SidePanelFilter";
-import {GetRestaurants} from "@/api";
+import {GetRestaurants} from "@/core/api";
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 import {Link, useNavigate} from "react-router-dom";
 

@@ -1,7 +1,7 @@
 import {defComponent} from "@/tools/define";
 import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {GetRestaurantById, GetRestaurantReviews} from "@/api";
+import {GetRestaurantById, GetRestaurantReviews} from "@/core/api";
 import "./RestaurantDetails.module.css"
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 import {StarRatings} from "@/components/Ratings/StarRatings";

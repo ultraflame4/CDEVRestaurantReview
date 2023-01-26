@@ -8,6 +8,7 @@ import {useOverlayToggle} from "@/tools/hooks";
 
 import {WModal} from "@/components/Modal/WModal";
 import {UserAccountContext} from "@/tools/contexts";
+import authManager from "@/core/authManager";
 
 
 const HeaderNavAccount_LoggedInMenu = (props) => {
@@ -20,9 +21,14 @@ const HeaderNavAccount_LoggedInMenu = (props) => {
 
 const HeaderNavAccount_GuestMenu = (props) => {
     const [currentModal, setModal] = useState(-1) // -1 is none, 0 is login, 1 is signup
-
+    const inpEmailRef = useRef(null);
+    const inpPwdRef = useRef(null);
     function closeModal() {
         setModal(-1);
+    }
+
+    function signIn() {
+        authManager.login(inpEmailRef.current.value, inpPwdRef.current.value)
     }
 
 
@@ -37,11 +43,11 @@ const HeaderNavAccount_GuestMenu = (props) => {
                 title={"Sign In"}
                 icon={"material-symbols:login"}>
 
-                <input placeholder={"Account Email"} type={"email"}/>
-                <input placeholder={"Password"} type={"password"}/>
+                <input placeholder={"Account Email"} type={"email"} ref={inpEmailRef}/>
+                <input placeholder={"Password"} type={"password"} ref={inpPwdRef}/>
                 <p className={"full-width"}>New here? <a style={{color:"var(--gold)"}} onClick={()=>setModal(1)}>Create Account</a></p>
                 <p className={"full-width"}><a style={{color:"var(--red)"}}>Forget password</a></p>
-                <button>Sign in</button>
+                <button onClick={signIn}>Sign in</button>
             </WModal>
             <WModal isOpen={currentModal === 1} onRequestClose={closeModal}>
                 <h1>Sign Up</h1>
