@@ -84,7 +84,7 @@ class AuthManager {
             console.log(document.cookie)
             data = await fetchApi("/api/user/info", undefined, {
                 credentials: "same-origin",
-                mode:"no-cors",
+                mode: "no-cors",
 
             })
         } catch (e) {
@@ -97,4 +97,7 @@ class AuthManager {
 
 }
 
-export default new AuthManager();
+const authManager = new AuthManager();
+// Expose the authManager to the window so that i can logout easily
+window.logout = authManager.logout
+export default authManager
