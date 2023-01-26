@@ -238,19 +238,22 @@
     text-overflow: ellipsis;
 }
 
-.HeaderNavAccount[toggled]
-.HeaderNavAccountMenu {
+.HeaderNavAccount[toggled] .HeaderNavAccountMenu {
     display: flex;
     opacity: 1;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.25rem;
     animation: fadein 200ms ease;
 }
 
 .HeaderNavAccountMenu > button {
     font-size: 1.05rem;
     width: 100%;
-
+    border-radius: 0.45rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes fadein {
