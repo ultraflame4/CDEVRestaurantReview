@@ -16,11 +16,22 @@ export default defineConfig({
     },
     server: {
         port: process.env.VITE_DEV_PORT,
+        proxy: {
+            "/api": {
+                target: `http://localhost:${process.env.VITE_EXPRESS_PORT}`,
+                changeOrigin: true,
+                secure: false,
+                followRedirects: true,
+
+                ws: true,
+                rewrite: (path) => path.replace(/^\/app/, ''),
+            }
+        }
     },
     resolve: {
         alias: {
-            "@": path.resolve(__dirname, "reactClient"),
+            "@": path.resolve(__dirname, "reactClient")
         }
     },
-    base: "/app/"
+    base: "/app"
 })
