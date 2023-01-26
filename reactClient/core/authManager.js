@@ -81,11 +81,10 @@ class AuthManager {
     async GetUserInfo() {
         let data;
         try {
-            console.log(document.cookie)
+
             data = await fetchApi("/api/user/info", undefined, {
                 credentials: "same-origin",
                 mode: "no-cors",
-
             })
         } catch (e) {
             console.log(e)
