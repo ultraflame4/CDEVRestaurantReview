@@ -37,11 +37,12 @@ const host = import.meta.env.DEV ? `localhost:${import.meta.env.VITE_EXPRESS_POR
  */
 
 
-class ApiError extends Error {
-    constructor(apiPath, jsonData) {
+export class ApiError extends Error {
+    constructor(apiPath, jsonData,errCode) {
         super(`ApiError: Error while fetching ${apiPath}\nApi results:\n${JSON.stringify(jsonData, null, 2)}`);
         this.name = "ApiError"
-        this.apiError = jsonData.error
+        this.apiError = jsonData?.error
+        this.code = errCode
     }
 
 }
@@ -53,7 +54,7 @@ class ApiError extends Error {
  * @param queryParams {Object}
  * @returns {Promise<any|null>} Returns null on failure
  */
-async function fetchApi(path_, queryParams = {}, init = {}) {
+export async function fetchApi(path_, queryParams = {}, init = {}) {
     let url = new URL(path_, `http://${host}`) + "?" + new URLSearchParams(queryParams)
     let response;
     try {
@@ -62,17 +63,25 @@ async function fetchApi(path_, queryParams = {}, init = {}) {
         console.error(`Error while fetching api ${url}:`, err)
         throw new Error("Unable to fetch api")
     }
-    let jsonData;
+
+    // try to decode the response
+    let jsonData = undefined;
     try {
         jsonData = await response.json();
     } catch (err) {
         console.error(`Error while decoding response ${path_}:`, response)
+    }
+
+    // check if the response is an error
+    if (!response.ok) {
+        throw new ApiError(url, jsonData??response.body,response.status)
+    }
+    // return the decoded response
+    // if response was not able to be decoded, throw an error
+    if (jsonData === undefined) {
         throw new Error("Unable to decode response")
     }
 
-    if (jsonData.error) {
-        throw new ApiError(url, jsonData)
-    }
 
     return jsonData
 
