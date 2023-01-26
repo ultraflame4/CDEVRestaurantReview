@@ -31,7 +31,8 @@ const router = createBrowserRouter([
     }
 );
 
-Modal.setAppElement('#modal')
+Modal.setAppElement('#root')
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <RouterProvider router={router}/>

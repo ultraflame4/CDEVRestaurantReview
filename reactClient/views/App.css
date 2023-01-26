@@ -1,4 +1,4 @@
-:root{
+:root {
     --red: #e55555;
     --green: #a9ae69;
     --gold: #b9ac33;
@@ -17,21 +17,23 @@
 
 }
 
-.color-gray{
+.color-gray {
     color: var(--gray);
 }
-.color-offwhite{
+
+.color-offwhite {
     color: var(--off-white);
 }
 
-.color-slightg{
+.color-slightg {
     color: var(--slight-gray);
 }
-.color-lightg{
+
+.color-lightg {
     color: var(--light-gray);
 }
 
-.poppins{
+.poppins {
     font-family: "Poppins";
 }
 
@@ -39,16 +41,16 @@
     margin: 0;
 }
 
-.alignself-center{
+.alignself-center {
     align-self: center;
 }
 
-.text-center{
+.text-center {
     align-self: center;
 }
 
 /*Centers horizontally using margin*/
-.margin-h-center{
+.margin-h-center {
     margin-left: auto;
     margin-right: auto;
 }
@@ -73,31 +75,32 @@ button {
     cursor: pointer;
 }
 
-button:hover{
+button:hover {
     --fore: var(--gray);
     --back: var(--green);
 }
 
-button.btn-primary{
+button.btn-primary {
     --fore: var(--gray);
     --back: var(--green);
 }
 
-button.btn-secondary{
+button.btn-secondary {
     --fore: var(--light-gray);
     --back: var(--gray);
 }
-button.btn-primary:hover,button.btn-secondary:hover{
+
+button.btn-primary:hover, button.btn-secondary:hover {
     filter: brightness(110%);
     transform: translateY(-0.1rem);
 }
 
-button.btn-primary:active,button.btn-secondary:active{
+button.btn-primary:active, button.btn-secondary:active {
     filter: none !important;
     transform: none;
 }
 
-.card{
+.card {
     filter: drop-shadow(0rem 0.1rem 0.4rem black);
     border-radius: 0.6em;
 }

@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import {useOverlayToggle, useToggle, useWatchableValue} from "@/tools/hooks";
 import {UserAccountInfo} from "@/api";
 import Modal from "react-modal";
-
+import {WModal} from "@/components/Modal/WModal";
 
 
 const HeaderNavAccount_LoggedInMenu = (props) => {
@@ -28,15 +28,15 @@ const HeaderNavAccount_GuestMenu = (props) => {
 
     return (
         <>
-            <button type={"button"} className={"btn-primary"} onClick={()=>setModal(1)}>Sign in</button>
+            <button type={"button"} className={"btn-primary"} onClick={()=>setModal(0)}>Sign in</button>
             <h6 className={"color-lightg no-margin text-center"}>or</h6>
-            <button type={"button"} className={"btn-secondary"} onClick={()=>setModal(0)}>Sign up</button>
-            <Modal isOpen={currentModal===0}>
+            <button type={"button"} className={"btn-secondary"} onClick={()=>setModal(1)}>Sign up</button>
+            <WModal isOpen={currentModal===0} onRequestClose={closeModal}>
                 <h1>Login</h1>
-            </Modal>
-            <Modal isOpen={currentModal===1}>
-                <h1>Sign up</h1>
-            </Modal>
+            </WModal>
+            <WModal isOpen={currentModal===1} onRequestClose={closeModal}>
+                <h1>Sign Up</h1>
+            </WModal>
         </>
     )
 }

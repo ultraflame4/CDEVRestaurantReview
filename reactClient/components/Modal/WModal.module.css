@@ -1,0 +1,38 @@
+
+/*------------ Default Modal Styles ------------*/
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.ReactModal__Overlay {
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(0.1rem);
+    animation: fadein 500ms ease
+}
+
+.ReactModal__Content {
+    filter: drop-shadow(0rem 0.1rem 0.4rem black);
+    border-radius: 0.6em;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem;
+
+    background: var(--black);
+    outline: none;
+    overflow: hidden;
+}
