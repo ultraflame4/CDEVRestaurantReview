@@ -16,7 +16,7 @@ export default defineConfig({
     },
     server: {
         port: process.env.VITE_DEV_PORT,
-        proxy: {
+        proxy: { // We using proxy cuz of CORS issues with cookies ._.
             "/api": {
                 target: `http://localhost:${process.env.VITE_EXPRESS_PORT}`,
                 changeOrigin: true,
