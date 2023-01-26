@@ -62,26 +62,27 @@ HeaderNavAccount_GuestMenu.propTypes = {
 
 const HeaderNavAccount = (props) => {
     const currentUser = useContext(UserAccountContext);
-
     const accIconRef = useRef(null);
     /**
      * @type {MutableRefObject<HTMLDivElement | null>}
      */
     const menuRef = useOverlayToggle(accIconRef);
+    let isLoggedIn = currentUser !== null;
 
 
     return (
-        <div className={classes.HeaderNavAccount} data-loggedin={(currentUser !== null).toString()} ref={menuRef}>
+        <div className={classes.HeaderNavAccount} data-loggedin={(isLoggedIn).toString()} ref={menuRef}>
             <div className={classes.HeaderNavAccountIconBorder}></div>
             <a ref={accIconRef}>
                 <Icon icon={"ic:account-circle"} className={classes.HeaderNavAccountIcon}/>
             </a>
             <div className={classes.HeaderNavAccountMenu}>
-                <h6 className={classes.HeaderNavAccountMenu_username}>{currentUser ?? "Guest User"}</h6>
+                <h6 className={classes.HeaderNavAccountMenu_username}>{currentUser?.name ?? "Guest User"}</h6>
                 {
-                    currentUser === null ?
-                        <HeaderNavAccount_GuestMenu/> :
-                        <HeaderNavAccount_LoggedInMenu/>
+                    isLoggedIn ?
+                        <HeaderNavAccount_LoggedInMenu/>:
+                        <HeaderNavAccount_GuestMenu/>
+
                 }
             </div>
 
