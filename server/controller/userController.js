@@ -31,12 +31,38 @@ async function CreateUser(req, res) {
 }
 
 /**
+ * Returns the current logged in user information
+ * @param req {import("express").Request}
+ * @param res {import("express").Response}
+ */
+async function GetUserInfo(req, res) {
+    try {
+        let user = await RestauRantDB.FindUserById(req.user.id)
+
+        if (!user) {
+            return resInternalErr(res, {success: false, message: "Cannot find user with id " + req.user.id})
+        }
+
+        res.status(200).json({
+            success: true,
+            username: user.username,
+            email: user.email,
+            date_created: user.date_created,
+            user_id: user.id
+        })
+    } catch (err) {
+        resInternalErr(res, {success: false, sqlErrors: err})
+    }
+}
+
+
+/**
  *
  * @param req {import("express").Request}
  * @param res {import("express").Response}
  */
 function TestUserLoggedIn(req, res) {
-    res.status(200).json({isLoggedIn: IsLoggedIn(req), isAuth: req.isAuthenticated(), userid: req.user?.id})
+    res.status(200).json({isLoggedIn: IsLoggedIn(req), isAuth: req.isAuthenticated(), user: req.user})
 }
 
 /**
@@ -94,7 +120,7 @@ async function UpdateUsername(req, res) {
 
     try {
         let r = await RestauRantDB.UpdateUsername(req.user.id, queryParams.newUsername)
-        res.json({sql:r})
+        res.json({sql: r})
     } catch (err) {
         resInternalErr(res, {success: false, sqlErrors: err})
     }
@@ -114,7 +140,7 @@ async function UpdateEmail(req, res) {
 
     try {
         let r = await RestauRantDB.UpdateEmail(req.user.id, queryParams.newEmail)
-        res.json({sql:r})
+        res.json({sql: r})
     } catch (err) {
         resInternalErr(res, {success: false, sqlErrors: err})
     }
@@ -134,9 +160,9 @@ async function UpdatePassword(req, res) {
 
     try {
         let usr = await RestauRantDB.FindUserById(req.user.id)
-        let newHash = await User.HashUserPassword(queryParams.newPassword,FormatTimestamp(usr.date_created))
+        let newHash = await User.HashUserPassword(queryParams.newPassword, FormatTimestamp(usr.date_created))
         let r = await RestauRantDB.UpdatePassword(req.user.id, newHash)
-        res.json({sql:r})
+        res.json({sql: r})
     } catch (err) {
         resInternalErr(res, {success: false, sqlErrors: err})
     }
@@ -145,5 +171,13 @@ async function UpdatePassword(req, res) {
 
 
 module.exports = {
-    CreateUser, TestUserLoggedIn, LoginUser, LogoutUser, GetAllReviews, UpdateEmail, UpdateUsername, UpdatePassword
+    CreateUser,
+    TestUserLoggedIn,
+    LoginUser,
+    LogoutUser,
+    GetAllReviews,
+    UpdateEmail,
+    UpdateUsername,
+    UpdatePassword,
+    GetUserInfo
 }

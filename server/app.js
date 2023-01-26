@@ -121,6 +121,7 @@ app.get('/api/user/reviews', middlewares.authenticated(),middlewares.cached(3), 
 app.put('/api/user/email', middlewares.authenticated(), userController.UpdateEmail)
 app.put('/api/user/password', middlewares.authenticated(), userController.UpdatePassword)
 app.put('/api/user/username', middlewares.authenticated(), userController.UpdateUsername)
+app.get('/api/user/info', middlewares.authenticated(),middlewares.cached(2,2), userController.GetUserInfo)
 
 app.listen(port, "localhost", () => {
    console.log(`CDEV Restau-Rant app server started at http://localhost:${port}`)
