@@ -248,24 +248,17 @@
     gap: 2rem;
     position: sticky;
 }
-.restaurantInfoItem a{
-    text-decoration: underline;
-    cursor: pointer;
-    pointer-events: all;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: white;
 
-}
+
 .restaurantInfoItem {
     display: grid;
     grid-template-rows: 1fr auto;
-    grid-template-columns: min-content 1fr;
+    grid-template-columns: min-content auto;
     height: fit-content;
     grid-column-gap: 0.5rem;
     grid-row-gap: 0.25rem;
+    width: 100%;
+    overflow: hidden;
 }
 
 .restaurantInfoItem .icon {
@@ -288,6 +281,15 @@
     letter-spacing: 0.05rem;
 }
 
+.restaurantInfoItem a{
+    text-decoration: underline;
+    cursor: pointer;
+    pointer-events: all;
+    font-weight: 600;
+    color: white;
+
+}
+
 .restaurantInfoItem p{
     grid-column: 2;
     grid-row: 2;
@@ -295,5 +297,13 @@
     font-weight: 600;
     font-family: "Poppins";
     font-size: 0.95rem;
+    width: 100%;
+    color: white;
+}
+
+.restaurantInfoItem p:has(>a) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
