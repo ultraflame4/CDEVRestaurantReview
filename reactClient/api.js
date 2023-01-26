@@ -1,5 +1,4 @@
 import React from "react";
-import {WatchableValue} from "@/tools/utils";
 
 const host = import.meta.env.DEV ? `localhost:${import.meta.env.VITE_EXPRESS_PORT}` : location.host
 
@@ -80,23 +79,6 @@ async function fetchApi(path_, queryParams = {}, init = {}) {
 
 }
 
-
-/**
- * Contains basic information about the user
- *
- * @export
- * @typedef UserAccountInfoObject
- * @property {WatchableValue<string|null>} username WatchableValue, value is null when not logged in
- * @property {WatchableValue<string|null>} email WatchableValue, value is null when not logged in
- */
-/**
- *
- * @type {UserAccountInfoObject}
- */
-export const UserAccountInfo = {
-    username: new WatchableValue(null),
-    email: new WatchableValue(null),
-}
 
 /**
  * Returns the current user's location data

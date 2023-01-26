@@ -4,10 +4,10 @@ import {Icon} from "@iconify-icon/react";
 import {IconLink} from "@/components/Links/IconLink";
 import {useContext, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {useOverlayToggle, useToggle, useWatchableValue} from "@/tools/hooks";
-import {UserAccountInfo} from "@/api";
-import Modal from "react-modal";
+import {useOverlayToggle} from "@/tools/hooks";
+
 import {WModal} from "@/components/Modal/WModal";
+import {UserAccountContext} from "@/tools/contexts";
 
 
 const HeaderNavAccount_LoggedInMenu = (props) => {
@@ -55,7 +55,7 @@ HeaderNavAccount_GuestMenu.propTypes = {
 }
 
 const HeaderNavAccount = (props) => {
-    const username = useWatchableValue(UserAccountInfo.username);
+    const currentUser = useContext(UserAccountContext);
 
     const accIconRef = useRef(null);
     /**
@@ -65,15 +65,15 @@ const HeaderNavAccount = (props) => {
 
 
     return (
-        <div className={classes.HeaderNavAccount} data-loggedin={(username != null).toString()} ref={menuRef}>
+        <div className={classes.HeaderNavAccount} data-loggedin={(currentUser !== null).toString()} ref={menuRef}>
             <div className={classes.HeaderNavAccountIconBorder}></div>
             <a ref={accIconRef}>
                 <Icon icon={"ic:account-circle"} className={classes.HeaderNavAccountIcon}/>
             </a>
             <div className={classes.HeaderNavAccountMenu}>
-                <h6 className={classes.HeaderNavAccountMenu_username}>{username ?? "Guest User"}</h6>
+                <h6 className={classes.HeaderNavAccountMenu_username}>{currentUser ?? "Guest User"}</h6>
                 {
-                    username == null ?
+                    currentUser === null ?
                         <HeaderNavAccount_GuestMenu/> :
                         <HeaderNavAccount_LoggedInMenu/>
                 }
