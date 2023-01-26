@@ -21,8 +21,6 @@ export default defineConfig({
                 target: `http://localhost:${process.env.VITE_EXPRESS_PORT}`,
                 changeOrigin: true,
                 secure: false,
-                followRedirects: true,
-
                 ws: true,
                 rewrite: (path) => path.replace(/^\/app/, ''),
             }

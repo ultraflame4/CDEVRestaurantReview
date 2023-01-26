@@ -82,7 +82,6 @@ function LoginUser(req, res) {
 function LogoutUser(req, res) {
     req.logout(err => {
     })
-    res.redirect("/api/user/test")
 }
 
 /**
