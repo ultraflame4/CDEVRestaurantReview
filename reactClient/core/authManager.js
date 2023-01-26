@@ -63,6 +63,9 @@ class AuthManager {
                 "Content-Type": "application/json"
             }
         })
+        console.log("LOGGED OUT")
+        await this.AskLoggedIn()
+        return null;
     }
 
     /**
@@ -96,7 +99,5 @@ class AuthManager {
 
 }
 
-const authManager = new AuthManager();
-// Expose the authManager to the window so that i can logout easily
-window.logout = authManager.logout
-export default authManager
+
+export default new AuthManager()
