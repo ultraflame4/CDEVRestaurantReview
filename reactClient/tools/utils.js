@@ -21,6 +21,7 @@ export class WatchableValue {
     }
 
     set value(value) {
+        if (this.#value === value) return
         this.#value = value
         this.#listeners.forEach(listener => listener())
     }
