@@ -7,10 +7,10 @@ import PropTypes from "prop-types";
 import {useOverlayToggle} from "@/tools/hooks";
 
 import {UserAccountContext} from "@/tools/contexts";
-import authManager from "@/core/authManager";
-import NiceModal from "@ebay/nice-modal-react";
-import {showModal, SignInModal, SignUpModal} from "@/components/modals/modals";
-import {WModal} from "@/components/Modal/WModal";
+
+import {SignInModal, SignUpModal} from "@/components/Modal/modals";
+import {showModal} from "@/components/Modal/modalsManager";
+
 
 
 const HeaderNavAccount_LoggedInMenu = (props) => {

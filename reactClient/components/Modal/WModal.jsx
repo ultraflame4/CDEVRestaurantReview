@@ -2,14 +2,23 @@ import PropTypes from "prop-types";
 import Modal from "react-modal";
 import classes from "./WModal.module.css";
 import {Icon} from "@iconify-icon/react";
+import {useState} from "react";
+import {useWatchableValue} from "@/tools/hooks";
+import {closeModal, GlobalCurrentModal} from "@/components/Modal/modalsManager";
 
 /**
  * A wrapper for react-modal to implement some default settings and styles. and other stuff
  */
 export function WModal(props) {
-    return <Modal isOpen={props.isOpen}
-                  onRequestClose={props.onClose}
+    const currentModal = useWatchableValue(GlobalCurrentModal)
 
+    function onModalClose() {
+        closeModal(props.modalId)
+    }
+
+
+    return <Modal isOpen={currentModal===props.modalId}
+                  onRequestClose={onModalClose}
                   shouldCloseOnEsc={true}
                   shouldCloseOnOverlayClick={true}
                   overlayClassName={classes.ReactModal__Overlay}
@@ -27,9 +36,8 @@ export function WModal(props) {
 }
 
 WModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
     children: PropTypes.node,
     title: PropTypes.string,
-    icon: PropTypes.string
+    icon: PropTypes.string,
+    modalId: PropTypes.string.isRequired
 }

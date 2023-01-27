@@ -4,7 +4,6 @@ import "./App.css"
 import {Suspense, useEffect, useState} from "react";
 import {UserAccountContext, UserAccountContextObj} from "@/tools/contexts";
 import authManager from "@/core/authManager";
-import NiceModal from "@ebay/nice-modal-react";
 
 
 export default function App() {

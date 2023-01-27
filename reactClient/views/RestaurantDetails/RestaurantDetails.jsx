@@ -11,7 +11,7 @@ import {LineBreaker} from "@/components/LineBreaker";
 import PropTypes from "prop-types";
 import classes from "./RestaurantDetails.module.css";
 import {UserAccountContext} from "@/tools/contexts";
-import {showModal} from "@/components/modals/modals";
+import {showModal} from "@/components/Modal/modalsManager";
 
 const ReviewItem = (props) => {
     let date = new Date(props.last_edit)
@@ -106,7 +106,7 @@ export default defComponent((props) => {
 
     function onWriteReview(){
         if (usrCtx===null){
-            showModal("signin")
+            showModal("signin").then(value => console.log("TEST"))
         }
     }
 
