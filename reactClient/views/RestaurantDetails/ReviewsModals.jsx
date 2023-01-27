@@ -3,13 +3,24 @@ import PropTypes from "prop-types";
 import React, {useRef} from "react";
 import {StarRatings} from "@/components/Ratings/StarRatings";
 import classes from "./ReviewsModals.module.css";
-import {CreateRestaurantReview} from "@/core/api";
+import {CreateRestaurantReview, DeleteRestaurantReview} from "@/core/api";
 import authManager from "@/core/authManager";
 
 
 export function DeleteReviewModal(props){
     function deleteReview() {
 
+        DeleteRestaurantReview(props.reviewId).then((val) => {
+            alert("Deleted Review!")
+            window.location.reload()
+        }).catch((err) => {
+            if (err.code === 401) {
+                alert("Error! Please log in again!")
+                window.location.reload()
+            }
+            alert("Error submitting review")
+            console.error(err)
+        })
     }
 
     return <WModal title={"Delete Review"} isOpen={props.isOpen} onClose={props.onClose}>

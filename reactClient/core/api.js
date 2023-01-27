@@ -235,3 +235,20 @@ export async function CreateRestaurantReview(id,rating,content){
         })
     })
 }
+/**
+ * Deletes a review by the user
+ * @param id {number} id of review
+ * @constructor
+ */
+export async function DeleteRestaurantReview(id){
+    return await fetchApi("/api/reviews/delete", undefined, {
+        method: "DELETE",
+        headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            review_id: id
+        })
+    })
+}
