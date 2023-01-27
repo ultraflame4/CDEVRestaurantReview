@@ -24,7 +24,7 @@ export function WModal(props) {
                   overlayClassName={classes.ReactModal__Overlay}
                   className={classes.ReactModal__Content}
     >
-        <button className={classes.CloseBtn} onClick={props.onClose}><Icon icon={"mdi:close"}/></button>
+        <button className={classes.CloseBtn} onClick={onModalClose}><Icon icon={"mdi:close"}/></button>
         <h1>
             {props.title}
             {props.icon && <Icon icon={props.icon}/>}

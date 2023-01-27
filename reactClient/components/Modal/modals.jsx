@@ -2,6 +2,7 @@ import {WModal} from "@/components/Modal/WModal";
 import {useEffect, useRef, useState} from "react";
 import authManager from "@/core/authManager";
 import PropTypes from "prop-types";
+import {showModal} from "@/components/Modal/modalsManager";
 
 
 export function SignInModal(props) {
@@ -20,7 +21,7 @@ export function SignInModal(props) {
 
             <input placeholder={"Account Email"} type={"email"} ref={inpEmailRef}/>
             <input placeholder={"Password"} type={"password"} ref={inpPwdRef}/>
-            <p className={"full-width"}>New here? <a style={{color:"var(--gold)"}} onClick={()=>null}>Create Account</a></p>
+            <p className={"full-width"}>New here? <a style={{color:"var(--gold)"}} onClick={()=>showModal("signup")}>Create Account</a></p>
             <p className={"full-width"}><a style={{color:"var(--red)"}}>Forget password</a></p>
             <button onClick={signIn}>Sign in</button>
         </WModal>
