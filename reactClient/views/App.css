@@ -61,7 +61,7 @@ button {
     --back: var(--gray);
 
     padding: 0.4em 0.7em;
-    border: none;
+    border: 0.1rem solid transparent;
     border-radius: 0.5em;
     outline: none;
     font-family: "Segoe UI";
@@ -73,11 +73,21 @@ button {
 
     transition: all 200ms ease-out;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 button:hover {
     --fore: var(--gray);
     --back: var(--green);
+}
+
+button:active {
+    transition-duration: 100ms;
+    transition-timing-function: linear;
+    --fore: var(--gray);
+    --back: var(--black);
+    border-color: var(--gray);
 }
 
 button.btn-primary {

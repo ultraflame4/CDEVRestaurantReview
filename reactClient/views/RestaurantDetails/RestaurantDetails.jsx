@@ -19,6 +19,13 @@ const ReviewItem = (props) => {
     let date = new Date(props.last_edit)
 
     return <li>
+        {
+            props.editable &&
+            <div className={classes.editReviewContainer}>
+                <button>Edit Review <Icon icon={"ic:baseline-edit"}/></button>
+                <button><Icon icon={"ic:baseline-delete-forever"}/></button>
+            </div>
+        }
         <div className={classes.reviewItemHead}>
             <Icon icon={"ic:baseline-account-circle"} className={classes.icon}/>
             <h4>{props.username}</h4>
@@ -43,6 +50,8 @@ ReviewItem.propTypes = {
     rating: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,
+    reviewId: PropTypes.number.isRequired,
+    editable: PropTypes.bool.isRequired
 }
 
 
@@ -109,7 +118,7 @@ export default defComponent((props) => {
         if (usrCtx === null) {
             showModal("signin")
                 .then(value => {
-                    if (authManager.isLoggedIn.value){
+                    if (authManager.isLoggedIn.value) {
                         return showModal("write-review")
                     }
                     return Promise.reject("Cannot show write review modal. User is not logged in.")
@@ -156,7 +165,10 @@ export default defComponent((props) => {
                                 last_edit={value.last_edit}
                                 rating={value.rating}
                                 content={value.content}
-                                likes={value.likes ?? 0}/>
+                                likes={value.likes ?? 0}
+                                reviewId={value.id}
+                                editable={value.author_id === usrCtx?.userId}
+                            />
                         )
                     }
                     <InfiniteScroll loadMore={loadMoreReviews} hide={allReviewsShown}/>
