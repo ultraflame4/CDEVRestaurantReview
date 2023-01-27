@@ -39,6 +39,7 @@ export function WModal(props) {
                   shouldCloseOnOverlayClick={true}
                   overlayClassName={classes.ReactModal__Overlay}
                   className={classes.ReactModal__Content}
+                  onAfterOpen={props.onAfterOpen}
     >
         <button className={classes.CloseBtn} onClick={onModalClose}><Icon icon={"mdi:close"}/></button>
         <h1>
@@ -57,5 +58,6 @@ WModal.propTypes = {
     icon: PropTypes.string,
     modalId: PropTypes.string,
     isOpen: PropTypes.bool,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    onAfterOpen: PropTypes.func
 }

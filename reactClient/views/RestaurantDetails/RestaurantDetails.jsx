@@ -13,7 +13,7 @@ import classes from "./RestaurantDetails.module.css";
 import {UserAccountContext} from "@/tools/contexts";
 import {showModal} from "@/components/Modal/modalsManager";
 import authManager from "@/core/authManager";
-import {DeleteReviewModal, WriteReviewModal} from "@/views/RestaurantDetails/ReviewsModals";
+import {DeleteReviewModal, EditReviewModal, WriteReviewModal} from "@/views/RestaurantDetails/ReviewsModals";
 
 const ReviewItem = (props) => {
     const [currentModal, setCurrentModal] = useState(null)
@@ -22,6 +22,10 @@ const ReviewItem = (props) => {
 
     function deleteReview() {
         setCurrentModal(0)
+    }
+
+    function editReview() {
+        setCurrentModal(1)
     }
 
     function closeModals() {
@@ -33,9 +37,15 @@ const ReviewItem = (props) => {
         {
             props.editable &&
             <div className={classes.editReviewContainer}>
-                <button>Edit Review <Icon icon={"ic:baseline-edit"}/></button>
+                <button onClick={editReview}>Edit Review <Icon icon={"ic:baseline-edit"}/></button>
                 <button onClick={deleteReview}><Icon icon={"ic:baseline-delete-forever"}/></button>
                 <DeleteReviewModal reviewId={props.reviewId} isOpen={currentModal===0} onClose={closeModals}/>
+                <EditReviewModal
+                    reviewId={props.reviewId}
+                    isOpen={currentModal===1}
+                    onClose={closeModals}
+                    initialContents={props.content}
+                    initialRating={props.rating}/>
             </div>
         }
 

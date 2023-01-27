@@ -235,6 +235,27 @@ export async function CreateRestaurantReview(id,rating,content){
     })
 }
 /**
+ * Updates a review by the user
+ * @param id {number} id of review to update
+ * @param rating {number} Rating given (1-10)
+ * @param content {string} The review contents
+ * @return {Promise<any>}
+ */
+export async function UpdateRestaurantReview(id,rating,content){
+    return await fetchApi("/api/reviews/update", undefined, {
+        method: "PUT",
+        headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            review_id: id,
+            rating: rating,
+            content: content
+        })
+    })
+}
+/**
  * Deletes a review by the user
  * @param id {number} id of review
  * @return {Promise<any>}
