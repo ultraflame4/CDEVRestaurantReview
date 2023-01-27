@@ -75,6 +75,7 @@ button {
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 button:hover {
@@ -88,6 +89,17 @@ button:active {
     --fore: var(--gray);
     --back: var(--black);
     border-color: var(--gray);
+}
+
+
+button.btn-danger:hover{
+    --fore: var(--black);
+    --back: var(--red);
+}
+
+button.btn-danger:active{
+    --fore: var(--gray);
+    --back: var(--black);
 }
 
 button.btn-primary {
@@ -140,4 +152,15 @@ a {
 
 .full-width {
     width: 100%;
+}
+
+.itemsCenter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.textRed{
+    color: var(--red);
 }

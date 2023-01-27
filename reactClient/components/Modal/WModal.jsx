@@ -6,18 +6,34 @@ import {useState} from "react";
 import {useWatchableValue} from "@/tools/hooks";
 import {closeModal, GlobalCurrentModal} from "@/components/Modal/modalsManager";
 
+
 /**
+ * @class WModalProps
+ * @property {string?} title The title of the modal
+ * @property {string?} icon Optional icon beside the title of the modal
+ * @property {string?} modalId The id of the modal. Set if you want to use showModal to open the modal [Optional]
+ * @property {boolean?} isOpen If true, the modal will be open. [Optional]
+ * @property {function?} onClose A function to be called when the modal closes. If not using modalId, this callback must be set to change the isOpen prop to close the modal[Optional]
+ * @property {React.ReactNode?} children Children of the modal
+ */
+
+/**
+ *
  * A wrapper for react-modal to implement some default settings and styles. and other stuff
+ * @param props {WModalProps}
  */
 export function WModal(props) {
     const currentModal = useWatchableValue(GlobalCurrentModal)
 
     function onModalClose() {
-        closeModal(props.modalId)
+        if (props.modalId) {
+            closeModal(props.modalId)
+        }
+        props.onClose?.()
     }
 
 
-    return <Modal isOpen={currentModal===props.modalId}
+    return <Modal isOpen={(currentModal === props.modalId || props.isOpen)}
                   onRequestClose={onModalClose}
                   shouldCloseOnEsc={true}
                   shouldCloseOnOverlayClick={true}
@@ -39,5 +55,7 @@ WModal.propTypes = {
     children: PropTypes.node,
     title: PropTypes.string,
     icon: PropTypes.string,
-    modalId: PropTypes.string.isRequired
+    modalId: PropTypes.string,
+    isOpen: PropTypes.bool,
+    onClose: PropTypes.func
 }

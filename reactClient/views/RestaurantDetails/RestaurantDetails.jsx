@@ -13,19 +13,32 @@ import classes from "./RestaurantDetails.module.css";
 import {UserAccountContext} from "@/tools/contexts";
 import {showModal} from "@/components/Modal/modalsManager";
 import authManager from "@/core/authManager";
-import {WriteReviewModal} from "@/views/RestaurantDetails/ReviewsModals";
+import {DeleteReviewModal, WriteReviewModal} from "@/views/RestaurantDetails/ReviewsModals";
 
 const ReviewItem = (props) => {
+    const [currentModal, setCurrentModal] = useState(null)
     let date = new Date(props.last_edit)
 
+
+    function deleteReview() {
+        setCurrentModal(0)
+    }
+
+    function closeModals() {
+        setCurrentModal(null)
+    }
+
     return <li>
+
         {
             props.editable &&
             <div className={classes.editReviewContainer}>
                 <button>Edit Review <Icon icon={"ic:baseline-edit"}/></button>
-                <button><Icon icon={"ic:baseline-delete-forever"}/></button>
+                <button onClick={deleteReview}><Icon icon={"ic:baseline-delete-forever"}/></button>
+                <DeleteReviewModal reviewId={props.reviewId} isOpen={currentModal===0} onClose={closeModals}/>
             </div>
         }
+
         <div className={classes.reviewItemHead}>
             <Icon icon={"ic:baseline-account-circle"} className={classes.icon}/>
             <h4>{props.username}</h4>
@@ -137,6 +150,7 @@ export default defComponent((props) => {
     return (<div>
         <main className={classes.main}>
             <WriteReviewModal restaurantId={restaurantId}/>
+
 
             <div>
                 <h1>{data.name}</h1>

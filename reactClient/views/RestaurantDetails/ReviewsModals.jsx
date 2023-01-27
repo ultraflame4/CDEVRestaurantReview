@@ -6,6 +6,27 @@ import classes from "./ReviewsModals.module.css";
 import {CreateRestaurantReview} from "@/core/api";
 import authManager from "@/core/authManager";
 
+
+export function DeleteReviewModal(props){
+    function deleteReview() {
+
+    }
+
+    return <WModal title={"Delete Review"} isOpen={props.isOpen} onClose={props.onClose}>
+        <p className={"itemsCenter textRed"} style={{fontSize:"1.25rem"}}>Are you sure you want<br/>to delete this review?</p>
+        <br/>
+        <br/>
+
+        <button onClick={deleteReview} className={"btn-danger"}>Delete</button>
+    </WModal>
+}
+
+DeleteReviewModal.propTypes = {
+    reviewId: PropTypes.number.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+}
+
 export function WriteReviewModal(props) {
     const [rating, setRating] = React.useState(0)
     const inpRef = useRef(null)
