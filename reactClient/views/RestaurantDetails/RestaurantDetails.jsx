@@ -12,8 +12,8 @@ import PropTypes from "prop-types";
 import classes from "./RestaurantDetails.module.css";
 import {UserAccountContext} from "@/tools/contexts";
 import {showModal} from "@/components/Modal/modalsManager";
-import {WModal} from "@/components/Modal/WModal";
 import authManager from "@/core/authManager";
+import {WriteReviewModal} from "@/views/RestaurantDetails/ReviewsModals";
 
 const ReviewItem = (props) => {
     let date = new Date(props.last_edit)
@@ -67,19 +67,9 @@ RestaurantInfoItem.propTypes = {
 }
 
 
-export function WriteReviewModal(props) {
-    return <WModal modalId={"write-review"} title={"Write a review "} icon={"ic:baseline-edit"}>
-
-    </WModal>
-}
-WriteReviewModal.propTypes = {
-    restaurantId: PropTypes.number.isRequired
-}
-
-
 export default defComponent((props) => {
     const params = useParams()
-    const restaurantId = params.id
+    const restaurantId = parseInt(params.id)
     const [data, setData] = useState(null)
     const [reviews, setReviews] = useState([])
     const [allReviewsShown, setAllReviewsShown] = useState(false)
@@ -130,8 +120,9 @@ export default defComponent((props) => {
                 .then(value => {
                     console.log("TSET")
                 })
-
+            return
         }
+        showModal("write-review")
     }
 
     return (<div>
