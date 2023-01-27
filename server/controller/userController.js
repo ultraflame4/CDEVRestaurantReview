@@ -82,6 +82,7 @@ function LoginUser(req, res) {
 function LogoutUser(req, res) {
     req.logout(err => {
     })
+    res.status(200).json({isLoggedIn: IsLoggedIn(req), isAuth: req.isAuthenticated(), user: req.user})
 }
 
 /**
