@@ -213,3 +213,25 @@ export async function GetRestaurantReviews(id,offset=0){
     return data.results ?? null
 }
 
+/**
+ * Gets a the reviews for a restaurant from the server using its id
+ * @param id {number} id of restaurant
+ * @param rating {number} Rating given (1-10)
+ * @param content {string} The review contents
+ * @return {Promise<null|DBReviewType[]>}
+ * @constructor
+ */
+export async function CreateRestaurantReview(id,rating,content){
+    return await fetchApi("/api/reviews/create", undefined, {
+        method: "POST",
+        headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            restaurant_id: id,
+            rating: rating,
+            content: content
+        })
+    })
+}

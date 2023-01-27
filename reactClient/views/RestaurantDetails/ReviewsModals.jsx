@@ -1,11 +1,14 @@
 import {WModal} from "@/components/Modal/WModal";
 import PropTypes from "prop-types";
-import React from "react";
+import React, {useRef} from "react";
 import {StarRatings} from "@/components/Ratings/StarRatings";
 import classes from "./ReviewsModals.module.css";
+import {CreateRestaurantReview} from "@/core/api";
+import authManager from "@/core/authManager";
 
 export function WriteReviewModal(props) {
     const [rating, setRating] = React.useState(0)
+    const inpRef = useRef(null)
     /**
      * @param e {React.MouseEvent}
      */
@@ -26,8 +29,38 @@ export function WriteReviewModal(props) {
     }
 
 
+    function submitReview() {
+        let reviewContent = inpRef.current.value
+        if (reviewContent.length < 20) {
+            alert("Review must be at least 20 characters long")
+            return
+        }
+        reviewContent = reviewContent.replace("\n","<br>") // preserve line breaks
+
+        if (rating === 0) {
+            alert("Please select a rating!")
+            return
+        }
+
+        CreateRestaurantReview(props.restaurantId, rating, reviewContent).then((val) => {
+            alert("Review submitted!")
+            window.location.reload()
+        }).catch((err) => {
+            if (err.code === 401) {
+                alert("Error! Please log in again!")
+                window.location.reload()
+            }
+
+            alert("Error submitting review")
+
+        })
+
+    }
+
     return <WModal modalId={"write-review"} title={"Write a review "} icon={"ic:baseline-edit"}>
         <h2 className={classes.rating}>Rating: <span onClick={onSelectRating} onMouseMove={onMove}><StarRatings rating={rating}/></span></h2>
+        <textarea className={classes.reviewsInput} ref={inpRef}></textarea>
+        <button onClick={submitReview}>Submit</button>
     </WModal>
 }
 
