@@ -33,7 +33,7 @@ const expressSession = session({
    resave: false,
    saveUninitialized: false,
    cookie:{
-      maxAge:20*60*1000,
+      maxAge:30*60*1000,
       rolling:true
    }
 })
