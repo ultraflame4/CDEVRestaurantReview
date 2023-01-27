@@ -1,5 +1,5 @@
 import {WatchableValue} from "@/tools/utils";
-import {SignInModal, SignUpModal} from "@/components/Modal/modals";
+import {SignInModal, SignUpModal} from "@/components/HeaderNav/AccountModals";
 import {useEffect, useState} from "react";
 
 export const GlobalCurrentModal = new WatchableValue(null)

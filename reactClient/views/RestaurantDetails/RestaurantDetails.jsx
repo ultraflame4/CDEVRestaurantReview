@@ -12,6 +12,8 @@ import PropTypes from "prop-types";
 import classes from "./RestaurantDetails.module.css";
 import {UserAccountContext} from "@/tools/contexts";
 import {showModal} from "@/components/Modal/modalsManager";
+import {WModal} from "@/components/Modal/WModal";
+import authManager from "@/core/authManager";
 
 const ReviewItem = (props) => {
     let date = new Date(props.last_edit)
@@ -29,7 +31,7 @@ const ReviewItem = (props) => {
         <div className={classes.reviewItemRating}><StarRatings rating={props.rating}/></div>
         <p><LineBreaker text={props.content} sep={"<br>"}/></p>
         <div className={classes.like}>
-            <Icon icon={"ic:baseline-thumb-up"} />
+            <Icon icon={"ic:baseline-thumb-up"}/>
             <span>{props.likes}</span>
         </div>
     </li>
@@ -44,8 +46,8 @@ ReviewItem.propTypes = {
 }
 
 
-const RestaurantInfoItem = (props)=>{
-    if (props.hide){
+const RestaurantInfoItem = (props) => {
+    if (props.hide) {
         return <></>
     }
     return <div className={classes.restaurantInfoItem}>
@@ -65,6 +67,15 @@ RestaurantInfoItem.propTypes = {
 }
 
 
+export function WriteReviewModal(props) {
+    return <WModal modalId={"write-review"} title={"Write a review "} icon={"ic:baseline-edit"}>
+
+    </WModal>
+}
+WriteReviewModal.propTypes = {
+    restaurantId: PropTypes.number.isRequired
+}
+
 
 export default defComponent((props) => {
     const params = useParams()
@@ -75,10 +86,10 @@ export default defComponent((props) => {
     const usrCtx = useContext(UserAccountContext)
 
 
-    function loadMoreReviews(){
-        GetRestaurantReviews(restaurantId,reviews.length)
+    function loadMoreReviews() {
+        GetRestaurantReviews(restaurantId, reviews.length)
             .then(value => {
-                if (value.length===0) {
+                if (value.length === 0) {
                     setAllReviewsShown(true)
                 }
                 setReviews(prevState => {
@@ -88,12 +99,12 @@ export default defComponent((props) => {
     }
 
     useEffect(() => {
-        document.title="RestauRants - Loading..."
+        document.title = "RestauRants - Loading..."
         GetRestaurantById(restaurantId)
             .then(value => {
-                setTimeout(()=> {
+                setTimeout(() => {
                     document.title = `RestauRants - ${value.name}`
-                },0)
+                }, 0)
                 setData(value)
             })
         loadMoreReviews()
@@ -104,14 +115,29 @@ export default defComponent((props) => {
     }
 
 
-    function onWriteReview(){
-        if (usrCtx===null){
-            showModal("signin").then(value => console.log("TEST"))
+    function onWriteReview() {
+        if (usrCtx === null) {
+            showModal("signin")
+                .then(value => {
+                    if (authManager.isLoggedIn.value){
+                        return showModal("write-review")
+                    }
+                    return Promise.reject("Cannot show write review modal. User is not logged in.")
+                })
+                .catch(reason => {
+                    console.error(reason)
+                })
+                .then(value => {
+                    console.log("TSET")
+                })
+
         }
     }
 
     return (<div>
         <main className={classes.main}>
+            <WriteReviewModal restaurantId={restaurantId}/>
+
             <div>
                 <h1>{data.name}</h1>
                 <StarRatings rating={parseFloat(data.avg_rating)}/>
@@ -126,7 +152,8 @@ export default defComponent((props) => {
                 </p>
                 <div className={classes.reviewsHeader}>
                     <h2>Reviews</h2> <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
-                    <button onClick={onWriteReview}>Write a review <Icon icon={"ic:baseline-edit"} className={classes.icon}/></button>
+                    <button onClick={onWriteReview}>Write a review <Icon icon={"ic:baseline-edit"}
+                                                                         className={classes.icon}/></button>
                 </div>
                 <ul className={classes.reviewsList}>
                     {

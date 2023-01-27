@@ -6,7 +6,7 @@ import './index.css'
 import {createBrowserRouter, RouterProvider, Route} from "react-router-dom";
 
 import App from "@/views/App";
-import {SignInModal, SignUpModal} from "@/components/Modal/modals";
+import {SignInModal, SignUpModal} from "@/components/HeaderNav/AccountModals";
 
 const Home = React.lazy(() => import("@/views/Home/Home"))
 const RestaurantDetails = React.lazy(() => import("@/views/RestaurantDetails/RestaurantDetails"))
@@ -36,10 +36,6 @@ Modal.setAppElement('#root')
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-
-        <SignInModal/>
-        <SignUpModal/>
-
         <RouterProvider router={router}/>
     </React.StrictMode>
 )

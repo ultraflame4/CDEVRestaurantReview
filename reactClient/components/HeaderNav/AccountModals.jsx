@@ -2,7 +2,7 @@ import {WModal} from "@/components/Modal/WModal";
 import {useEffect, useRef, useState} from "react";
 import authManager from "@/core/authManager";
 import PropTypes from "prop-types";
-import {showModal} from "@/components/Modal/modalsManager";
+import {closeModal, showModal} from "@/components/Modal/modalsManager";
 
 
 export function SignInModal(props) {
@@ -11,6 +11,9 @@ export function SignInModal(props) {
 
     async function signIn() {
         let s = await authManager.login(inpEmailRef.current.value, inpPwdRef.current.value)
+        if (s){
+            closeModal("signin")
+        }
     }
 
     return (
@@ -34,7 +37,7 @@ export function SignUpModal(props) {
         <WModal
             modalId={"signup"}
             title={"Sign Up"}>
-            <h1>Sign up</h1>
+            <h1>Sign up (WIP)</h1>
         </WModal>
     )
 }

@@ -8,7 +8,7 @@ import {useOverlayToggle} from "@/tools/hooks";
 
 import {UserAccountContext} from "@/tools/contexts";
 
-import {SignInModal, SignUpModal} from "@/components/Modal/modals";
+import {SignInModal, SignUpModal} from "@/components/HeaderNav/AccountModals";
 import {showModal} from "@/components/Modal/modalsManager";
 
 
@@ -54,6 +54,9 @@ const HeaderNavAccount = (props) => {
 
     return (
         <div className={classes.HeaderNavAccount} data-loggedin={(isLoggedIn).toString()} ref={menuRef}>
+            <SignInModal/>
+            <SignUpModal/>
+
             <div className={classes.HeaderNavAccountIconBorder}></div>
             <a ref={accIconRef}>
                 <Icon icon={"ic:account-circle"} className={classes.HeaderNavAccountIcon}/>
