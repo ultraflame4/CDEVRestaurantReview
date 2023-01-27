@@ -16,9 +16,18 @@ export function WriteReviewModal(props) {
         setRating(percent)
     }
 
+    /**
+     * @param e {React.MouseEvent}
+     */
+    function onMove(e){
+        if (e.buttons === 1) {
+            onSelectRating(e)
+        }
+    }
+
 
     return <WModal modalId={"write-review"} title={"Write a review "} icon={"ic:baseline-edit"}>
-        <h2 className={classes.rating}>Rating: <span onClick={onSelectRating}><StarRatings rating={rating}/></span></h2>
+        <h2 className={classes.rating}>Rating: <span onClick={onSelectRating} onMouseMove={onMove}><StarRatings rating={rating}/></span></h2>
     </WModal>
 }
 
