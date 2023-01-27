@@ -218,8 +218,7 @@ export async function GetRestaurantReviews(id,offset=0){
  * @param id {number} id of restaurant
  * @param rating {number} Rating given (1-10)
  * @param content {string} The review contents
- * @return {Promise<null|DBReviewType[]>}
- * @constructor
+ * @return {Promise<any>}
  */
 export async function CreateRestaurantReview(id,rating,content){
     return await fetchApi("/api/reviews/create", undefined, {
@@ -238,7 +237,7 @@ export async function CreateRestaurantReview(id,rating,content){
 /**
  * Deletes a review by the user
  * @param id {number} id of review
- * @constructor
+ * @return {Promise<any>}
  */
 export async function DeleteRestaurantReview(id){
     return await fetchApi("/api/reviews/delete", undefined, {
