@@ -71,6 +71,25 @@ function TestUserLoggedIn(req, res) {
  * @param res {import("express").Response}
  */
 function LoginUser(req, res) {
+    // Ensure there is only one session per user. Else destroy the old session
+    req.sessionStore.length((err1, length) => console.log(length))
+    req.sessionStore.all((err, obj) => {
+        if (err) {
+            console.log(err)
+            return
+        }
+
+        // Loop through all sessions and destroy the ones that belong to the same user
+        for (let sessionId in obj) {
+
+            if (sessionId === req.session.id) continue //Skip if its the current session
+
+            if (obj[sessionId].passport.user === req.user.id) {
+                req.sessionStore.destroy(sessionId, err => err&&console.log(err))
+            }
+        }
+
+    })
     res.status(200).json({success: IsLoggedIn(req)})
 }
 
