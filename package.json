@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "express-dev": "nodemon server/app.js",
     "express-run": "node server/app.js",
-    "build&run": "npm run build && npm run express-run"
+    "build-run": "npm run build && npm run express-run"
   },
   "dependencies": {
     "@iconify-icon/react": "^1.0.1",

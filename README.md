@@ -22,7 +22,7 @@ This is a fullstack web development project done for school.
 ## Running the project
 1. node .<br/>
 or
-2. Run `npm build&run` to build the client and run the server.
+2. Run `npm build-run` to build the client and run the server.
 
 Alternatively, you can build the client and run server separately.
 
