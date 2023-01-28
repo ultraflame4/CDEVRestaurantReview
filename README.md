@@ -34,11 +34,6 @@ Alternatively, you can build the client and run server separately.
 2. `npm run express-dev` - Starts the express server with nodemon (auto restart for code changes).
 The express server will use the files in `./dist/` folder for its static html pages
 
-## Thjings to Note:
+## Things to Note:
 - See icons from https://icones.js.org/
 - Use library [Iconfig](https://docs.iconify.design/iconify-icon/react.html) to use icons from multiple vendors in React
-
-- Use geocoding to convert addresses to coordinates. Do this manually and store it in the database. Google Map Api use requires $$$ :(
-  - and then store both the location string and coordinates in the database
-
-- Sorting. All sorting shld be done by the database using sql queries.
