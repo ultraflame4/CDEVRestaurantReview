@@ -12,7 +12,7 @@ export function EditReviewModal(props) {
 
     function onModalLoad() {
         if (inpRef.current === null) return
-        inpRef.current.value = props.initialContents.replace("<br>","\n") // Change br tp actual line breaks
+        inpRef.current.value = props.initialContents.replace("<br>","\n") // Change br to actual line breaks
     }
 
     /**
