@@ -10,7 +10,7 @@
     margin: 0;
     height: 0.5rem;
     outline: none;
-
+    /* Make the slider appear filled using linear-gradient and the changing filledPercentage in js*/
     background: linear-gradient(to right, var(--fill-track-color) , var(--fill-track-color) var(--filledPercentage), var(--bg-color) var(--filledPercentage), var(--bg-color) 100%);
     border-radius: 4px;
     overflow: visible;

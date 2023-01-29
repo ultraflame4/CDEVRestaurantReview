@@ -15,7 +15,7 @@ export function useToggle(callback) {
 }
 
 /**
- * Makes any element toggleable like useToggle, but also un-toggles when the mouse is clicked outside of the element (and descendents)
+ * Makes any element toggleable like useToggle, but also un-toggles when the mouse is clicked outside the element (and descendents)
  *
  * @param {MutableRefObject<null> | null} triggerElementRef The element ref to trigger toggle when clicked. Defaults to element ref that is returned. When left to default, the element will toggle itself and cause visibility issues,
  * @param {(toggled: boolean)=>void | null} callback The callback called
@@ -24,6 +24,7 @@ export function useToggle(callback) {
 
 export function useOverlayToggle(triggerElementRef = null, callback = null) {
     /**
+     * Create a ref for the target element
      * @type {MutableRefObject<HTMLElement | null>}
      */
     const ref = useRef(null)

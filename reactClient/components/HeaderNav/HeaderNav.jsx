@@ -12,7 +12,7 @@ import {SignInModal, SignUpModal} from "@/components/HeaderNav/AccountModals";
 import {showModal} from "@/components/Modal/modalsManager";
 
 
-
+// Menu to show when the user is logged in
 const HeaderNavAccount_LoggedInMenu = (props) => {
     return (
         <>
@@ -21,34 +21,25 @@ const HeaderNavAccount_LoggedInMenu = (props) => {
     )
 }
 
+// Menu to show when the user is not logged in
 const HeaderNavAccount_GuestMenu = (props) => {
-
-    const inpEmailRef = useRef(null);
-    const inpPwdRef = useRef(null);
-
-
-
     return (
         <>
             <button type={"button"} className={"btn-primary"} onClick={() => showModal("signin")}>Sign in</button>
             <h6 className={"color-lightg no-margin text-center"}>or</h6>
             <button type={"button"} className={"btn-secondary"} onClick={() => showModal("signup")}>Sign up</button>
-
         </>
     )
 }
 
-HeaderNavAccount_GuestMenu.propTypes = {
-    username: PropTypes.string,
-}
-
 const HeaderNavAccount = (props) => {
     const currentUser = useContext(UserAccountContext);
+    // Reference to the account icon which on clicked will toggle the account menu
     const accIconRef = useRef(null);
-    /**
-     * @type {MutableRefObject<HTMLDivElement | null>}
-     */
+    // Reference account menu which will open when the account icon is clicked
     const menuRef = useOverlayToggle(accIconRef);
+
+    // Check if the user is logged in. If the user is logged in, currentUser will be an object. If the user is not logged in, currentUser will be null
     let isLoggedIn = currentUser !== null;
 
 
@@ -64,7 +55,7 @@ const HeaderNavAccount = (props) => {
             <div className={classes.HeaderNavAccountMenu}>
                 <h6 className={classes.HeaderNavAccountMenu_username}>{currentUser?.username ?? "Guest User"}</h6>
                 {
-                    isLoggedIn ?
+                    isLoggedIn ? // If the user is logged in, show the logged in menu. Else, show the guest menu
                         <HeaderNavAccount_LoggedInMenu/>:
                         <HeaderNavAccount_GuestMenu/>
 

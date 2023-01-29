@@ -31,4 +31,10 @@ export class UserAccountContextObj{
         return this._date_created;
     }
 }
+
+/**
+ * The react context for the current user.
+ * null, if user is not logged in.
+ * @type {React.Context<null|UserAccountContext>}
+ */
 export const UserAccountContext = React.createContext(null);

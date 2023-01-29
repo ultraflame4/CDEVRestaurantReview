@@ -25,24 +25,30 @@ import PropTypes from "prop-types";
  * @constructor
  */
 export const InputRangeSlider = function (props) {
+    // Reference to the input element
     const inputElementRef = useRef(null)
 
+    // Called when the input element is dragged
     function OnInput(e) {
         /**
          * @type {HTMLInputElement}
          */
-        let inputElement = inputElementRef.current
+        let inputElement = inputElementRef.current // get the input element from the reference
+        // If the min max values are not set, (the props are undefined) then take them as min = 0 and max = 100
         let min = parseFloat(inputElement.min.length !== 0 ? inputElement.min : "0")
         let max = parseFloat(inputElement.max.length !== 0 ? inputElement.max : "100")
+        // Get the current slider value of the input element
         let current = parseFloat(inputElement.value)
-
+        // Calculate the percentage of the slider should be filled
         let fillPercent = ((inputElement.value - min) / (max - min)) * 100
+        // Set the css variable to the percentage, and css will fill the track
         inputElement.style.setProperty("--filledPercentage",`${fillPercent}%`)
-
+        // Call the props.onInput callback  if it is set
         props.onInput?.(current,min,max)
     }
 
     useEffect(()=>{
+        // Update the input element on initial load, so it doesn't look weird when defaultValue is not 0
         OnInput(null)
     },[props.defaultValue])
 

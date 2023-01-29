@@ -4,15 +4,22 @@ import authManager from "@/core/authManager";
 import PropTypes from "prop-types";
 import {closeModal, showModal} from "@/components/Modal/modalsManager";
 
-
+// Modal for sign in
 export function SignInModal(props) {
+    // Reference to the email and password inputs
     const inpEmailRef = useRef(null);
     const inpPwdRef = useRef(null);
 
     async function signIn() {
-        let s = await authManager.login(inpEmailRef.current.value, inpPwdRef.current.value)
-        if (s){
+        // Log in using the authManager using the email and password from the email and password inputs
+        let success = await authManager.login(inpEmailRef.current.value, inpPwdRef.current.value)
+        // On success, close the modal
+        if (success){
             closeModal("signin")
+        }
+        else{
+            // Else tell the user that the login failed
+            alert("Login unsuccessful. Please try again.")
         }
     }
 
@@ -31,6 +38,7 @@ export function SignInModal(props) {
     )
 }
 
+// Modal for sign up. Work in progress....
 export function SignUpModal(props) {
 
     return (
