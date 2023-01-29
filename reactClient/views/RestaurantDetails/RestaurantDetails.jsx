@@ -15,34 +15,42 @@ import {showModal} from "@/components/Modal/modalsManager";
 import authManager from "@/core/authManager";
 import {DeleteReviewModal, EditReviewModal, WriteReviewModal} from "@/views/RestaurantDetails/ReviewsModals";
 
+/**
+ * Represents a single review
+ * @param props
+ * @return {JSX.Element}
+ */
 const ReviewItem = (props) => {
+    // 0 = delete, 1 = edit
     const [currentModal, setCurrentModal] = useState(null)
     let date = new Date(props.last_edit)
 
-
     function deleteReview() {
+        // open delete review modal
         setCurrentModal(0)
     }
 
     function editReview() {
+        // Open edit review modal
         setCurrentModal(1)
     }
 
     function closeModals() {
+        // Close all modals
         setCurrentModal(null)
     }
 
     return <li>
 
         {
-            props.editable &&
+            props.editable && // Only show edit/delete buttons if the review is editable
             <div className={classes.editReviewContainer}>
                 <button onClick={editReview}>Edit Review <Icon icon={"ic:baseline-edit"}/></button>
                 <button onClick={deleteReview}><Icon icon={"ic:baseline-delete-forever"}/></button>
-                <DeleteReviewModal reviewId={props.reviewId} isOpen={currentModal===0} onClose={closeModals}/>
+                <DeleteReviewModal reviewId={props.reviewId} isOpen={currentModal === 0} onClose={closeModals}/>
                 <EditReviewModal
                     reviewId={props.reviewId}
-                    isOpen={currentModal===1}
+                    isOpen={currentModal === 1}
                     onClose={closeModals}
                     initialContents={props.content}
                     initialRating={props.rating}/>
@@ -53,13 +61,17 @@ const ReviewItem = (props) => {
             <Icon icon={"ic:baseline-account-circle"} className={classes.icon}/>
             <h4>{props.username}</h4>
             <h5>
+                {/*Format the timestamp of the review last edit date*/}
                 {date.toLocaleDateString(undefined, {dateStyle: "short"})}
                 {" "}
                 {date.toLocaleTimeString(undefined, {timeStyle: "short"})}
             </h5>
         </div>
+        {/*Show the review rating*/}
         <div className={classes.reviewItemRating}><StarRatings rating={props.rating}/></div>
+        {/*Review contents*/}
         <p><LineBreaker text={props.content} sep={"<br>"}/></p>
+        {/*Like button*/}
         <div className={classes.like}>
             <Icon icon={"ic:baseline-thumb-up"}/>
             <span>{props.likes}</span>
@@ -77,7 +89,11 @@ ReviewItem.propTypes = {
     editable: PropTypes.bool.isRequired
 }
 
-
+/**
+ * Represents a single restaurant info item (eg. location, phone number, etc.)
+ * @param props
+ * @return {JSX.Element}
+ */
 const RestaurantInfoItem = (props) => {
     if (props.hide) {
         return <></>
@@ -98,7 +114,9 @@ RestaurantInfoItem.propTypes = {
     hide: PropTypes.bool
 }
 
-
+/**
+ * Details page for a restaurant
+ */
 export default defComponent((props) => {
     const params = useParams()
     const restaurantId = parseInt(params.id)
@@ -107,7 +125,7 @@ export default defComponent((props) => {
     const [allReviewsShown, setAllReviewsShown] = useState(false)
     const usrCtx = useContext(UserAccountContext)
 
-
+    // Callback function to load more reviews
     function loadMoreReviews() {
         GetRestaurantReviews(restaurantId, reviews.length)
             .then(value => {
@@ -121,39 +139,45 @@ export default defComponent((props) => {
     }
 
     useEffect(() => {
+        // On mount, set the page title to "Loading..."
         document.title = "RestauRants - Loading..."
+        // Get restaurant details
         GetRestaurantById(restaurantId)
             .then(value => {
+                // set timeout here cuz idk why but it doesn't work without it
                 setTimeout(() => {
+                    // Set the page title to the restaurant name
                     document.title = `RestauRants - ${value.name}`
                 }, 0)
+                // Set the data
                 setData(value)
             })
+        // Load the first couple of reviews
         loadMoreReviews()
     }, [restaurantId])
 
-    if (data === null) {
+    if (data === null) { // If data is null, show a loading spinner
         return <div><InfiniteScroll/></div>
     }
 
-
+    // Callback function to show the Write review modal
     function onWriteReview() {
-        if (usrCtx === null) {
+        if (usrCtx === null) { // if user is not signed in, show the sign in modal
             showModal("signin")
                 .then(value => {
                     if (authManager.isLoggedIn.value) {
-                        return showModal("write-review")
+                        return showModal("write-review") // if user is signed in, show the write review modal
                     }
+                    // if user is not signed in, show an error message
                     return Promise.reject("Cannot show write review modal. User is not logged in.")
                 })
                 .catch(reason => {
+                    // log error message
                     console.error(reason)
-                })
-                .then(value => {
-                    console.log("TSET")
                 })
             return
         }
+        // if user is already logged in, show the write review modal
         showModal("write-review")
     }
 

@@ -2,6 +2,9 @@ import {defComponent} from "@/tools/define";
 import "./Home.css"
 import {RestaurantList} from "@/components/Restaurant/RestaurantList";
 
+/**
+ * Home page for the website
+ */
 export default defComponent((props) => {
     return (
         <main>
@@ -9,14 +12,10 @@ export default defComponent((props) => {
             {/*todo later as part of advanced feature*/}
             </section>
             <section id={"allrestaurants"}>
+                {/* Show the list of restaurants */}
                 <RestaurantList title={"All Restaurants"}/>
             </section>
-            {/*<h1>Test</h1>*/}
-            {/*<h2>Test</h2>*/}
-            {/*<h3>Test</h3>*/}
-            {/*<h4>Test</h4>*/}
-            {/*<h5>Test</h5>*/}
-            {/*<h6>Test</h6>*/}
+
         </main>
     )
 })
