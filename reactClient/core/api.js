@@ -1,7 +1,5 @@
 import React from "react";
 
-const host = import.meta.env.DEV ? `localhost:${import.meta.env.VITE_DEV_PORT}/app` : location.host
-
 /**
  * Restaurant Type returned by the database
  * @export
@@ -36,7 +34,7 @@ const host = import.meta.env.DEV ? `localhost:${import.meta.env.VITE_DEV_PORT}/a
  * @property {string} username
  */
 
-
+// Error class for api errors so we can pass in the html error codes
 export class ApiError extends Error {
     constructor(apiPath, jsonData,errCode) {
         super(`ApiError: Error while fetching ${apiPath}\nApi results:\n${JSON.stringify(jsonData, null, 2)}`);
@@ -54,13 +52,16 @@ export class ApiError extends Error {
  * @returns {Promise<any|null>} Returns null on failure
  */
 export async function fetchApi(path_, queryParams = {}, init = {}) {
+    // Format the url to include any query parameters
     let url = new URL(path_, `http://${window.location.host}`) + "?" + new URLSearchParams(queryParams)
     let response;
 
 
     try {
+        // Fetch the api with the init options
         response = await fetch(url, init);
     } catch (err) {
+        // if there was an error, log it and throw a generic error
         console.error(`Error while fetching api ${url}:`, err)
         throw new Error("Unable to fetch api")
     }
@@ -77,6 +78,7 @@ export async function fetchApi(path_, queryParams = {}, init = {}) {
     if (!response.ok) {
         throw new ApiError(url, jsonData??response.body,response.status)
     }
+    
     // return the decoded response
     // if response was not able to be decoded, throw an error
     if (jsonData === undefined) {
@@ -96,7 +98,9 @@ export async function fetchApi(path_, queryParams = {}, init = {}) {
  */
 function getCurrentGeoPosition() {
     return new Promise((resolve, reject) => {
+        // check if geolocation is supported
         if (!navigator.geolocation){
+            // Else reject the promise with 0,0 for the xy coordinates
             reject({
                 x: 0,
                 y: 0,
@@ -105,6 +109,7 @@ function getCurrentGeoPosition() {
             return
         }
 
+        // get the current position and resolve the promise
         navigator.geolocation.getCurrentPosition(position => {
             resolve({
                 x: position.coords.longitude,
@@ -113,6 +118,7 @@ function getCurrentGeoPosition() {
             })
 
         }, positionError => {
+            // if there was an error, reject the promise and return 0,0 for the xy coordinates
             reject({
                 x: 0,
                 y: 0,
@@ -129,12 +135,12 @@ function getCurrentGeoPosition() {
  */
 export async function GetRestaurants(start) {
 
-
+    // get the current position
     let pos = await getCurrentGeoPosition()
-
 
     let response;
     try {
+        // fetch the restaurants
         response = await fetchApi("/api/restaurants",
             {
                 start: start,
@@ -142,14 +148,15 @@ export async function GetRestaurants(start) {
                 y: pos.y,
                 limit: 15
             })
-
+        // return the results
         return response.results;
     } catch (err) {
+        // if there was an error, log it and return an empty array
         console.error(err)
         return []
     }
 
-
+    // PSEUDO DATA GENERATOR BELOW
     let a = []
     for (let i = 0; i < 15; i++) {
         a.push({
@@ -174,9 +181,11 @@ export async function GetRestaurants(start) {
  * @constructor
  */
 export async function GetRestaurantById(id) {
+    // get the current position
     let currentPos = await getCurrentGeoPosition()
     let data;
     try{
+        // call the api
         data = await fetchApi("/api/restaurants/id", {
             restaurantId: id,
             x: currentPos.x,
@@ -184,15 +193,17 @@ export async function GetRestaurantById(id) {
         })
     }
     catch (e) {
+        // if there was an error, log it and return null
         console.log(e)
         return null
     }
+    // return the first (and only) result
     return data.results[0] ?? null
 }
 
 
 /**
- * Gets a the reviews for a restaurant from the server using its id
+ * Gets the reviews for a restaurant from the server using its id
  * @param id {number} id of restaurant
  * @param offset {number} Offset to start from
  * @return {Promise<null|DBReviewType[]>}
@@ -201,15 +212,18 @@ export async function GetRestaurantById(id) {
 export async function GetRestaurantReviews(id,offset=0){
     let data;
     try{
+        // Call api
         data = await fetchApi("/api/reviews",{
             restaurant_id:id,
             start:offset
         })
     }
     catch (e) {
+        // if there was an error, log it and return null
         console.log(e)
         return null
     }
+    // return the results. if undefined somehow, return null
     return data.results ?? null
 }
 
@@ -221,13 +235,14 @@ export async function GetRestaurantReviews(id,offset=0){
  * @return {Promise<any>}
  */
 export async function CreateRestaurantReview(id,rating,content){
+    // call the api
     return await fetchApi("/api/reviews/create", undefined, {
-        method: "POST",
+        method: "POST", // set it to post
         headers: {
             Accept: "*/*",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json" // very important, otherwise the server will not know what to do with the data
         },
-        body: JSON.stringify({
+        body: JSON.stringify({ // pass in the parameters as a json string
             restaurant_id: id,
             rating: rating,
             content: content
@@ -242,13 +257,14 @@ export async function CreateRestaurantReview(id,rating,content){
  * @return {Promise<any>}
  */
 export async function UpdateRestaurantReview(id,rating,content){
+    // call the api
     return await fetchApi("/api/reviews/update", undefined, {
         method: "PUT",
         headers: {
             Accept: "*/*",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json" // very important, otherwise the server will not know what to do with the data
         },
-        body: JSON.stringify({
+        body: JSON.stringify({ // pass in the parameters as a json string
             review_id: id,
             rating: rating,
             content: content
@@ -261,13 +277,14 @@ export async function UpdateRestaurantReview(id,rating,content){
  * @return {Promise<any>}
  */
 export async function DeleteRestaurantReview(id){
+    // call the api
     return await fetchApi("/api/reviews/delete", undefined, {
         method: "DELETE",
         headers: {
             Accept: "*/*",
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
+        body: JSON.stringify({ // pass in the parameters as a json string
             review_id: id
         })
     })
