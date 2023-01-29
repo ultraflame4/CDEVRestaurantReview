@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/index.1500da46.js",
+    "file": "assets/index.d067d297.js",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
@@ -12,19 +12,19 @@
     ]
   },
   "reactClient/views/Home/Home.jsx": {
-    "file": "assets/Home.150563cc.js",
+    "file": "assets/Home.96cf3330.js",
     "src": "reactClient/views/Home/Home.jsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_InfiniteScroll.5c304c78.js"
+      "_InfiniteScroll.7be66ddc.js"
     ],
     "css": [
       "assets/Home.4f3e0517.css"
     ]
   },
-  "_InfiniteScroll.5c304c78.js": {
-    "file": "assets/InfiniteScroll.5c304c78.js",
+  "_InfiniteScroll.7be66ddc.js": {
+    "file": "assets/InfiniteScroll.7be66ddc.js",
     "imports": [
       "index.html"
     ],
@@ -33,16 +33,20 @@
     ]
   },
   "reactClient/views/RestaurantDetails/RestaurantDetails.jsx": {
-    "file": "assets/RestaurantDetails.71c2297b.js",
+    "file": "assets/RestaurantDetails.744d18cc.js",
     "src": "reactClient/views/RestaurantDetails/RestaurantDetails.jsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_InfiniteScroll.5c304c78.js"
+      "_InfiniteScroll.7be66ddc.js"
     ],
     "css": [
       "assets/RestaurantDetails.a68d7992.css"
     ]
+  },
+  "reactClient/views/RestaurantDetails/RestaurantDetails.css": {
+    "file": "assets/RestaurantDetails.a68d7992.css",
+    "src": "reactClient/views/RestaurantDetails/RestaurantDetails.css"
   },
   "InfiniteScroll.css": {
     "file": "assets/InfiniteScroll.c840a84f.css",
@@ -51,10 +55,6 @@
   "reactClient/views/Home/Home.css": {
     "file": "assets/Home.4f3e0517.css",
     "src": "reactClient/views/Home/Home.css"
-  },
-  "reactClient/views/RestaurantDetails/RestaurantDetails.css": {
-    "file": "assets/RestaurantDetails.a68d7992.css",
-    "src": "reactClient/views/RestaurantDetails/RestaurantDetails.css"
   },
   "index.css": {
     "file": "assets/index.9608940a.css",
