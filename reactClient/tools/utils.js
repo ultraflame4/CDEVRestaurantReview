@@ -7,6 +7,7 @@ export class WatchableValue {
      */
     #value
     /**
+     * Listener callbacks
      * @type {Array<()=>void>}
      */
     #listeners;
@@ -21,7 +22,9 @@ export class WatchableValue {
     }
 
     set value(value) {
+        // If the value is the same, do nothing
         if (this.#value === value) return
+        // Else set the value and call the listeners
         this.#value = value
         this.#listeners.forEach(listener => listener())
     }
@@ -40,6 +43,7 @@ export class WatchableValue {
      * @param {Array<()=>void>} callback
      */
     release(callback) {
+        // Remove the callback from the listeners array
         this.#listeners = this.#listeners.filter(l => l !== callback)
     }
 }

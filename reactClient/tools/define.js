@@ -1,5 +1,5 @@
 /**
- * Stores a bunch of functions to define callback types and other stuff
+ * Stores a bunch of functions to define callback types and other stuff.
  */
 
 

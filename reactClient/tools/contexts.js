@@ -1,5 +1,6 @@
 import React from "react";
 
+// Contains the context information for the current user.
 export class UserAccountContextObj{
 
 

@@ -32,21 +32,24 @@ export function useOverlayToggle(triggerElementRef = null, callback = null) {
 
         ref.current.tabIndex = -1
 
-
+        // If the trigger element ref is null, set it to the element ref
         if (triggerElementRef == null) {
             triggerElementRef = ref
         }
 
+        // Listen for clicks in the trigger element and toggle on the element
         const clickListener = (e) => {
             e.stopPropagation()
             ref.current?.toggleAttribute("toggled")
             callback?.(true)
         }
 
+        // Listen for clicks and un-toggle if clicked outside the element
         const blurListener = (/**@type {MouseEvent}*/e) => {
-
+            // If the click was inside the element, do nothing
             if  (ref.current.contains(e.target))
                 return
+            // Else untiggle
             ref.current?.toggleAttribute("toggled", false)
             callback?.(false)
         }
@@ -56,7 +59,6 @@ export function useOverlayToggle(triggerElementRef = null, callback = null) {
         triggerElementRef.current?.addEventListener("click", clickListener)
 
         return () => {
-
             document.removeEventListener("click", blurListener)
             triggerElementRef.current?.removeEventListener("click", clickListener)
         }
@@ -80,12 +82,16 @@ export function useWatchableValue(watchableVal) {
 
     useEffect(() => {
         const callback = () => {
+            // Update the value when tge watchable value is changed
             setVal(watchableVal.value)
         }
+        // Add a listener to the watchable value
         watchableVal.watch(callback);
         return () => {
+            // Remove the listener when the component is unmounted
             watchableVal.release(callback)
         };
+
     }, [watchableVal])
 
     return getVal
