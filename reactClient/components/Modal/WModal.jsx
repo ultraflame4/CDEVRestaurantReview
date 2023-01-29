@@ -23,17 +23,19 @@ import {closeModal, GlobalCurrentModal} from "@/components/Modal/modalsManager";
  * @param props {WModalProps}
  */
 export function WModal(props) {
+    // Get the current modal that should be shown from the modalsManager
     const currentModal = useWatchableValue(GlobalCurrentModal)
 
     function onModalClose() {
+        // To close the modal, if we are using the modalId, then call the closeModal function from the modalsManager.
         if (props.modalId) {
             closeModal(props.modalId)
         }
+        // Call close callback if set
         props.onClose?.()
     }
 
-
-    return <Modal isOpen={(currentModal === props.modalId || props.isOpen)}
+    return <Modal isOpen={(currentModal === props.modalId || props.isOpen)} // If the current modal is this modal, or the isOpen prop is true, then show the modal
                   onRequestClose={onModalClose}
                   shouldCloseOnEsc={true}
                   shouldCloseOnOverlayClick={true}
