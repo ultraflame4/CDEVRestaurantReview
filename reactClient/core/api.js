@@ -5,7 +5,7 @@ const host = import.meta.env.DEV ? `localhost:${import.meta.env.VITE_DEV_PORT}/a
 /**
  * Restaurant Type returned by the database
  * @export
- * @typedef DBRestaurantType
+ * @typedef {Object} DBRestaurantType
  * @property {number} id
  * @property {string} name
  * @property {string} description

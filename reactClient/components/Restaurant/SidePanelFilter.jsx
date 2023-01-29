@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import classes from "@/components/Restaurant/SidePanelFilter.module.css";
 
 /**
+ * Represents an item for the filter sidepanel.
  * @param {{
  *     title: string,
  *     icon: string,
@@ -25,10 +26,15 @@ import classes from "@/components/Restaurant/SidePanelFilter.module.css";
  * @return {*}
  */
 const FilterSliderItem = (props) => {
+    // The value text is the current value the slider is at and the value that will be displayed if enabled.
     const [valueText, setValueText] = useState(0)
 
+    // Callback for the input range slider.
     function callback(value, min, max) {
+        // If the value is not the max value, then we want to display the value.
+        // Otherwise, we want to display the max value text if it is set. (else just show the value)
         setValueText(value !== max ? value : (props.showValueMaxText ?? value))
+        // Call the callback if it is set.
         props.callback?.(value, min, max)
     }
 
@@ -39,22 +45,29 @@ const FilterSliderItem = (props) => {
                 {valueText}
             {props.showValueIcon ? <Icon icon={props.showValueIcon} className={classes.icon}/> : ""}
         </span>
-
+        {/*The range slider input for the filter*/}
         <InputRangeSlider min={props.min} max={props.max} step={props.step} defaultValue={props.defaultValue}
                           onInput={callback}/>
-        {props.noIcon ? <>
-            <span>{props.minText}</span>
-            <div><span>{props.maxText}</span></div>
-        </> : <>
-            <Icon icon={props.minIcon ?? props.icon} className={classes.icon}/>
-            <div>
-                <Icon icon={props.icon} className={classes.icon}/>
-                <Icon icon={props.icon} className={classes.icon}/>
-                <Icon icon={props.icon} className={classes.icon}/>
-                <Icon icon={props.icon} className={classes.icon}/>
-                <Icon icon={props.icon} className={classes.icon}/>
-            </div>
-        </>}
+        {
+            props.noIcon ?
+                // If noIcon is true, then we don't want to display any icons, but instead text.
+                <>
+                    <span>{props.minText}</span>
+                    <div><span>{props.maxText}</span></div>
+                </>
+                :
+                // Otherwise, we want to display the minIcon and then the max icon 5 times.
+                <>
+                    <Icon icon={props.minIcon ?? props.icon} className={classes.icon}/>
+                    <div>
+                        <Icon icon={props.icon} className={classes.icon}/>
+                        <Icon icon={props.icon} className={classes.icon}/>
+                        <Icon icon={props.icon} className={classes.icon}/>
+                        <Icon icon={props.icon} className={classes.icon}/>
+                        <Icon icon={props.icon} className={classes.icon}/>
+                    </div>
+                </>
+        }
     </li>)
 }
 
@@ -77,6 +90,7 @@ FilterSliderItem.propTypes = {
 }
 
 /**
+ * Represents the filter sidepanel with filters and sorting options.
  *
  * @param props {{
  *         maxCostChange?: function (value:number, min:number, max :number) : void,
@@ -84,7 +98,7 @@ FilterSliderItem.propTypes = {
  *         minReviewsChange?: function (value:number, min:number, max :number) : void,
  *         sortByChange ?: function (sortBy:string) : void,
  * }}
- * @return {JSX.Element}
+ * @return {React.ReactNode}
  * @constructor
  */
 export const FilterSidepanel = (props) => {

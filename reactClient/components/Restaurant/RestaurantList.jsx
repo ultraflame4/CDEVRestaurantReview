@@ -1,55 +1,68 @@
-import PropTypes, {func, number} from "prop-types";
+import PropTypes from "prop-types";
 import classes from "./Restaurant.module.css"
 
 import {Icon} from "@iconify-icon/react";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {StarRatings} from "@/components/Ratings/StarRatings";
 import {CostRatings} from "@/components/Ratings/CostRatings";
 import {LineBreaker} from "@/components/LineBreaker";
 import {FilterSidepanel} from "@/components/Restaurant/SidePanelFilter";
 import {GetRestaurants} from "@/core/api";
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
+/**
+ * This component represents a single restaurant in the list
+ * @param props
+ * @return {React.ReactNode}
+ */
 const RestaurantListItem = (props) => {
 
 
     return (<li className={classes.restaurantListContentItem + " card"}>
-        <Link to={`restaurant/${props.id}`}>
-        <div className={classes.restaurantListContentItem_Head}>
-            <h3 className={classes.restaurantListContentItem_Name}>
-                {props.name}
-            </h3>
+        <Link to={`restaurant/${props.id}`}> {/*Link to restaurant page*/}
 
-            {/*Tags here*/}
-            <ul className={classes.restaurant_tagslist}>
-                {props.tags?.map((tagname, tagindex) => {
-                    return (<li key={tagindex}>
-                        {tagname}
-                    </li>)
-                })}
-            </ul>
-            <div className={classes.restaurant_subInfoBar}>
-                <StarRatings rating={props.rating}/>
-                <Icon icon={"ci:dot-03-m"}/>
-                <CostRatings rating={props.cost}/>
-                <Icon icon={"ci:dot-03-m"}/>
-                <span>{props.distance}km</span>
+            <div className={classes.restaurantListContentItem_Head}>
+                <h3 className={classes.restaurantListContentItem_Name}>
+                    {props.name}
+                </h3>
+
+                {/*Tags here*/}
+                <ul className={classes.restaurant_tagslist}>
+                    { // For each tag given in the tag list in props, create a li for it
+                        props.tags?.map((tagname, tagindex) => {
+                            return (<li key={tagindex}>
+                                {tagname}
+                            </li>)
+                        })
+                    }
+                </ul>
+                {/*Sub info bar, the stars and cost ratings, and also the distance */}
+                <div className={classes.restaurant_subInfoBar}>
+                    <StarRatings rating={props.rating}/>
+                    <Icon icon={"ci:dot-03-m"}/>
+                    <CostRatings rating={props.cost}/>
+                    <Icon icon={"ci:dot-03-m"}/>
+                    <span>{props.distance}km</span>
+                </div>
+
+            </div>
+            <p className={classes.restaurant_desc}>
+                {/*The restaurant description. Use <br> as the line breaks, because thats how i stored them in the database*/}
+                <LineBreaker text={props.desc} sep={"<br>"}/>
+            </p>
+            {/*The restaurant banner image*/}
+            <img className={classes.restaurant_banner_img}
+                 alt={`Image of restaurant ${props.name}`}
+                 src={props.imageSrc}/>
+            {/*Recent reveiws of the restaurants (WIP) */}
+            <div className={classes.restaurant_recentReviews}>
+                <div className={classes.restaurant_recentReviews_header}>
+                    <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
+                    <h4>Recent Reviews</h4>
+                </div>
             </div>
 
-        </div>
-        <p className={classes.restaurant_desc}>
-            <LineBreaker text={props.desc} sep={"<br>"}/>
-        </p>
-        <img className={classes.restaurant_banner_img}
-             alt={`Image of restaurant ${props.name}`}
-             src={props.imageSrc}/>
-        <div className={classes.restaurant_recentReviews}>
-            <div className={classes.restaurant_recentReviews_header}>
-                <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
-                <h4>Recent Reviews</h4>
-            </div>
-        </div>
         </Link>
     </li>)
 }
@@ -65,6 +78,11 @@ RestaurantListItem.propType = {
     distance: PropTypes.number.isRequired
 }
 
+/**
+ * This component represents the list of restaurants
+ * @param props
+ * @return {React.ReactNode}
+ */
 const RestaurantListContents = (props) => {
 
     return (<ul className={classes.restaurantListContent}>
@@ -87,26 +105,36 @@ const RestaurantListContents = (props) => {
 RestaurantListContents.propTypes = {
     restaurants: PropTypes.array.isRequired
 }
-
+/**
+ * This component represents the entire restaurant list page
+ * @param props
+ * @return {JSX.Element}
+ */
 export const RestaurantList = (props) => {
-    const [isAllLoaded,setIsAllLoaded] = useState(false)
+    const [isAllLoaded, setIsAllLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
 
+    // Function to load more restaurants
     function loadData() {
         setRestaurants(prevState => {
+            // Get more restaurants from the api using the current length of the restaurant list as the offset
             GetRestaurants(prevState.length).then(value => {
+                // Concat the new restaurants to the existing list
                 setRestaurants(prevState.concat(value))
-                if (value.length == 0){
+                // If the api returns an empty array, then we have loaded all the restaurants
+                if (value.length == 0) {
+                    // Set the isAllLoaded state to true, so that the infinite scroll component is hidden
                     setIsAllLoaded(true)
                 }
             })
+
             return prevState
         })
     }
 
 
-
     useEffect(() => {
+        // Initially load some restaurants
         loadData()
     }, [props.start])
 
@@ -117,7 +145,8 @@ export const RestaurantList = (props) => {
         </h1>
         <FilterSidepanel/>
         <RestaurantListContents restaurants={restaurants}/>
-        <InfiniteScroll loadMore={loadData} className={classes.infiniteScrollStyle} hide={isAllLoaded} />
+        {/*on load more load more data lah*/}
+        <InfiniteScroll loadMore={loadData} className={classes.infiniteScrollStyle} hide={isAllLoaded}/>
     </div>;
 }
 RestaurantList.propTypes = {
