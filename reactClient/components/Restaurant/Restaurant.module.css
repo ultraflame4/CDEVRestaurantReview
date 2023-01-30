@@ -33,7 +33,6 @@
 
 /*The individual restaurant card*/
 .restaurantListContentItem {
-
     width: 24rem;
     max-width: 53rem;
     height: 24rem;
@@ -43,9 +42,10 @@
     padding: 0.6em;
     flex-shrink: 0;
     flex-grow: 1;
+}
 
-
-
+.restaurantListContentItem[data-hidden="true"]{
+    display: none;
 }
 .restaurantListContentItem a{
     text-decoration: inherit;

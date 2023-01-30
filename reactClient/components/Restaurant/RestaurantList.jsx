@@ -18,8 +18,8 @@ import {Link} from "react-router-dom";
  */
 const RestaurantListItem = (props) => {
 
-
-    return (<li className={classes.restaurantListContentItem + " card"}>
+    console.log(props.rating,props.name)
+    return (<li className={classes.restaurantListContentItem + " card"} data-hidden={props.hidden}>
         <Link to={`restaurant/${props.id}`}> {/*Link to restaurant page*/}
 
             <div className={classes.restaurantListContentItem_Head}>
@@ -75,7 +75,8 @@ RestaurantListItem.propType = {
     cost: PropTypes.number.isRequired,
     desc: PropTypes.string.isRequired,
     imageSrc: PropTypes.string.isRequired,
-    distance: PropTypes.number.isRequired
+    distance: PropTypes.number.isRequired,
+    hidden: PropTypes.bool.isRequired
 }
 
 /**
@@ -88,22 +89,27 @@ const RestaurantListContents = (props) => {
     return (<ul className={classes.restaurantListContent}>
         {
             props.restaurants.map((value, index) =>
-                <RestaurantListItem key={index}
-                                    id={value.id}
-                                    tags={value.tags}
-                                    rating={parseFloat(value.avg_rating)}
-                                    cost={value.cost_rating / 2}
-                                    name={value.name}
-                                    desc={value.description}
-                                    imageSrc={value.photo_url}
-                                    distance={Math.round(value.distance / 10) / 100} // round distance to 2 d.p.
+                <RestaurantListItem
+                    key={index}
+                    id={value.id}
+                    tags={value.tags}
+                    rating={parseFloat(value.avg_rating)}
+                    cost={value.cost_rating / 2}
+                    name={value.name}
+                    desc={value.description}
+                    imageSrc={value.photo_url}
+                    distance={Math.round(value.distance / 10) / 100} // round distance to 2 d.p.
+                    hidden={value.cost_rating > props.maxCost*2 || value.avg_rating < props.minRating*2 || value.reviews_count < props.minReviews}
                 />)
         }
     </ul>)
 }
 
 RestaurantListContents.propTypes = {
-    restaurants: PropTypes.array.isRequired
+    restaurants: PropTypes.array.isRequired,
+    maxCost: PropTypes.number.isRequired,
+    minRating: PropTypes.number.isRequired,
+    minReviews: PropTypes.number.isRequired
 }
 /**
  * This component represents the entire restaurant list page
@@ -113,6 +119,9 @@ RestaurantListContents.propTypes = {
 export const RestaurantList = (props) => {
     const [isAllLoaded, setIsAllLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
+    const [maxCost, setMaxCost] = useState(5)
+    const [minRating, setMinRating] = useState(0)
+    const [minReviews, setMinReviews] = useState(0)
 
     // Function to load more restaurants
     function loadData() {
@@ -130,6 +139,7 @@ export const RestaurantList = (props) => {
 
             return prevState
         })
+
     }
 
 
@@ -143,8 +153,16 @@ export const RestaurantList = (props) => {
         <h1 className={classes.title}>
             {props.title}
         </h1>
-        <FilterSidepanel/>
-        <RestaurantListContents restaurants={restaurants}/>
+        <FilterSidepanel
+            maxCostChange={value => setMaxCost(value)}
+            minRatingChange={value => setMinRating(value)}
+            minReviewsChange={value => setMinReviews(value)}
+        />
+        <RestaurantListContents
+            restaurants={restaurants}
+            maxCost={maxCost}
+            minReviews={minReviews}
+            minRating={minRating}/>
         {/*on load more load more data lah*/}
         <InfiniteScroll loadMore={loadData} className={classes.infiniteScrollStyle} hide={isAllLoaded}/>
     </div>;

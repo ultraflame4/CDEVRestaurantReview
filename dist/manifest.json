@@ -44,20 +44,20 @@
       "assets/RestaurantDetails.a68d7992.css"
     ]
   },
-  "reactClient/views/RestaurantDetails/RestaurantDetails.css": {
-    "file": "assets/RestaurantDetails.a68d7992.css",
-    "src": "reactClient/views/RestaurantDetails/RestaurantDetails.css"
-  },
-  "InfiniteScroll.css": {
-    "file": "assets/InfiniteScroll.c840a84f.css",
-    "src": "InfiniteScroll.css"
-  },
   "reactClient/views/Home/Home.css": {
     "file": "assets/Home.4f3e0517.css",
     "src": "reactClient/views/Home/Home.css"
   },
+  "reactClient/views/RestaurantDetails/RestaurantDetails.css": {
+    "file": "assets/RestaurantDetails.a68d7992.css",
+    "src": "reactClient/views/RestaurantDetails/RestaurantDetails.css"
+  },
   "index.css": {
     "file": "assets/index.9608940a.css",
     "src": "index.css"
+  },
+  "InfiniteScroll.css": {
+    "file": "assets/InfiniteScroll.c840a84f.css",
+    "src": "InfiniteScroll.css"
   }
 }

@@ -124,6 +124,7 @@ export const FilterSidepanel = (props) => {
                     showValueIcon={"material-symbols:star"}
                     min={0}
                     max={5}
+                    step={0.5}
                     callback={props.minRatingChange}
                 />
 
