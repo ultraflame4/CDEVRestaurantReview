@@ -18,7 +18,6 @@ import {Link} from "react-router-dom";
  */
 const RestaurantListItem = (props) => {
 
-    console.log(props.rating,props.name)
     return (<li className={classes.restaurantListContentItem + " card"} data-hidden={props.hidden}>
         <Link to={`restaurant/${props.id}`}> {/*Link to restaurant page*/}
 

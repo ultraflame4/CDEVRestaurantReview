@@ -26,7 +26,6 @@ export const StarRatings = (props) => {
     // Loop 5 times to display 5 stars
     for (let i = 0; i < 5; i++) {
         // If the no of stars less than 1, then we need to display a half star
-        console.log(stars_count)
         if (stars_count < 1) {
             stars.push(<Icon key={i} icon={"material-symbols:star-half"} className={classes.starRating}/>)
         }
