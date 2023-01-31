@@ -6,6 +6,25 @@ import classes from "./ReviewsModals.module.css";
 import {CreateRestaurantReview, DeleteRestaurantReview, UpdateRestaurantReview} from "@/core/api";
 import authManager from "@/core/authManager";
 
+export function PhotosModal(props){
+    return <WModal title={"All Photos"} icon={"mdi:folder-multiple-image"} isOpen={props.isOpen} onClose={props.onClose}>
+        <ul className={classes.photosList}>
+            {
+                props.pictures.map((value, index) => {
+                    return <li key={index}>
+                        <img src={value} alt={"Restaurant Picture"}/>
+                    </li>
+                })
+            }
+        </ul>
+    </WModal>
+}
+PhotosModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    pictures: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onClose: PropTypes.func.isRequired
+}
+
 export function EditReviewModal(props) {
     const [rating, setRating] = React.useState(props.initialRating)
     const inpRef = useRef(null)

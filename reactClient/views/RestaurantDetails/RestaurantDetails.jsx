@@ -13,7 +13,12 @@ import classes from "./RestaurantDetails.module.css";
 import {UserAccountContext} from "@/tools/contexts";
 import {showModal} from "@/components/Modal/modalsManager";
 import authManager from "@/core/authManager";
-import {DeleteReviewModal, EditReviewModal, WriteReviewModal} from "@/views/RestaurantDetails/ReviewsModals";
+import {
+    DeleteReviewModal,
+    EditReviewModal,
+    PhotosModal,
+    WriteReviewModal
+} from "@/views/RestaurantDetails/ReviewsModals";
 import {GetMapEmbedUrl} from "@/tools/utils";
 
 /**
@@ -124,6 +129,7 @@ export default defComponent((props) => {
     const [data, setData] = useState(null)
     const [reviews, setReviews] = useState([])
     const [allReviewsShown, setAllReviewsShown] = useState(false)
+    const [showPhotos, setShowPhotos] = useState(false)
     const usrCtx = useContext(UserAccountContext)
 
     // Callback function to load more reviews
@@ -185,7 +191,7 @@ export default defComponent((props) => {
     return (<div>
         <main className={classes.main}>
             <WriteReviewModal restaurantId={restaurantId}/>
-
+            <PhotosModal isOpen={showPhotos} pictures={data.photo_url} onClose={()=>setShowPhotos(false)}/>
 
             <div>
                 <h1>{data.name}</h1>
@@ -199,6 +205,7 @@ export default defComponent((props) => {
                 <p className={classes.restaurantDesc}>
                     <LineBreaker text={data.description} sep={"<br>"}/>
                 </p>
+
                 <div className={classes.reviewsHeader}>
                     <h2>Reviews</h2> <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
                     <button onClick={onWriteReview}>Write a review <Icon icon={"ic:baseline-edit"}
@@ -227,7 +234,7 @@ export default defComponent((props) => {
                 <div className={classes.photos}>
                     <img src={data.photo_url[0]} alt={"An image of the restaurant"}/>
                     <img src={data.photo_url[1]} alt={"An image of the restaurant"}/>
-                    <button>
+                    <button onClick={()=>setShowPhotos(true)}>
                         <img src={data.photo_url[2]} alt={"An image of the restaurant"}/>
                         <p>See all {data.photo_url.length}</p>
                     </button>

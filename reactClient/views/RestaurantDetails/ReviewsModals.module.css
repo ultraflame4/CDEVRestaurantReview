@@ -28,3 +28,23 @@
     font-weight: 600;
     margin-bottom: 1rem;
 }
+
+.photosList{
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+    max-height: 45vh;
+    max-width: 65vw;
+    overflow-y: auto;
+    justify-content: center;
+    gap: 1rem;
+}
+.photosList li{
+    flex-grow: 1;
+}
+
+.photosList li img{
+    width: 100%;
+    border-radius: 0.4rem;
+}
