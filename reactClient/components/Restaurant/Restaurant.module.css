@@ -214,6 +214,7 @@
 
 .restaurant_recentReviewsItem p::before {
     content: open-quote;
+    margin-right: 0.25em;
 }
 
 .restaurant_recentReviewsItem > span::before {
