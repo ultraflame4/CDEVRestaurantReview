@@ -247,7 +247,7 @@ export default defComponent((props) => {
                 <iframe frameBorder="0" scrolling="no" marginHeight="0"
                         marginWidth="0"
                         className={"card"}
-                        src={GetMapEmbedUrl(data.location)}>
+                        src={GetMapEmbedUrl(data.name,data.location)}>
 
                 </iframe>
 

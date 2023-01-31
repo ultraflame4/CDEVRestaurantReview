@@ -50,16 +50,17 @@ export class WatchableValue {
 
 /**
  * A helper function to get the map embed url for google maps
+ * @param {string} name
  * @param {string} location
  * @return {string}
  * @constructor
  */
-export function GetMapEmbedUrl(location) {
+export function GetMapEmbedUrl(name,location) {
     const url = new URL("https://maps.google.com/maps")
 
     url.searchParams.set("width", "100%")
     url.searchParams.set("hl", "en")
-    url.searchParams.set("q", location)
+    url.searchParams.set("q", `${location} (${name})`)
     url.searchParams.set("z", 18)
     url.searchParams.set("output", "embed")
 
