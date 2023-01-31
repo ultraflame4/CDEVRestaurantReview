@@ -14,6 +14,7 @@ import {UserAccountContext} from "@/tools/contexts";
 import {showModal} from "@/components/Modal/modalsManager";
 import authManager from "@/core/authManager";
 import {DeleteReviewModal, EditReviewModal, WriteReviewModal} from "@/views/RestaurantDetails/ReviewsModals";
+import {GetMapEmbedUrl} from "@/tools/utils";
 
 /**
  * Represents a single review
@@ -241,7 +242,14 @@ export default defComponent((props) => {
                     <RestaurantInfoItem icon={"ic:directions"} title={"Location"} hide={!data.location}>
                         {data.location}
                     </RestaurantInfoItem>
+
                 </aside>
+                <iframe frameBorder="0" scrolling="no" marginHeight="0"
+                        marginWidth="0"
+                        className={"card"}
+                        src={GetMapEmbedUrl(data.location)}>
+
+                </iframe>
 
             </div>
         </main>
