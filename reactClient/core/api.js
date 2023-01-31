@@ -201,21 +201,48 @@ export async function GetRestaurantById(id) {
     return data.results[0] ?? null
 }
 
-
 /**
- * Gets the reviews for a restaurant from the server using its id
+ * Gets the recent reviews for a restaurant from the server using its id
  * @param id {number} id of restaurant
- * @param offset {number} Offset to start from
+ * @param limit {number}
  * @return {Promise<null|DBReviewType[]>}
  * @constructor
  */
-export async function GetRestaurantReviews(id,offset=0){
+export async function GetRestaurantRecentReviews(id,limit=3){
     let data;
     try{
         // Call api
         data = await fetchApi("/api/reviews",{
             restaurant_id:id,
-            start:offset
+            limit:limit,
+            sort:"edit_date"
+        })
+    }
+    catch (e) {
+        // if there was an error, log it and return null
+        console.log(e)
+        return null
+    }
+    // return the results. if undefined somehow, return null
+    return data.results ?? null
+}
+
+/**
+ * Gets the reviews for a restaurant from the server using its id
+ * @param id {number} id of restaurant
+ * @param offset {number} Offset to start from
+ * @param limit {number}
+ * @return {Promise<null|DBReviewType[]>}
+ * @constructor
+ */
+export async function GetRestaurantReviews(id,offset=0,limit=15){
+    let data;
+    try{
+        // Call api
+        data = await fetchApi("/api/reviews",{
+            restaurant_id:id,
+            start:offset,
+            limit:limit
         })
     }
     catch (e) {

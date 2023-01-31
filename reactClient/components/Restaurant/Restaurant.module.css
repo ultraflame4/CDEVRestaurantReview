@@ -151,7 +151,10 @@
     margin-left: 0.6rem;
     border-radius: 0.5rem;
     filter: drop-shadow(0 0.1rem 0.2rem var(--black));
-    padding: 0.5rem
+    padding: 0.5rem;
+    height: 100%;
+    box-sizing: border-box;
+    min-height: 0;
 }
 
 .restaurant_recentReviews .icon{
@@ -166,6 +169,41 @@
     font-size: 0.85rem;
     letter-spacing: 0.02rem;
     color: var(--off-white);
+}
+
+.restaurant_recentReviewsItem{
+    font-size: 0.8em;
+    font-weight: 600;
+    color: var(--light-gray);
+    margin-top: 1rem;
+}
+
+
+.restaurant_recentReviews p{
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    font-family: "Poppins";
+    white-space: break-spaces;
+    margin: 0;
+}
+/*Add quotes and dash*/
+.restaurant_recentReviewsItem > span{
+    font-weight: 900;
+    margin-right: 0.25rem;
+}
+.restaurant_recentReviewsItem p::before, .restaurant_recentReviewsItem > span{
+    font-size: 1.25em;
+    color: var(--green);
+}
+.restaurant_recentReviewsItem p::before{
+    content: open-quote;
+}
+.restaurant_recentReviewsItem > span::before{
+    content: close-quote;
 }
 
 

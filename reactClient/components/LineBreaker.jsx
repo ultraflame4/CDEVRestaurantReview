@@ -19,8 +19,9 @@ export function LineBreaker(props) {
                 .split(sep)
                 .map((value, index) => {
                     // if it's the first item, don't add a line break
-                    if (index === 0) {
-                        return <span key={index}>{value}</span>
+                    // OR if noLineBreaks is true, don't add a line break
+                    if (index === 0 || props.noLineBreaks) {
+                        return <span key={index}>{value}&nbsp;</span>
                     }
                     // otherwise, add a line break
                     return <span key={index}><br/>{value}</span>
@@ -32,5 +33,6 @@ export function LineBreaker(props) {
 
 LineBreaker.propTypes = {
     text: PropTypes.string.isRequired,
-    sep: PropTypes.string
+    sep: PropTypes.string,
+    noLineBreaks: PropTypes.bool
 }

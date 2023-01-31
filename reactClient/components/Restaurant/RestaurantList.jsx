@@ -7,7 +7,7 @@ import {StarRatings} from "@/components/Ratings/StarRatings";
 import {CostRatings} from "@/components/Ratings/CostRatings";
 import {LineBreaker} from "@/components/LineBreaker";
 import {FilterSidepanel} from "@/components/Restaurant/SidePanelFilter";
-import {GetRestaurants} from "@/core/api";
+import {GetRestaurantRecentReviews, GetRestaurantReviews, GetRestaurants} from "@/core/api";
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 import {Link} from "react-router-dom";
 
@@ -17,6 +17,15 @@ import {Link} from "react-router-dom";
  * @return {React.ReactNode}
  */
 const RestaurantListItem = (props) => {
+
+    const [recentReviews, setRecentReviews] = useState([])
+
+    useEffect(() => {
+        GetRestaurantRecentReviews(props.id).then(reviews => {
+            setRecentReviews(reviews)
+        })
+    }, [props.id])
+
 
     return (<li className={classes.restaurantListContentItem + " card"} data-hidden={props.hidden}>
         <Link to={`restaurant/${props.id}`}> {/*Link to restaurant page*/}
@@ -60,6 +69,17 @@ const RestaurantListItem = (props) => {
                     <Icon icon={"ic:baseline-chat"} className={classes.icon}/>
                     <h4>Recent Reviews</h4>
                 </div>
+                {
+                    recentReviews.map((val, index) => {
+                        return <div className={classes.restaurant_recentReviewsItem}>
+
+                            <p key={index}>
+                                <LineBreaker text={val.content} sep={"<br>"} noLineBreaks={true}/>
+                            </p>
+                            <span>-</span>{val.username}
+                        </div>
+                    })
+                }
             </div>
 
         </Link>
@@ -98,7 +118,7 @@ const RestaurantListContents = (props) => {
                     desc={value.description}
                     imageSrc={value.photo_url}
                     distance={Math.round(value.distance / 10) / 100} // round distance to 2 d.p.
-                    hidden={value.cost_rating > props.maxCost*2 || value.avg_rating < props.minRating*2 || value.reviews_count < props.minReviews}
+                    hidden={value.cost_rating > props.maxCost * 2 || value.avg_rating < props.minRating * 2 || value.reviews_count < props.minReviews}
                 />)
         }
     </ul>)
