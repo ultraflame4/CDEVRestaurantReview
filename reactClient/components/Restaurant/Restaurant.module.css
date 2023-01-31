@@ -156,6 +156,7 @@
     box-sizing: border-box;
     min-height: 0;
     position: relative;
+    min-width: 0; /*Fixes the issue of the text overflowing the container*/
 }
 
 .restaurant_recentReviews .icon {
