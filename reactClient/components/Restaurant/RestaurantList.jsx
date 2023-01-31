@@ -71,7 +71,7 @@ const RestaurantListItem = (props) => {
                 </div>
                 {
                     recentReviews.map((val, index) => {
-                        return <div className={classes.restaurant_recentReviewsItem}>
+                        return <div className={classes.restaurant_recentReviewsItem} key={index}>
 
                             <p key={index}>
                                 <LineBreaker text={val.content} sep={"<br>"} noLineBreaks={true}/>
@@ -80,6 +80,7 @@ const RestaurantListItem = (props) => {
                         </div>
                     })
                 }
+                <p>Total Reviews : {props.reviews_count}</p>
             </div>
 
         </Link>
@@ -95,6 +96,7 @@ RestaurantListItem.propType = {
     desc: PropTypes.string.isRequired,
     imageSrc: PropTypes.string.isRequired,
     distance: PropTypes.number.isRequired,
+    reviews_count: PropTypes.number.isRequired,
     hidden: PropTypes.bool.isRequired
 }
 
@@ -117,6 +119,7 @@ const RestaurantListContents = (props) => {
                     name={value.name}
                     desc={value.description}
                     imageSrc={value.photo_url}
+                    reviews_count={value.reviews_count}
                     distance={Math.round(value.distance / 10) / 100} // round distance to 2 d.p.
                     hidden={value.cost_rating > props.maxCost * 2 || value.avg_rating < props.minRating * 2 || value.reviews_count < props.minReviews}
                 />)

@@ -18,7 +18,6 @@
 }
 
 
-
 .restaurantListContent {
     display: flex;
     flex-wrap: wrap;
@@ -44,10 +43,11 @@
     flex-grow: 1;
 }
 
-.restaurantListContentItem[data-hidden="true"]{
+.restaurantListContentItem[data-hidden="true"] {
     display: none;
 }
-.restaurantListContentItem a{
+
+.restaurantListContentItem a {
     text-decoration: inherit;
     color: inherit;
     width: 100%;
@@ -56,7 +56,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: min-content auto 50%;
-    overflow: hidden;
+
 }
 
 .restaurantListContentItem_Head {
@@ -110,7 +110,7 @@
 
 }
 
-.restaurant_desc{
+.restaurant_desc {
     grid-column: 1/1;
     grid-row: 2/3;
     margin: 0;
@@ -138,32 +138,33 @@
     background-position: center;
 }
 
-.restaurant_recentReviews_header{
+.restaurant_recentReviews_header {
     display: flex;
     align-items: center;
     gap: 0.4rem;
 }
 
-.restaurant_recentReviews{
+.restaurant_recentReviews {
     grid-column: 2/3;
     grid-row: 2/-1;
     background: var(--black);
     margin-left: 0.6rem;
     border-radius: 0.5rem;
     filter: drop-shadow(0 0.1rem 0.2rem var(--black));
-    padding: 0.5rem;
+    padding:  0.5rem 0.65rem;
     height: 100%;
     box-sizing: border-box;
     min-height: 0;
+    position: relative;
 }
 
-.restaurant_recentReviews .icon{
+.restaurant_recentReviews .icon {
     color: var(--green);
     margin: 0;
     font-size: 1.5rem;
 }
 
-.restaurant_recentReviews h4{
+.restaurant_recentReviews h4 {
     margin: 0;
     font-family: "Poppins";
     font-size: 0.85rem;
@@ -171,15 +172,24 @@
     color: var(--off-white);
 }
 
-.restaurant_recentReviewsItem{
+.restaurant_recentReviews > p {
+    font-family: "Poppins";
+    font-size: 0.8rem;
+    color: var(--off-white);
+    font-weight: 700;
+    position: absolute;
+    bottom: 0.35rem;
+    left: 0.65rem;
+}
+
+.restaurant_recentReviewsItem {
     font-size: 0.8em;
     font-weight: 600;
     color: var(--light-gray);
-    margin-top: 1rem;
+    margin-top: 0.7rem;
 }
 
-
-.restaurant_recentReviews p{
+.restaurant_recentReviews p {
     display: -webkit-box;
     line-clamp: 2;
     -webkit-line-clamp: 2;
@@ -190,30 +200,34 @@
     white-space: break-spaces;
     margin: 0;
 }
+
 /*Add quotes and dash*/
-.restaurant_recentReviewsItem > span{
+.restaurant_recentReviewsItem > span {
     font-weight: 900;
     margin-right: 0.25rem;
 }
-.restaurant_recentReviewsItem p::before, .restaurant_recentReviewsItem > span{
+
+.restaurant_recentReviewsItem p::before, .restaurant_recentReviewsItem > span {
     font-size: 1.25em;
     color: var(--green);
 }
-.restaurant_recentReviewsItem p::before{
+
+.restaurant_recentReviewsItem p::before {
     content: open-quote;
 }
-.restaurant_recentReviewsItem > span::before{
+
+.restaurant_recentReviewsItem > span::before {
     content: close-quote;
     margin-right: 0.25em;
 }
 
 
-.restaurant_subInfoBar{
+.restaurant_subInfoBar {
     display: flex;
     align-items: center;
 }
 
-.restaurant_subInfoBar > span{
+.restaurant_subInfoBar > span {
     font-weight: 700;
     font-size: 1.05rem;
     height: 1.6rem;
@@ -222,6 +236,6 @@
     font-family: "Poppins";
 }
 
-.infiniteScrollStyle{
+.infiniteScrollStyle {
     grid-column: 1/-1;
 }
