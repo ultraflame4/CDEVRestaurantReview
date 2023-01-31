@@ -204,6 +204,7 @@
 }
 .restaurant_recentReviewsItem > span::before{
     content: close-quote;
+    margin-right: 0.25em;
 }
 
 
