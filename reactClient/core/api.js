@@ -141,13 +141,24 @@ function getCurrentGeoPosition() {
     })
 }
 
+const sortConvTable = [
+    "index",
+    "cost",
+    "rating",
+    "reviews",
+    "distance"
+]
+
+
 /**
  *
  * @param start {number}
+ * @param sort {number}
  * @return {Promise<DBRestaurantType[]>}
  */
-export async function GetRestaurants(start) {
-
+export async function GetRestaurants(start, sort = -1) {
+    let sort_converted = sortConvTable[parseInt(sort)+1] // add 1 to sort to account for the index (-1 no sort becomes index sort)
+    console.log("Getting restaurants",sort_converted,sort,sort+1)
     // get the current position
     let pos = await getCurrentGeoPosition()
 
@@ -159,7 +170,8 @@ export async function GetRestaurants(start) {
                 start: start,
                 x: pos.x,
                 y: pos.y,
-                limit: 15
+                limit: 15,
+                sortBy: sort_converted
             })
         // return the results
         return response.results;

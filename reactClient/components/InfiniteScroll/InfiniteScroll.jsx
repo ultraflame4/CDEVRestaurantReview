@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import {useInView} from "react-intersection-observer";
 import classes from "./InfiniteScroll.module.css";
+import {useEffect} from "react";
 
 /**
  * An infinite scroll element. Place this at the bottom of the page. Will call a callback when it appears to load more data
@@ -20,6 +21,7 @@ export function InfiniteScroll(props){
     if (props.hide){
         return <></>
     }
+
     // Else give a loading text
     return <div className={classes.infiniteScroll+" "+props.className??""} ref={ref} data-inview={inView}>
         <span>Loading</span>

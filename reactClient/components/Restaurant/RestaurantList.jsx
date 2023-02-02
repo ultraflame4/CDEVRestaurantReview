@@ -145,12 +145,12 @@ export const RestaurantList = (props) => {
     const [maxCost, setMaxCost] = useSearchParamsState("cost",5)
     const [minRating, setMinRating] = useSearchParamsState("rating",0)
     const [minReviews, setMinReviews] = useSearchParamsState("reviews",0)
-
+    const [sortBy, setSortBy] = useSearchParamsState("sort",-1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
     // Function to load more restaurants
     function loadData() {
         setRestaurants(prevState => {
             // Get more restaurants from the api using the current length of the restaurant list as the offset
-            GetRestaurants(prevState.length).then(value => {
+            GetRestaurants(prevState.length,sortBy).then(value => {
                 // Concat the new restaurants to the existing list
                 setRestaurants(prevState.concat(value))
                 // If the api returns an empty array, then we have loaded all the restaurants
@@ -162,14 +162,14 @@ export const RestaurantList = (props) => {
 
             return prevState
         })
-
     }
 
-
     useEffect(() => {
+        // When the component is mounted, load some restaurants (clearing the restaurant list first which may have things if reloading list)
         // Initially load some restaurants
+        setRestaurants([])
         loadData()
-    }, [props.start])
+    }, [sortBy])
 
 
     return <div className={classes.RestaurantList}>
@@ -183,6 +183,7 @@ export const RestaurantList = (props) => {
             maxCostInitialValue={maxCost}
             minRatingInitialValue={minRating}
             minReviewsInitialValue={minReviews}
+            sortByChange={value => setSortBy(value)}
         />
         <RestaurantListContents
             restaurants={restaurants}

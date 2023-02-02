@@ -107,6 +107,13 @@ SortByItem.propTypes = {
 /**
  * Represents the filter sidepanel with filters and sorting options.
  *
+ * Sort by options:
+ * - No Sort: -1
+ * - Cost: 0
+ * - Ratings: 1
+ * - Reviews: 2
+ * - Distance: 3
+ *
  * @param props {{
  *         maxCostChange?: function (value:number, min:number, max :number) : void,
  *         minRatingChange?: function (value:number, min:number, max :number) : void,
