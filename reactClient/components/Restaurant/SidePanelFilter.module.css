@@ -91,7 +91,30 @@
     right: 0;
 
     font-size: 1.5rem;
+}
 
+.sortBy_item{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+
+.sortBy_item button{
+    border-radius: 100%;
+    width: fit-content;
+    height: fit-content;
+    padding: 0;
+    background: none;
+    font-size: 1.35rem;
+    color: var(--green);
+    border: 0.2rem solid var(--green);
+}
+.sortBy_item button> *:first-child{
+    transition: inherit;
+}
+.sortBy_item button[data-isselected="false"] > *:first-child{
+    opacity: 0;
 }
 
 .icon {

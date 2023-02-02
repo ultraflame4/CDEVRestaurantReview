@@ -36,7 +36,7 @@ import React from "react";
 
 // Error class for api errors so we can pass in the html error codes
 export class ApiError extends Error {
-    constructor(apiPath, jsonData,errCode) {
+    constructor(apiPath, jsonData, errCode) {
         super(`ApiError: Error while fetching ${apiPath}\nApi results:\n${JSON.stringify(jsonData, null, 2)}`);
         this.name = "ApiError"
         this.apiError = jsonData?.error
@@ -76,21 +76,34 @@ export async function fetchApi(path_, queryParams = {}, init = {}) {
 
     // check if the response is an error
     if (!response.ok) {
-        throw new ApiError(url, jsonData??response.body,response.status)
+        throw new ApiError(url, jsonData ?? response.body, response.status)
     }
-    
+
     // return the decoded response
     // if response was not able to be decoded, throw an error
     if (jsonData === undefined) {
         throw new Error("Unable to decode response")
     }
 
-
     return jsonData
-
-
 }
 
+/**
+ * Fetches the api with the Post method
+ * @param path_
+ * @param data {Object} json data to send in the body
+ * @param queryParams
+ * @param init
+ * @return {Promise<*|null>}
+ */
+export function postApi(path_, data, queryParams = {}, init = {}) {
+    return fetchApi(path_, queryParams, {
+        ...init,
+        method: "POST",
+        headers: {},
+        body: JSON.stringify(data)
+    })
+}
 
 /**
  * Returns the current user's location data
@@ -99,7 +112,7 @@ export async function fetchApi(path_, queryParams = {}, init = {}) {
 function getCurrentGeoPosition() {
     return new Promise((resolve, reject) => {
         // check if geolocation is supported
-        if (!navigator.geolocation){
+        if (!navigator.geolocation) {
             // Else reject the promise with 0,0 for the xy coordinates
             reject({
                 x: 0,
@@ -184,15 +197,14 @@ export async function GetRestaurantById(id) {
     // get the current position
     let currentPos = await getCurrentGeoPosition()
     let data;
-    try{
+    try {
         // call the api
         data = await fetchApi("/api/restaurants/id", {
             restaurantId: id,
             x: currentPos.x,
             y: currentPos.y
         })
-    }
-    catch (e) {
+    } catch (e) {
         // if there was an error, log it and return null
         console.log(e)
         return null
@@ -208,17 +220,16 @@ export async function GetRestaurantById(id) {
  * @return {Promise<null|DBReviewType[]>}
  * @constructor
  */
-export async function GetRestaurantRecentReviews(id,limit=3){
+export async function GetRestaurantRecentReviews(id, limit = 3) {
     let data;
-    try{
+    try {
         // Call api
-        data = await fetchApi("/api/reviews",{
-            restaurant_id:id,
-            limit:limit,
-            sort:"edit_date"
+        data = await fetchApi("/api/reviews", {
+            restaurant_id: id,
+            limit: limit,
+            sort: "edit_date"
         })
-    }
-    catch (e) {
+    } catch (e) {
         // if there was an error, log it and return null
         console.log(e)
         return null
@@ -235,17 +246,16 @@ export async function GetRestaurantRecentReviews(id,limit=3){
  * @return {Promise<null|DBReviewType[]>}
  * @constructor
  */
-export async function GetRestaurantReviews(id,offset=0,limit=15){
+export async function GetRestaurantReviews(id, offset = 0, limit = 15) {
     let data;
-    try{
+    try {
         // Call api
-        data = await fetchApi("/api/reviews",{
-            restaurant_id:id,
-            start:offset,
-            limit:limit
+        data = await fetchApi("/api/reviews", {
+            restaurant_id: id,
+            start: offset,
+            limit: limit
         })
-    }
-    catch (e) {
+    } catch (e) {
         // if there was an error, log it and return null
         console.log(e)
         return null
@@ -261,7 +271,7 @@ export async function GetRestaurantReviews(id,offset=0,limit=15){
  * @param content {string} The review contents
  * @return {Promise<any>}
  */
-export async function CreateRestaurantReview(id,rating,content){
+export async function CreateRestaurantReview(id, rating, content) {
     // call the api
     return await fetchApi("/api/reviews/create", undefined, {
         method: "POST", // set it to post
@@ -276,6 +286,7 @@ export async function CreateRestaurantReview(id,rating,content){
         })
     })
 }
+
 /**
  * Updates a review by the user
  * @param id {number} id of review to update
@@ -283,7 +294,7 @@ export async function CreateRestaurantReview(id,rating,content){
  * @param content {string} The review contents
  * @return {Promise<any>}
  */
-export async function UpdateRestaurantReview(id,rating,content){
+export async function UpdateRestaurantReview(id, rating, content) {
     // call the api
     return await fetchApi("/api/reviews/update", undefined, {
         method: "PUT",
@@ -298,12 +309,13 @@ export async function UpdateRestaurantReview(id,rating,content){
         })
     })
 }
+
 /**
  * Deletes a review by the user
  * @param id {number} id of review
  * @return {Promise<any>}
  */
-export async function DeleteRestaurantReview(id){
+export async function DeleteRestaurantReview(id) {
     // call the api
     return await fetchApi("/api/reviews/delete", undefined, {
         method: "DELETE",

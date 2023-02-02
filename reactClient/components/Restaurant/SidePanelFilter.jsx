@@ -11,7 +11,6 @@ import classes from "@/components/Restaurant/SidePanelFilter.module.css";
  *     title: string,
  *     icon: string,
  *     minIcon?: string,
- *     className?: string,
  *     min?: number,
  *     max?: number,
  *     step?: number,
@@ -38,7 +37,7 @@ const FilterSliderItem = (props) => {
         props.callback?.(value, min, max)
     }
 
-    return (<li className={props.className}>
+    return (<li>
         <h5>{props.title}</h5>
 
         <span className={classes.filterRangeSliderValue} data-hasicon={props.showValueIcon}>
@@ -76,7 +75,6 @@ FilterSliderItem.propTypes = {
     title: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired,
     minIcon: PropTypes.string,
-    className: PropTypes.string,
     min: PropTypes.number,
     max: PropTypes.number,
     step: PropTypes.number,
@@ -88,6 +86,23 @@ FilterSliderItem.propTypes = {
     showValueIcon: PropTypes.string,
     showValueMaxText: PropTypes.string
 }
+
+const SortByItem = (props)=>{
+    return (
+        <li className={classes.sortBy_item}>
+            <button onClick={props.onClick} data-isselected={props.isSelected}><Icon icon={"ic:check-circle"}/></button>
+            <h5>{props.title}</h5>
+        </li>
+    )
+}
+
+SortByItem.propTypes = {
+    title: PropTypes.string.isRequired,
+    isSelected: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+}
+
+
 
 /**
  * Represents the filter sidepanel with filters and sorting options.
@@ -105,6 +120,19 @@ FilterSliderItem.propTypes = {
  * @constructor
  */
 export const FilterSidepanel = (props) => {
+    const [sortBy, setSortBy] = useState(-1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
+
+    function changeSortBy(newSortBy){
+        setSortBy(prevState => {
+            if (newSortBy === prevState){
+                props.sortByChange?.(-1)
+                return -1
+            }
+            props.sortByChange?.(newSortBy)
+            return newSortBy
+        })
+
+    }
 
     return (
         <aside className={`card ${classes.filterpanel}`}>
@@ -149,6 +177,12 @@ export const FilterSidepanel = (props) => {
 
             </ul>
             <h4>Sort by</h4>
+            <ul>
+                <SortByItem title={"Cost"} isSelected={sortBy===0} onClick={()=>{changeSortBy(0)}}/>
+                <SortByItem title={"Rating"} isSelected={sortBy===1} onClick={()=>{changeSortBy(1)}}/>
+                <SortByItem title={"Reviews"} isSelected={sortBy===2} onClick={()=>{changeSortBy(2)}}/>
+                <SortByItem title={"Distance"} isSelected={sortBy===3} onClick={()=>{changeSortBy(3)}}/>
+            </ul>
         </aside>
     )
 }
