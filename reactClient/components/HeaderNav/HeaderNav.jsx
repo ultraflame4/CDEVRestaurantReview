@@ -17,8 +17,8 @@ import authManager from "@/core/authManager";
 const HeaderNavAccount_LoggedInMenu = (props) => {
     return (
         <>
-            <IconLink to={"/search?sort=0"} text={"My Reviews"} icon={"material-symbols:chat"}/>
-            <IconLink to={"/search?sort=0"} text={"Settings"} icon={"material-symbols:settings"}/>
+            <IconLink to={"/profile/reviews"} text={"My Reviews"} icon={"material-symbols:chat"}/>
+            <IconLink to={"/profile/settings"} text={"Settings"} icon={"material-symbols:settings"}/>
             <br/>
             <br/>
             <button type={"button"} className={"btn-danger"} onClick={()=>authManager.logout()  }>Sign Out</button>
