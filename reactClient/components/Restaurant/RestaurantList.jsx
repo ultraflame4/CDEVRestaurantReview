@@ -161,12 +161,14 @@ export const RestaurantList = (props) => {
                     // Set the isAllLoaded state to true, so that the infinite scroll component is hidden
                     setIsAllLoaded(true)
                 }
+
+                setTimeout(() => {
+                    if (infiniteScrollVisible.current && value.length != 0){
+                        loadData() // causing infinite loop
+                    }
+                }, 500) // wait a while before checking if the infinite scroll is visible, if visible, load more restaurants
             })
-            setTimeout(() => {
-                if (infiniteScrollVisible.current && !isAllLoaded){
-                    // loadData() // causing infinite loop
-                }
-            }, 500) // wait a while before checking if the infinite scroll is visible, if visible, load more restaurants
+
             return prevState
         })
     }
