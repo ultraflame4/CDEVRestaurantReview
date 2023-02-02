@@ -93,7 +93,7 @@ button:active {
 
 
 button.btn-danger:hover{
-    --fore: var(--black);
+    --fore: var(--white);
     --back: var(--red);
 }
 

@@ -10,13 +10,18 @@ import {UserAccountContext} from "@/tools/contexts";
 
 import {SignInModal, SignUpModal} from "@/components/HeaderNav/AccountModals";
 import {showModal} from "@/components/Modal/modalsManager";
+import authManager from "@/core/authManager";
 
 
 // Menu to show when the user is logged in
 const HeaderNavAccount_LoggedInMenu = (props) => {
     return (
         <>
-
+            <IconLink to={"/search?sort=0"} text={"My Reviews"} icon={"material-symbols:chat"}/>
+            <IconLink to={"/search?sort=0"} text={"Settings"} icon={"material-symbols:settings"}/>
+            <br/>
+            <br/>
+            <button type={"button"} className={"btn-danger"} onClick={()=>authManager.logout()  }>Sign Out</button>
         </>
     )
 }
@@ -52,7 +57,7 @@ const HeaderNavAccount = (props) => {
             <a ref={accIconRef}>
                 <Icon icon={"ic:account-circle"} className={classes.HeaderNavAccountIcon}/>
             </a>
-            <div className={classes.HeaderNavAccountMenu}>
+            <div className={classes.HeaderNavAccountMenu} data-loggedin={isLoggedIn}>
                 <h6 className={classes.HeaderNavAccountMenu_username}>{currentUser?.username ?? "Guest User"}</h6>
                 {
                     isLoggedIn ? // If the user is logged in, show the logged in menu. Else, show the guest menu

@@ -231,6 +231,30 @@
     display: none;
 }
 
+.HeaderNavAccountMenu a{
+    color: var(--light-gray);
+    font-size: 1em;
+    font-family: "Poppins";
+    font-weight: 700;
+    text-decoration: none;
+    height: 100%;
+    margin-bottom: 0.5rem;
+
+}
+
+.HeaderNavAccountMenu[data-loggedin="true"] a:hover{
+    color: var(--off-white);
+}
+
+.HeaderNavAccountMenu[data-loggedin="true"] a:nth-child(2) {
+    --icon-color: var(--green);
+}
+
+.HeaderNavAccountMenu[data-loggedin="true"] a:nth-child(3) {
+    --icon-color: var(--off-white);
+}
+
+
 .HeaderNavAccountMenu_username {
     margin: 0;
     margin-bottom: 1em;
