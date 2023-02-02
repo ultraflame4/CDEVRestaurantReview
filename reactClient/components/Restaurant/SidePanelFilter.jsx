@@ -96,7 +96,10 @@ FilterSliderItem.propTypes = {
  *         maxCostChange?: function (value:number, min:number, max :number) : void,
  *         minRatingChange?: function (value:number, min:number, max :number) : void,
  *         minReviewsChange?: function (value:number, min:number, max :number) : void,
- *         sortByChange ?: function (sortBy:string) : void,
+ *         maxCostInitialValue?: number,
+ *         minRatingInitialValue?: number,
+ *         minReviewsInitialValue?: number,
+ *         sortByChange ?: function (sortBy:string) : void
  * }}
  * @return {React.ReactNode}
  * @constructor
@@ -112,7 +115,7 @@ export const FilterSidepanel = (props) => {
                     icon={"fa:dollar"}
                     min={0}
                     max={5}
-                    defaultValue={5}
+                    defaultValue={props.maxCostInitialValue ?? 5}
                     showValueIcon={"fa:dollar"}
                     showValueMaxText={"Any"}
                     callback={props.maxCostChange}
@@ -125,6 +128,7 @@ export const FilterSidepanel = (props) => {
                     min={0}
                     max={5}
                     step={0.5}
+                    defaultValue={props.minRatingInitialValue ?? 0}
                     callback={props.minRatingChange}
                 />
 
@@ -134,6 +138,7 @@ export const FilterSidepanel = (props) => {
                     icon={"material-symbols:star"}
                     min={0}
                     max={41}
+                    defaultValue={props.minReviewsInitialValue ?? 0}
                     noIcon={true}
                     minText={"0"}
                     maxText={"40+"}
@@ -152,5 +157,8 @@ FilterSidepanel.propType = {
     maxCostChange: PropTypes.func,
     minRatingChange: PropTypes.func,
     minReviewsChange: PropTypes.func,
+    maxCostInitialValue: PropTypes.number,
+    minRatingInitialValue: PropTypes.number,
+    minReviewsInitialValue: PropTypes.number,
     sortByChange: PropTypes.func
 }

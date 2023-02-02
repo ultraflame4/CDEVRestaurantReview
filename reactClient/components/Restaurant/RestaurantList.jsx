@@ -10,6 +10,7 @@ import {FilterSidepanel} from "@/components/Restaurant/SidePanelFilter";
 import {GetRestaurantRecentReviews, GetRestaurantReviews, GetRestaurants} from "@/core/api";
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 import {Link} from "react-router-dom";
+import {useSearchParamsState} from "@/tools/hooks";
 
 /**
  * This component represents a single restaurant in the list
@@ -141,9 +142,9 @@ RestaurantListContents.propTypes = {
 export const RestaurantList = (props) => {
     const [isAllLoaded, setIsAllLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
-    const [maxCost, setMaxCost] = useState(5)
-    const [minRating, setMinRating] = useState(0)
-    const [minReviews, setMinReviews] = useState(0)
+    const [maxCost, setMaxCost] = useSearchParamsState("cost",5)
+    const [minRating, setMinRating] = useSearchParamsState("rating",0)
+    const [minReviews, setMinReviews] = useSearchParamsState("reviews",0)
 
     // Function to load more restaurants
     function loadData() {
@@ -179,12 +180,16 @@ export const RestaurantList = (props) => {
             maxCostChange={value => setMaxCost(value)}
             minRatingChange={value => setMinRating(value)}
             minReviewsChange={value => setMinReviews(value)}
+            maxCostInitialValue={maxCost}
+            minRatingInitialValue={minRating}
+            minReviewsInitialValue={minReviews}
         />
         <RestaurantListContents
             restaurants={restaurants}
             maxCost={maxCost}
             minReviews={minReviews}
-            minRating={minRating}/>
+            minRating={minRating}
+        />
         {/*on load more load more data lah*/}
         <InfiniteScroll loadMore={loadData} className={classes.infiniteScrollStyle} hide={isAllLoaded}/>
     </div>;

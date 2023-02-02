@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
+import {useSearchParams} from "react-router-dom";
 /**
  * Makes any element toggleable
  *
@@ -95,4 +96,32 @@ export function useWatchableValue(watchableVal) {
     }, [watchableVal])
 
     return getVal
+}
+
+/**
+ * Basically useState and useSearchParams combined
+ *
+ * @param {string} name The name of the search param
+ * @param {any} defaultValue The default value of the search param
+ * @return {[string, (val: string)=>void]} Returns the state and a function to set the state
+ */
+export function useSearchParamsState(name, defaultValue){
+    const [searchParams, setSearchParams] = useSearchParams()
+    let val = searchParams.get(name)
+    console.log(searchParams.get(name),name)
+
+    if (val == null) {
+        searchParams.set(name, defaultValue)
+        setSearchParams(searchParams)
+        val = defaultValue
+    }
+
+    const [state, setState] = useState(val)
+
+    return [state, (val) => {
+        console.log(val, name)
+        searchParams.set(name, val)
+        setSearchParams(searchParams)
+        setState(val)
+    }]
 }
