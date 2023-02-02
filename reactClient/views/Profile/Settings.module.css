@@ -1,0 +1,40 @@
+.main{
+    padding-top: 2rem;
+    display: grid;
+    grid-template-columns: max-content auto;
+    grid-template-rows: 1fr 1fr 1fr;
+    height: fit-content;
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+    align-items: center;
+}
+
+.main h2{
+    display: inline-block;
+    margin: 0;
+    letter-spacing: 0.1rem;
+    font-weight: 700;
+}
+
+.main p{
+    display: inline-block;
+    font-size: 1.5rem;
+    margin: 0 0 0 0.5rem;
+    font-weight: 500;
+}
+.main div{
+    display: flex;
+    align-items: center;
+    grid-column: 1;
+}
+
+.main button{
+    grid-column: 2;
+    width: fit-content;
+    height: fit-content;
+}
+
+.main button > [icon]{
+    font-size: 1.45em;
+    margin-left: 0.25rem;
+}
