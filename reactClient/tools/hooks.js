@@ -108,8 +108,6 @@ export function useWatchableValue(watchableVal) {
 export function useSearchParamsState(name, defaultValue){
     const [searchParams, setSearchParams] = useSearchParams()
     let val = searchParams.get(name)
-    console.log(searchParams.get(name),name)
-
     if (val == null) {
         searchParams.set(name, defaultValue)
         setSearchParams(searchParams)
@@ -119,7 +117,6 @@ export function useSearchParamsState(name, defaultValue){
     const [state, setState] = useState(val)
 
     return [state, (val) => {
-        console.log(val, name)
         searchParams.set(name, val)
         setSearchParams(searchParams)
         setState(val)
