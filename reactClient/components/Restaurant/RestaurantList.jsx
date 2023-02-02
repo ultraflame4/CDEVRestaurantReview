@@ -149,6 +149,7 @@ export const RestaurantList = (props) => {
     const [sortBy, setSortBy] = useSearchParamsState("sort", -1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
     // Function to load more restaurants
     function loadData() {
+        if (isAllLoaded) return // If all restaurants are loaded, don't load more (this is to prevent the infinite scroll from loading more restaurants when it is not visible
 
         setRestaurants(prevState => {
             // Get more restaurants from the api using the current length of the restaurant list as the offset

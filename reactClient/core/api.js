@@ -158,7 +158,6 @@ const sortConvTable = [
  */
 export async function GetRestaurants(start, sort = -1) {
     let sort_converted = sortConvTable[parseInt(sort)+1] // add 1 to sort to account for the index (-1 no sort becomes index sort)
-    console.log("Getting restaurants",sort_converted,sort,sort+1)
     // get the current position
     let pos = await getCurrentGeoPosition()
 
