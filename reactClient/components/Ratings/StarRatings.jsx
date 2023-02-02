@@ -22,7 +22,7 @@ export const StarRatings = (props) => {
 
     // number of stars left to display
     let stars_count = Math.round(props.rating) / 2
-    console.log(stars_count,props.rating)
+
     // Loop 5 times to display 5 stars
     for (let i = 0; i < 5; i++) {
 
