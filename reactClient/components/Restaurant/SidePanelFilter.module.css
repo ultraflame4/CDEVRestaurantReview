@@ -18,6 +18,13 @@
     letter-spacing: 0.05em;
 }
 
+.filterpanel h4:nth-child(3) >button{
+    display: inline-block;
+    padding: 0 0.25rem;
+    border-radius: 0.3rem;
+
+}
+
 .filterpanel h5 {
     display: inline-block;
     margin: 0;

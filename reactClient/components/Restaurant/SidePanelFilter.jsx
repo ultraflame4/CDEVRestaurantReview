@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import {Icon} from "@iconify-icon/react";
 import {InputRangeSlider} from "@/components/InputRangeSlider/InputRangeSlider";
@@ -93,7 +93,7 @@ FilterSliderItem.propTypes = {
     showValueMaxText: PropTypes.string
 }
 
-const SortByItem = (props)=>{
+const SortByItem = (props) => {
 
     return (
         <li className={classes.sortBy_item}>
@@ -108,7 +108,6 @@ SortByItem.propTypes = {
     isSelected: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired
 }
-
 
 
 /**
@@ -128,17 +127,21 @@ SortByItem.propTypes = {
  *         maxCostInitialValue?: number,
  *         minRatingInitialValue?: number,
  *         minReviewsInitialValue?: number,
- *         sortByChange ?: function (sortBy:string) : void
+ *         sortByChange ?: function (sortBy:string) : void,
+ *         sortOrderChange?: function (sortOrder:string) : void,
+ *         initialSortBy?: number,
+ *         initialSortOrder?:number
  * }}
  * @return {React.ReactNode}
  * @constructor
  */
 export const FilterSidepanel = (props) => {
-    const [sortBy, setSortBy] = useState(props.initialSortBy??-1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
-
-    function changeSortBy(newSortBy){
+    const [sortBy, setSortBy] = useState(props.initialSortBy ?? -1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
+    const [sortOrder, setSortOrder] = useState(props.initialSortOrder ?? 0) // 0 = ascending, 1 = descending
+    const orderBtnRef = useRef(null)
+    function changeSortBy(newSortBy) {
         setSortBy(prevState => {
-            if (newSortBy === prevState){
+            if (newSortBy === prevState) {
                 props.sortByChange?.(-1)
                 return -1
             }
@@ -146,6 +149,19 @@ export const FilterSidepanel = (props) => {
             return newSortBy
         })
     }
+
+    function toggleOrder() {
+        setSortOrder(prevState => {
+            let newSortOrder = prevState === 0 ? 1 : 0
+            orderBtnRef.current.textContent = newSortOrder === 0 ? "Ascending" : "Descending"
+            props.sortOrderChange?.(newSortOrder)
+            return newSortOrder
+        })
+    }
+
+    useEffect(() => {
+        toggleOrder()
+    },[props.initialSortOrder??0])
 
     return (
         <aside className={`card ${classes.filterpanel}`}>
@@ -189,12 +205,20 @@ export const FilterSidepanel = (props) => {
                 />
 
             </ul>
-            <h4>Sort by</h4>
+            <h4>Sort by <button onClick={toggleOrder} ref={orderBtnRef}></button></h4>
             <ul>
-                <SortByItem title={"Cost"} isSelected={sortBy===0} onClick={()=>{changeSortBy(0)}}/>
-                <SortByItem title={"Rating"} isSelected={sortBy===1} onClick={()=>{changeSortBy(1)}}/>
-                <SortByItem title={"Reviews"} isSelected={sortBy===2} onClick={()=>{changeSortBy(2)}}/>
-                <SortByItem title={"Distance"} isSelected={sortBy===3} onClick={()=>{changeSortBy(3)}}/>
+                <SortByItem title={"Cost"} isSelected={sortBy === 0} onClick={() => {
+                    changeSortBy(0)
+                }}/>
+                <SortByItem title={"Rating"} isSelected={sortBy === 1} onClick={() => {
+                    changeSortBy(1)
+                }}/>
+                <SortByItem title={"Reviews"} isSelected={sortBy === 2} onClick={() => {
+                    changeSortBy(2)
+                }}/>
+                <SortByItem title={"Distance"} isSelected={sortBy === 3} onClick={() => {
+                    changeSortBy(3)
+                }}/>
             </ul>
         </aside>
     )
@@ -208,5 +232,7 @@ FilterSidepanel.propType = {
     minRatingInitialValue: PropTypes.number,
     minReviewsInitialValue: PropTypes.number,
     sortByChange: PropTypes.func,
-    initialSortBy: PropTypes.number
+    sortOrderChange: PropTypes.func,
+    initialSortBy: PropTypes.number,
+    initialSortOrder: PropTypes.number
 }

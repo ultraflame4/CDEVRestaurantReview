@@ -154,9 +154,10 @@ const sortConvTable = [
  *
  * @param start {number}
  * @param sort {number}
+ * @param order {number}
  * @return {Promise<DBRestaurantType[]>}
  */
-export async function GetRestaurants(start, sort = -1) {
+export async function GetRestaurants(start, sort = -1,order = 0) {
     let sort_converted = sortConvTable[parseInt(sort)+1] // add 1 to sort to account for the index (-1 no sort becomes index sort)
     // get the current position
     let pos = await getCurrentGeoPosition()
@@ -170,7 +171,8 @@ export async function GetRestaurants(start, sort = -1) {
                 x: pos.x,
                 y: pos.y,
                 limit: 15,
-                sortBy: sort_converted
+                sortBy: sort_converted,
+                order: order === 0 ? "asc" : "desc"
             })
         // return the results
         return response.results;
