@@ -7,6 +7,8 @@ import {showModal} from "@/components/Modal/modalsManager";
 
 export default function UserProfile_Settings() {
     const currentUser = useContext(UserAccountContext);
+
+
     return (<main className={classes.main}>
 
         <EditUsernameModal/>
@@ -22,7 +24,7 @@ export default function UserProfile_Settings() {
         </div>
         <button onClick={()=>showModal("change-email")}>Change Email <Icon icon={"ic:baseline-edit"}/></button>
         <div>
-            <h2>Password</h2>
+            <h2>Password : </h2><p>{new Array(16).fill("█")}</p>
         </div>
         <button onClick={()=>showModal("update-password")}>Update Password <Icon icon={"ic:baseline-edit"}/></button>
     </main>)

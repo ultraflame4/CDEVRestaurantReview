@@ -10,14 +10,12 @@
 }
 
 .main h2{
-    display: inline-block;
     margin: 0;
     letter-spacing: 0.1rem;
     font-weight: 700;
 }
 
 .main p{
-    display: inline-block;
     font-size: 1.5rem;
     margin: 0 0 0 0.5rem;
     font-weight: 500;
@@ -26,6 +24,7 @@
     display: flex;
     align-items: center;
     grid-column: 1;
+    min-width: 0;
 }
 
 .main button{
