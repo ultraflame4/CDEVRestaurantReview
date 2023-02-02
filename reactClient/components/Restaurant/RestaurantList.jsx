@@ -163,8 +163,8 @@ export const RestaurantList = (props) => {
                 }
             })
             setTimeout(() => {
-                if (infiniteScrollVisible.current){
-                    loadData()
+                if (infiniteScrollVisible.current && !isAllLoaded){
+                    // loadData() // causing infinite loop
                 }
             }, 500) // wait a while before checking if the infinite scroll is visible, if visible, load more restaurants
             return prevState
