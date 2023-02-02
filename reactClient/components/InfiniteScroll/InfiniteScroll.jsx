@@ -6,7 +6,10 @@ import {useEffect} from "react";
 /**
  * An infinite scroll element. Place this at the bottom of the page. Will call a callback when it appears to load more data
  * @param props {{
- *     loadMore:()=>void
+ *     loadMore:()=>void,
+ *     className: string,
+ *     hide: bool,
+ *     visibleRef: React.MutableRefObject<boolean>
  * }}
  * @return {JSX.Element}
  * @constructor
@@ -15,7 +18,13 @@ export function InfiniteScroll(props){
     const {ref,inView} = useInView({
         threshold:0,
         // When the element is scrolled into view, call the loadMore callback to tell the parent component to load more things
-        onChange:(inView)=>{if (inView) props.loadMore?.()}
+        onChange:(inView)=>{
+            if (props.visibleRef!==undefined){
+                console.log(inView)
+                props.visibleRef.current = inView
+            }
+            if (inView) props.loadMore?.()
+        }
     });
     // If the parent component wants to hide the infinite scroll eg. cuz all things have loaded, return an empty element
     if (props.hide){
@@ -31,6 +40,7 @@ export function InfiniteScroll(props){
 InfiniteScroll.propTypes = {
     loadMore: PropTypes.func,
     className: PropTypes.string,
-    hide:PropTypes.bool
+    hide:PropTypes.bool,
+    visibleRef:PropTypes.object,
 
 }

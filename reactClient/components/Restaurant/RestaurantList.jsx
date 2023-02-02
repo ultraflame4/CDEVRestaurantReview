@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import classes from "./Restaurant.module.css"
 
 import {Icon} from "@iconify-icon/react";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {StarRatings} from "@/components/Ratings/StarRatings";
 import {CostRatings} from "@/components/Ratings/CostRatings";
 import {LineBreaker} from "@/components/LineBreaker";
@@ -141,16 +141,18 @@ RestaurantListContents.propTypes = {
  */
 export const RestaurantList = (props) => {
     const [isAllLoaded, setIsAllLoaded] = useState(false)
+    const infiniteScrollVisible = useRef(false)
     const [restaurants, setRestaurants] = useState([])
-    const [maxCost, setMaxCost] = useSearchParamsState("cost",5)
-    const [minRating, setMinRating] = useSearchParamsState("rating",0)
-    const [minReviews, setMinReviews] = useSearchParamsState("reviews",0)
-    const [sortBy, setSortBy] = useSearchParamsState("sort",-1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
+    const [maxCost, setMaxCost] = useSearchParamsState("cost", 5)
+    const [minRating, setMinRating] = useSearchParamsState("rating", 0)
+    const [minReviews, setMinReviews] = useSearchParamsState("reviews", 0)
+    const [sortBy, setSortBy] = useSearchParamsState("sort", -1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
     // Function to load more restaurants
     function loadData() {
+
         setRestaurants(prevState => {
             // Get more restaurants from the api using the current length of the restaurant list as the offset
-            GetRestaurants(prevState.length,sortBy).then(value => {
+            GetRestaurants(prevState.length, sortBy).then(value => {
                 // Concat the new restaurants to the existing list
                 setRestaurants(prevState.concat(value))
                 // If the api returns an empty array, then we have loaded all the restaurants
@@ -159,7 +161,11 @@ export const RestaurantList = (props) => {
                     setIsAllLoaded(true)
                 }
             })
-
+            setTimeout(() => {
+                if (infiniteScrollVisible.current){
+                    loadData()
+                }
+            }, 500) // wait a while before checking if the infinite scroll is visible, if visible, load more restaurants
             return prevState
         })
     }
@@ -193,7 +199,8 @@ export const RestaurantList = (props) => {
             minRating={minRating}
         />
         {/*on load more load more data lah*/}
-        <InfiniteScroll loadMore={loadData} className={classes.infiniteScrollStyle} hide={isAllLoaded}/>
+        <InfiniteScroll loadMore={loadData} className={classes.infiniteScrollStyle} hide={isAllLoaded}
+                        visibleRef={infiniteScrollVisible}/>
     </div>;
 }
 RestaurantList.propTypes = {
