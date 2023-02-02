@@ -142,26 +142,28 @@ export const FilterSidepanel = (props) => {
     function changeSortBy(newSortBy) {
         setSortBy(prevState => {
             if (newSortBy === prevState) {
-                props.sortByChange?.(-1)
+
                 return -1
             }
-            props.sortByChange?.(newSortBy)
+
             return newSortBy
         })
     }
 
     function toggleOrder() {
         setSortOrder(prevState => {
-            let newSortOrder = prevState === 0 ? 1 : 0
-            orderBtnRef.current.textContent = newSortOrder === 0 ? "Ascending" : "Descending"
-            props.sortOrderChange?.(newSortOrder)
-            return newSortOrder
+            return prevState === 0 ? 1 : 0
         })
     }
 
     useEffect(() => {
-        toggleOrder()
-    },[props.initialSortOrder??0])
+        orderBtnRef.current.textContent = sortOrder === 0 ? "Ascending" : "Descending"
+        props.sortOrderChange?.(sortOrder)
+    },[sortOrder])
+
+    useEffect(() => {
+        props.sortByChange?.(sortBy)
+    },[sortBy])
 
     return (
         <aside className={`card ${classes.filterpanel}`}>
