@@ -191,7 +191,10 @@ export default defComponent((props) => {
     return (<div>
         <main className={classes.main}>
             <WriteReviewModal restaurantId={restaurantId}/>
-            <PhotosModal isOpen={showPhotos} pictures={data.photo_url} onClose={()=>setShowPhotos(false)}/>
+            {
+                data.photo_url?.length > 2 && // No show the photos modal if there are less than 2 photos
+                <PhotosModal isOpen={showPhotos} pictures={data.photo_url} onClose={()=>setShowPhotos(false)}/>
+            }
 
             <div>
                 <h1>{data.name}</h1>
@@ -232,12 +235,19 @@ export default defComponent((props) => {
             </div>
             <div>
                 <div className={classes.photos}>
-                    <img src={data.photo_url[0]} alt={"An image of the restaurant"}/>
-                    <img src={data.photo_url[1]} alt={"An image of the restaurant"}/>
-                    <button onClick={()=>setShowPhotos(true)}>
-                        <img src={data.photo_url[2]} alt={"An image of the restaurant"}/>
-                        <p>See all {data.photo_url.length}</p>
-                    </button>
+                    {    data.photo_url?.length > 0 &&
+                        <img src={data.photo_url[0]} alt={"An image of the restaurant"}/>
+                    }
+                    {   data.photo_url?.length > 1 &&
+                        <img src={data.photo_url[1]} alt={"An image of the restaurant"}/>
+                    }
+                    {
+                        data.photo_url?.length > 2 && // Dont show the button if there are less than 3 photos
+                        <button onClick={()=>setShowPhotos(true)}>
+                            <img src={data.photo_url[2]} alt={"An image of the restaurant"}/>
+                            <p>See all {data.photo_url.length}</p>
+                        </button>
+                    }
                 </div>
                 <aside className={"card"}>
                     <RestaurantInfoItem icon={"mdi:link-variant"} title={"Website"} hide={!data.website}>
