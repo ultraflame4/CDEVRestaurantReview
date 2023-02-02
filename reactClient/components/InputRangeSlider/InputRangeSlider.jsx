@@ -43,7 +43,14 @@ export const InputRangeSlider = function (props) {
         let fillPercent = ((inputElement.value - min) / (max - min)) * 100
         // Set the css variable to the percentage, and css will fill the track
         inputElement.style.setProperty("--filledPercentage",`${fillPercent}%`)
-        // Call the props.onInput callback  if it is set
+
+    }
+
+    function OnValChanged(e) { // separate event callback that updates on mouse up to reduce number of callbacks sent
+        let inputElement = inputElementRef.current // get the input element from the reference
+        let min = parseFloat(inputElement.min.length !== 0 ? inputElement.min : "0")
+        let max = parseFloat(inputElement.max.length !== 0 ? inputElement.max : "100")
+        let current = parseFloat(inputElement.value)
         props.onInput?.(current,min,max)
     }
 
@@ -53,7 +60,7 @@ export const InputRangeSlider = function (props) {
     },[props.defaultValue])
 
     return (
-        <input type={"range"} className={props.className ?? "" + " " + classes.slider} onInput={OnInput}
+        <input type={"range"} className={props.className ?? "" + " " + classes.slider} onInput={OnInput} onClick={OnValChanged}
                min={props.min??0}
                max={props.max??100}
                step={props.step??1}
