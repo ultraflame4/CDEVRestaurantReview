@@ -133,11 +133,18 @@ async function GetAllReviews(req, res) {
  */
 async function UpdateUsername(req, res) {
     let queryParams = GetJsonParams(req, res, {
-        newUsername: {type: "string"}
+        newUsername: {type: "string"},
+        password: {type: "string"}
     })
     if (!queryParams) return
 
     try {
+        let usr = await RestauRantDB.FindUserById(req.user.id)
+        let checkPasswd = await usr.ComparePassword(queryParams.password)
+        if (!checkPasswd) {
+            return resUnauthorised(res)
+        }
+
         let r = await RestauRantDB.UpdateUsername(req.user.id, queryParams.newUsername)
         res.json({sql: r})
     } catch (err) {
@@ -153,11 +160,18 @@ async function UpdateUsername(req, res) {
  */
 async function UpdateEmail(req, res) {
     let queryParams = GetJsonParams(req, res, {
-        newEmail: {type: "string"}
+        newEmail: {type: "string"},
+        password: {type: "string"}
     })
     if (!queryParams) return
 
     try {
+        let usr = await RestauRantDB.FindUserById(req.user.id)
+        let checkPasswd = await usr.ComparePassword(queryParams.password)
+        if (!checkPasswd) {
+            return resUnauthorised(res)
+        }
+
         let r = await RestauRantDB.UpdateEmail(req.user.id, queryParams.newEmail)
         res.json({sql: r})
     } catch (err) {
@@ -173,12 +187,19 @@ async function UpdateEmail(req, res) {
  */
 async function UpdatePassword(req, res) {
     let queryParams = GetJsonParams(req, res, {
-        newPassword: {type: "string"}
+        newPassword: {type: "string"},
+        password: {type: "string"}
     })
     if (!queryParams) return
 
     try {
         let usr = await RestauRantDB.FindUserById(req.user.id)
+        let checkPasswd = await usr.ComparePassword(queryParams.password)
+        if (!checkPasswd) {
+            console.log("TEST")
+            return resUnauthorised(res)
+        }
+
         let newHash = await User.HashUserPassword(queryParams.newPassword, FormatTimestamp(usr.date_created))
         let r = await RestauRantDB.UpdatePassword(req.user.id, newHash)
         res.json({sql: r})
