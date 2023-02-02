@@ -376,3 +376,9 @@ export async function UpdateEmail(newEmail,password) {
         password: password
     })
 }
+export async function UpdatePassword(newPassword,password) {
+    return await putApi("/api/user/password",{
+        newPassword: newPassword,
+        password: password
+    })
+}

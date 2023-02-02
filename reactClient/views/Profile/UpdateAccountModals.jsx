@@ -1,7 +1,7 @@
 import {WModal} from "@/components/Modal/WModal";
 import {useContext, useEffect, useRef} from "react";
 import {UserAccountContext} from "@/tools/contexts";
-import {UpdateEmail, UpdateUsername} from "@/core/api";
+import {UpdateEmail, UpdatePassword, UpdateUsername} from "@/core/api";
 import {closeModal} from "@/components/Modal/modalsManager";
 
 export function EditUsernameModal() {
@@ -72,15 +72,36 @@ export function ChangeEmailModal() {
             <input placeholder={"New Email"} ref={emailRef}/>
             <input placeholder={"Password"} ref={passwdRef}/>
             <br/>
-            <button onClick={saveEmail}>Save</button>
+            <button onClick={saveEmail}>Change</button>
         </WModal>
     )
 }
 
 export function UpdatePasswordModal() {
-    return (
-        <WModal icon={"mdi:form-textbox-password"} modalId={"update-password"} title={"Update Password"}>
+    const newPasswdRef = useRef(null)
+    const passwdRef = useRef(null)
 
+    function savePassword() {
+        UpdatePassword(newPasswdRef.current.value, passwdRef.current.value)
+            .then(value => {
+                window.location.reload()
+                alert("Password updated successfully!")
+            })
+            .catch(err => {
+                if (err.code === 401) {
+                    alert("Wrong password!")
+                } else {
+                    alert("Something went wrong! Please try again later.")
+                }
+            })
+    }
+
+    return (
+        <WModal icon={"mdi:form-textbox-password"} modalId={"update-password"} title={"Update Password"} >
+            <input placeholder={"New Password"} ref={newPasswdRef}/>
+            <input placeholder={"Current Password"} ref={passwdRef}/>
+            <br/>
+            <button onClick={savePassword}>Update</button>
         </WModal>
     )
 }
