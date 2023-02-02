@@ -239,7 +239,6 @@
     text-decoration: none;
     height: 100%;
     margin-bottom: 0.5rem;
-
 }
 
 .HeaderNavAccountMenu[data-loggedin="true"] a:hover{

@@ -7,6 +7,9 @@ import {createBrowserRouter, RouterProvider, Route} from "react-router-dom";
 
 import App from "@/views/App";
 import {SignInModal, SignUpModal} from "@/components/HeaderNav/AccountModals";
+import UserProfile from "@/views/Profile/UserProfile";
+import UserProfile_Settings from "@/views/Profile/UserProfile_Settings";
+import UserProfile_Reviews from "@/views/Profile/UserProfile_Reviews";
 
 const Home = React.lazy(() => import("@/views/Home/Home"))
 const RestaurantDetails = React.lazy(() => import("@/views/RestaurantDetails/RestaurantDetails"))
@@ -23,6 +26,20 @@ const router = createBrowserRouter([
                 {
                     path: "/restaurant/:id",
                     element: <RestaurantDetails/>,
+                },
+                {
+                    path: "/profile/",
+                    element: <UserProfile/>,
+                    children: [
+                        {
+                            path: "settings",
+                            element: <UserProfile_Settings/>
+                        },
+                        {
+                            path: "reviews",
+                            element: <UserProfile_Reviews/>
+                        }
+                    ]
                 }
             ]
         },

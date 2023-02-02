@@ -1,0 +1,99 @@
+.UserProfile {
+    display: grid;
+    grid-template-columns: max-content auto;
+    width: 100%;
+    height: calc(100% - var(--header-height) - 1px);
+    background: var(--black);
+    padding: 1rem;
+    box-sizing: border-box;
+    grid-column-gap: 1rem;
+}
+
+.UserProfile > main {
+    grid-column: 2;
+}
+
+.UserProfile > aside {
+    grid-column: 1;
+    width: 24rem;
+    min-height: fit-content;
+    max-height: calc(100vh - var(--header-height) - 2.5rem);
+    background-color: #f5f5f5;
+    padding: 20px;
+    box-sizing: border-box;
+    background: var(--gray);
+    border-radius: 0.9rem;
+    position: sticky;
+}
+
+.UserDetails {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: min-content auto;
+    grid-column-gap: 0.75rem;
+    height: fit-content;
+}
+
+.UserDetails > .icon {
+    grid-row: 1/-1;
+    grid-column: 1;
+    font-size: 3.5rem;
+    color: var(--light-gray);
+}
+
+.UserDetails > h4 {
+    margin: 0;
+    grid-row: 1;
+    grid-column: 2;
+    margin-top: auto;
+}
+
+.UserDetails > h5 {
+    margin: 0;
+    grid-row: 2;
+    grid-column: 2;
+    color: var(--slight-gray);
+    margin-bottom: auto;
+}
+
+.UserProfile > aside > ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+.UserProfile > aside > ul >li{
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 200ms ease;
+}
+
+.UserProfile > aside > ul > li:hover{
+    background: var(--slight-gray);
+}
+.UserProfile > aside > ul > li:active,.UserProfile > aside > ul > li[data-active="true"]{
+    background: var(--black);
+}
+
+.UserProfile > aside a {
+    --icon-color: var(--off-white);
+    font-family: "Segoe UI";
+    font-size: 1.45rem;
+    letter-spacing: 0.075rem;
+    color: var(--off-white);
+    gap: 0.75rem;
+    margin: 0;
+}
+.UserProfile > aside > ul > li:nth-child(2) a{
+    --icon-color: var(--green);
+    color: var(--off-white);
+    margin-bottom: 3px;
+}
+.UserProfile > aside > ul > li:nth-child(2) a> *:first-child{
+    position: relative;
+    top: 3px;
+}
+
+.icon {
+
+}
