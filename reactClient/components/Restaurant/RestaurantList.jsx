@@ -140,13 +140,22 @@ RestaurantListContents.propTypes = {
  * @return {JSX.Element}
  */
 export const RestaurantList = (props) => {
-    const [isAllLoaded, setIsAllLoaded] = useState(false)
     const infiniteScrollVisible = useRef(false)
+
+    const [isAllLoaded, setIsAllLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
-    const [maxCost, setMaxCost] = useSearchParamsState("cost", 5)
-    const [minRating, setMinRating] = useSearchParamsState("rating", 0)
-    const [minReviews, setMinReviews] = useSearchParamsState("reviews", 0)
-    const [sortBy, setSortBy] = useSearchParamsState("sort", -1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
+
+    const [maxCost_, setMaxCost] = useSearchParamsState("cost", 5)
+    const [minRating_, setMinRating] = useSearchParamsState("rating", 0)
+    const [minReviews_, setMinReviews] = useSearchParamsState("reviews", 0)
+    const [sortBy_, setSortBy] = useSearchParamsState("sort", -1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
+
+    const maxCost = parseFloat(maxCost_)
+    const minRating = parseFloat(minRating_)
+    const minReviews = parseInt(minReviews_)
+    const sortBy = parseInt(sortBy_)
+
+
     // Function to load more restaurants
     function loadData() {
         if (isAllLoaded) return // If all restaurants are loaded, don't load more (this is to prevent the infinite scroll from loading more restaurants when it is not visible
