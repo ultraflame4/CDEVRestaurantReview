@@ -110,7 +110,9 @@ export function useSearchParamsState(name, defaultValue){
     let val = searchParams.get(name)
     if (val == null) {
         searchParams.set(name, defaultValue)
-        setSearchParams(searchParams)
+        setSearchParams(searchParams, {
+            replace: true // Replace the current history entry instead of adding a new one
+        })
         val = defaultValue
     }
 
@@ -118,7 +120,9 @@ export function useSearchParamsState(name, defaultValue){
 
     return [state, (val) => {
         searchParams.set(name, val)
-        setSearchParams(searchParams)
+        setSearchParams(searchParams,{
+            replace: true // Replace the current history entry instead of adding a new one
+        })
         setState(val)
     }]
 }
