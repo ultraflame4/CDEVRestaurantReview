@@ -88,6 +88,7 @@ FilterSliderItem.propTypes = {
 }
 
 const SortByItem = (props)=>{
+
     return (
         <li className={classes.sortBy_item}>
             <button onClick={props.onClick} data-isselected={props.isSelected}><Icon icon={"ic:check-circle"}/></button>
@@ -138,7 +139,6 @@ export const FilterSidepanel = (props) => {
             props.sortByChange?.(newSortBy)
             return newSortBy
         })
-
     }
 
     return (
