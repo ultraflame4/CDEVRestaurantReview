@@ -184,6 +184,7 @@ export const RestaurantList = (props) => {
             minRatingInitialValue={minRating}
             minReviewsInitialValue={minReviews}
             sortByChange={value => setSortBy(value)}
+            initialSortBy={sortBy}
         />
         <RestaurantListContents
             restaurants={restaurants}

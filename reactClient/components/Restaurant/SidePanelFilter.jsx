@@ -127,7 +127,7 @@ SortByItem.propTypes = {
  * @constructor
  */
 export const FilterSidepanel = (props) => {
-    const [sortBy, setSortBy] = useState(-1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
+    const [sortBy, setSortBy] = useState(props.initialSortBy??-1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
 
     function changeSortBy(newSortBy){
         setSortBy(prevState => {
@@ -201,5 +201,6 @@ FilterSidepanel.propType = {
     maxCostInitialValue: PropTypes.number,
     minRatingInitialValue: PropTypes.number,
     minReviewsInitialValue: PropTypes.number,
-    sortByChange: PropTypes.func
+    sortByChange: PropTypes.func,
+    initialSortBy: PropTypes.number
 }
