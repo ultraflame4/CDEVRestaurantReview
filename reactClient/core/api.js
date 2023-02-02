@@ -100,7 +100,29 @@ export function postApi(path_, data, queryParams = {}, init = {}) {
     return fetchApi(path_, queryParams, {
         ...init,
         method: "POST",
-        headers: {},
+        headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json" // very important, otherwise the server will not know what to do with the data
+        },
+        body: JSON.stringify(data)
+    })
+}
+/**
+ * Fetches the api with the Put method
+ * @param path_
+ * @param data {Object} json data to send in the body
+ * @param queryParams
+ * @param init
+ * @return {Promise<*|null>}
+ */
+export function putApi(path_, data, queryParams = {}, init = {}) {
+    return fetchApi(path_, queryParams, {
+        ...init,
+        method: "PUT",
+        headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json" // very important, otherwise the server will not know what to do with the data
+        },
         body: JSON.stringify(data)
     })
 }
@@ -339,5 +361,18 @@ export async function DeleteRestaurantReview(id) {
         body: JSON.stringify({ // pass in the parameters as a json string
             review_id: id
         })
+    })
+}
+
+export async function UpdateUsername(newUsername,password) {
+    return await putApi("/api/user/username",{
+        newUsername: newUsername,
+        password: password
+    })
+}
+export async function UpdateEmail(newEmail,password) {
+    return await putApi("/api/user/email",{
+        newEmail: newEmail,
+        password: password
     })
 }

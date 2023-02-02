@@ -14,6 +14,7 @@ import {closeModal, GlobalCurrentModal} from "@/components/Modal/modalsManager";
  * @property {string?} modalId The id of the modal. Set if you want to use showModal to open the modal [Optional]
  * @property {boolean?} isOpen If true, the modal will be open. [Optional]
  * @property {function?} onClose A function to be called when the modal closes. If not using modalId, this callback must be set to change the isOpen prop to close the modal[Optional]
+ * @property {function?} onAfterOpen A function to be called when the modal after the modal opens. Used for syncing refs and stuff
  * @property {React.ReactNode?} children Children of the modal
  */
 
