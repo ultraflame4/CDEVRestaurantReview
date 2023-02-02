@@ -19,7 +19,8 @@ import PropTypes from "prop-types";
  *     max?: number,
  *     step?: number,
  *     defaultValue?: number,
- *     onInput?: function (value:number, min:number, max :number) : void
+ *     onInput?: function (value:number, min:number, max :number) : void,
+ *     onValUpdate?: function (value:number, min:number, max :number) : void
  * }} props
  * @return {*}
  * @constructor
@@ -43,15 +44,16 @@ export const InputRangeSlider = function (props) {
         let fillPercent = ((inputElement.value - min) / (max - min)) * 100
         // Set the css variable to the percentage, and css will fill the track
         inputElement.style.setProperty("--filledPercentage",`${fillPercent}%`)
-
+        props.onInput?.(current,min,max)
     }
 
-    function OnValChanged(e) { // separate event callback that updates on mouse up to reduce number of callbacks sent
+    // separate event callback that updates on mouse up to reduce number of callbacks sent
+    function OnValChanged(e) {
         let inputElement = inputElementRef.current // get the input element from the reference
         let min = parseFloat(inputElement.min.length !== 0 ? inputElement.min : "0")
         let max = parseFloat(inputElement.max.length !== 0 ? inputElement.max : "100")
         let current = parseFloat(inputElement.value)
-        props.onInput?.(current,min,max)
+        props.onValUpdate?.(current,min,max)
     }
 
     useEffect(()=>{
@@ -75,5 +77,6 @@ InputRangeSlider.propType = {
     max:PropTypes.number,
     step:PropTypes.number,
     defaultValue:PropTypes.number,
-    onInput:PropTypes.object,
+    onInput:PropTypes.func, // Called when the input is dragged
+    onValUpdate:PropTypes.func, // Called when the input is released (mouse up)
 }

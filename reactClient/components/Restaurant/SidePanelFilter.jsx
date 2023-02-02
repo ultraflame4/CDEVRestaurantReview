@@ -28,11 +28,17 @@ const FilterSliderItem = (props) => {
     // The value text is the current value the slider is at and the value that will be displayed if enabled.
     const [valueText, setValueText] = useState(0)
 
-    // Callback for the input range slider.
-    function callback(value, min, max) {
+
+    // Callback to update the value text when the value is changed.
+    function numberUpdate(value, min, max) {
         // If the value is not the max value, then we want to display the value.
         // Otherwise, we want to display the max value text if it is set. (else just show the value)
         setValueText(value !== max ? value : (props.showValueMaxText ?? value))
+    }
+
+
+    // Callback for the input range slider. that actually updates other things
+    function callback(value, min, max) {
         // Call the callback if it is set.
         props.callback?.(value, min, max)
     }
@@ -46,7 +52,7 @@ const FilterSliderItem = (props) => {
         </span>
         {/*The range slider input for the filter*/}
         <InputRangeSlider min={props.min} max={props.max} step={props.step} defaultValue={props.defaultValue}
-                          onInput={callback}/>
+                          onValUpdate={callback} onInput={numberUpdate}/>
         {
             props.noIcon ?
                 // If noIcon is true, then we don't want to display any icons, but instead text.
