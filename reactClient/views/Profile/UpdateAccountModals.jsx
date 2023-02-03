@@ -61,8 +61,9 @@ export function ChangeEmailModal() {
             .catch(err => {
                 if (err.code === 401) {
                     alert("Wrong password!")
-                } else {
-                    alert("Something went wrong! Please try again later.")
+                }
+                else {
+                    alert("This email is already being used!")
                 }
             })
     }
