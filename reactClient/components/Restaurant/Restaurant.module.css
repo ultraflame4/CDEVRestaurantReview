@@ -43,10 +43,6 @@
     flex-grow: 1;
 }
 
-.restaurantListContentItem[data-hidden="true"] {
-    display: none;
-}
-
 .restaurantListContentItem a {
     text-decoration: inherit;
     color: inherit;

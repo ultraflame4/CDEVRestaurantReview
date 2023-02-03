@@ -28,7 +28,7 @@ const RestaurantListItem = (props) => {
     }, [props.id])
 
 
-    return (<li className={classes.restaurantListContentItem + " card"} data-hidden={props.hidden}>
+    return (<li className={classes.restaurantListContentItem + " card"} hidden={props.hidden}>
         <Link to={`restaurant/${props.id}`}> {/*Link to restaurant page*/}
 
             <div className={classes.restaurantListContentItem_Head}>
@@ -110,8 +110,10 @@ const RestaurantListContents = (props) => {
 
     return (<ul className={classes.restaurantListContent}>
         {
-            props.restaurants.map((value, index) =>
-                <RestaurantListItem
+            props.restaurants.map((value, index) =>{
+                let hidden = value.cost_rating > props.maxCost * 2 || value.avg_rating < props.minRating * 2 || value.reviews_count < props.minReviews
+
+                return <RestaurantListItem
                     key={index}
                     id={value.id}
                     tags={value.tags}
@@ -123,7 +125,8 @@ const RestaurantListContents = (props) => {
                     reviews_count={value.reviews_count}
                     distance={Math.round(value.distance / 10) / 100} // round distance to 2 d.p.
                     hidden={value.cost_rating > props.maxCost * 2 || value.avg_rating < props.minRating * 2 || value.reviews_count < props.minReviews}
-                />)
+                />
+            })
         }
     </ul>)
 }
