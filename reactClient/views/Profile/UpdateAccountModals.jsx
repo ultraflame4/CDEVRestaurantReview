@@ -36,7 +36,7 @@ export function EditUsernameModal() {
             onAfterOpen={onModalLoad}
         >
             <input placeholder={"New Username"} ref={usernameRef}/>
-            <input placeholder={"Password"} ref={passwdRef}/>
+            <input placeholder={"Password"} ref={passwdRef} type={"password"}/>
             <br/>
             <button onClick={saveUsername}>Save</button>
         </WModal>
@@ -69,8 +69,8 @@ export function ChangeEmailModal() {
 
     return (
         <WModal icon={"mdi:email-edit"} modalId={"change-email"} title={"Change Email"} onAfterOpen={onModalLoad}>
-            <input placeholder={"New Email"} ref={emailRef}/>
-            <input placeholder={"Password"} ref={passwdRef}/>
+            <input placeholder={"New Email"} ref={emailRef} type={"email"}/>
+            <input placeholder={"Password"} ref={passwdRef} type={"password"}/>
             <br/>
             <button onClick={saveEmail}>Change</button>
         </WModal>
@@ -98,8 +98,8 @@ export function UpdatePasswordModal() {
 
     return (
         <WModal icon={"mdi:form-textbox-password"} modalId={"update-password"} title={"Update Password"} >
-            <input placeholder={"New Password"} ref={newPasswdRef}/>
-            <input placeholder={"Current Password"} ref={passwdRef}/>
+            <input placeholder={"New Password"} ref={newPasswdRef} type={"password"}/>
+            <input placeholder={"Current Password"} ref={passwdRef} type={"password"}/>
             <br/>
             <button onClick={savePassword}>Update</button>
         </WModal>
