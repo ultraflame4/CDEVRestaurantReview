@@ -223,6 +223,7 @@ export const RestaurantList = (props) => {
     useEffect(() => {
         // When the component is mounted, load some restaurants (clearing the restaurant list first which may have things if reloading list)
         // Initially load some restaurants
+        setIsAllLoaded(false)
         setRestaurants([])
         loadData()
     }, [sortBy, sortOrder])
