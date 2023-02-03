@@ -11,6 +11,7 @@ import {UserAccountContext} from "@/tools/contexts";
 import {SignInModal, SignUpModal} from "@/components/HeaderNav/AccountModals";
 import {showModal} from "@/components/Modal/modalsManager";
 import authManager from "@/core/authManager";
+import {useNavigate} from "react-router-dom";
 
 
 // Menu to show when the user is logged in
@@ -75,11 +76,23 @@ const HeaderNavAccount = (props) => {
 
 export default defComponent((props) => {
     const [hamburgerToggled, setHamburgerToggled] = useState(false)
+    const navigate = useNavigate()
 
     function toggleHamburger() {
         setHamburgerToggled(prevState => !prevState)
     }
 
+    /**
+     * @param e {React.KeyboardEvent<HTMLInputElement>}
+     */
+    function OnSearch(e) {
+        if (e.key.toLowerCase() !== "enter") return;
+
+        let query = e.currentTarget.value;
+        if (query.length === 0) return;
+        navigate(`/search?q=${encodeURIComponent(query)}`)
+
+    }
 
     return (
         <header className={classes.HeaderNav}>
@@ -89,7 +102,7 @@ export default defComponent((props) => {
             <div className={classes.HeaderNavSearch}>
                 <Icon icon={"ic:outline-search"} className={classes.SearchIcon}/>
                 <div className={classes.SearchInput}>
-                    <input type={"text"} placeholder={"Search Restaurants, Food, Locations and Tags."}/>
+                    <input type={"text"} placeholder={"Search Restaurants, Food, Locations and Tags."} onKeyUp={OnSearch}/>
                     <span className={classes.SearchInputUnderline}></span>
                 </div>
             </div>

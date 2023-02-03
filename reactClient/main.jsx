@@ -10,6 +10,7 @@ import {SignInModal, SignUpModal} from "@/components/HeaderNav/AccountModals";
 import UserProfile from "@/views/Profile/UserProfile";
 import UserProfile_Settings from "@/views/Profile/UserProfile_Settings";
 import UserProfile_Reviews from "@/views/Profile/UserProfile_Reviews";
+import SearchResults from "@/views/Search/SearchResults";
 
 const Home = React.lazy(() => import("@/views/Home/Home"))
 const RestaurantDetails = React.lazy(() => import("@/views/RestaurantDetails/RestaurantDetails"))
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
                 {
                     path: "/restaurant/:id",
                     element: <RestaurantDetails/>,
+                },
+                {
+                    path: "/search/",
+                    element: <SearchResults/>,
                 },
                 {
                     path: "/profile/",

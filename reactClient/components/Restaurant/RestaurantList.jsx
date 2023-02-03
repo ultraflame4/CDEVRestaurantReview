@@ -148,11 +148,11 @@ export const RestaurantList = (props) => {
     const [isAllLoaded, setIsAllLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
 
-    const [maxCost_, setMaxCost] = useSearchParamsState("cost", 5)
-    const [minRating_, setMinRating] = useSearchParamsState("rating", 0)
-    const [minReviews_, setMinReviews] = useSearchParamsState("reviews", 0)
-    const [sortBy_, setSortBy] = useSearchParamsState("sort", -1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
-    const [sortOrder_, setSortOrder] = useSearchParamsState("order", 0) // 0 = ascending, 1 = descending
+    const [maxCost_, setMaxCost] = useSearchParamsState("c", 5)
+    const [minRating_, setMinRating] = useSearchParamsState("r", 0)
+    const [minReviews_, setMinReviews] = useSearchParamsState("v", 0)
+    const [sortBy_, setSortBy] = useSearchParamsState("s", -1) // -1 = no sort, 0 = cost, 1 = ratings, 2 = reviews, 3 = distance
+    const [sortOrder_, setSortOrder] = useSearchParamsState("o", 0) // 0 = ascending, 1 = descending
 
     const maxCost = parseFloat(maxCost_)
     const minRating = parseFloat(minRating_)
