@@ -382,3 +382,10 @@ export async function UpdatePassword(newPassword,password) {
         password: password
     })
 }
+export async function CreateAccount(username,email,password) {
+    return await postApi("/api/user/create",{
+        username: username,
+        email: email,
+        password: password
+    })
+}
