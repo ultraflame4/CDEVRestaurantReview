@@ -134,15 +134,21 @@ const RestaurantListContents = (props) => {
     }
 
     useEffect(() => {
-        let results = searchFilter(props.restaurants)
-        console.log("R", results)
-        setRestaurants(results)
-    }, [props.restaurants])
+        if (props.searchQuery){
+            let results = searchFilter(props.restaurants)
+            setRestaurants(results)
+            return
+        }
+        setRestaurants(props.restaurants)
+    }, [props.restaurants, props.searchQuery])
 
     return (<ul className={classes.restaurantListContent}>
         {
-            restaurants.map((value_, index) => {
-                let value = value_.item
+            restaurants.map((value, index) => {
+                if (props.searchQuery){
+                    value = value.item
+                }
+
                 let filtersTest = value.cost_rating > props.maxCost * 2 || value.avg_rating < props.minRating * 2 || value.reviews_count < props.minReviews
 
                 return <RestaurantListItem
