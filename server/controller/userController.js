@@ -18,7 +18,7 @@ async function CreateUser(req, res) {
     // Check for existing user
     let user = await RestauRantDB.FindUser(queryParams.email)
     if (user !== null) {
-        res.status(400).json({success: false})
+        res.status(200).json({success: false})
         return
     }
     try {
