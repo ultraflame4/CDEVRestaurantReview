@@ -110,8 +110,8 @@ const RestaurantListContents = (props) => {
 
     return (<ul className={classes.restaurantListContent}>
         {
-            props.restaurants.map((value, index) =>{
-                let hidden = value.cost_rating > props.maxCost * 2 || value.avg_rating < props.minRating * 2 || value.reviews_count < props.minReviews
+            props.restaurants.map((value, index) => {
+                let filtersTest = value.cost_rating > props.maxCost * 2 || value.avg_rating < props.minRating * 2 || value.reviews_count < props.minReviews
 
                 return <RestaurantListItem
                     key={index}
@@ -124,7 +124,7 @@ const RestaurantListContents = (props) => {
                     imageSrc={value.photo_url}
                     reviews_count={value.reviews_count}
                     distance={Math.round(value.distance / 10) / 100} // round distance to 2 d.p.
-                    hidden={value.cost_rating > props.maxCost * 2 || value.avg_rating < props.minRating * 2 || value.reviews_count < props.minReviews}
+                    hidden={filtersTest}
                 />
             })
         }
@@ -135,7 +135,8 @@ RestaurantListContents.propTypes = {
     restaurants: PropTypes.array.isRequired,
     maxCost: PropTypes.number.isRequired,
     minRating: PropTypes.number.isRequired,
-    minReviews: PropTypes.number.isRequired
+    minReviews: PropTypes.number.isRequired,
+    searchQuery: PropTypes.string
 }
 /**
  * This component represents the entire restaurant list page
@@ -167,7 +168,7 @@ export const RestaurantList = (props) => {
 
         setRestaurants(prevState => {
             // Get more restaurants from the api using the current length of the restaurant list as the offset
-            GetRestaurants(prevState.length, sortBy,sortOrder).then(value => {
+            GetRestaurants(prevState.length, sortBy, sortOrder).then(value => {
                 // Concat the new restaurants to the existing list
                 setRestaurants(prevState.concat(value))
                 // If the api returns an empty array, then we have loaded all the restaurants
@@ -194,7 +195,7 @@ export const RestaurantList = (props) => {
         // Initially load some restaurants
         setRestaurants([])
         loadData()
-    }, [sortBy,sortOrder])
+    }, [sortBy, sortOrder])
 
 
     return <div className={classes.RestaurantList}>
@@ -218,6 +219,7 @@ export const RestaurantList = (props) => {
             maxCost={maxCost}
             minReviews={minReviews}
             minRating={minRating}
+            searchQuery={props.searchQuery}
         />
         {/*on load more load more data lah*/}
         <InfiniteScroll loadMore={loadData} className={classes.infiniteScrollStyle} hide={isAllLoaded}
@@ -225,5 +227,7 @@ export const RestaurantList = (props) => {
     </div>;
 }
 RestaurantList.propTypes = {
-    title: PropTypes.string.isRequired, className: PropTypes.string
+    title: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    searchQuery: PropTypes.string
 }
