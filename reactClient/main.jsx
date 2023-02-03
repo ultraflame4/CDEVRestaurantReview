@@ -11,6 +11,8 @@ import UserProfile from "@/views/Profile/UserProfile";
 import UserProfile_Settings from "@/views/Profile/UserProfile_Settings";
 import UserProfile_Reviews from "@/views/Profile/UserProfile_Reviews";
 import SearchResults from "@/views/Search/SearchResults";
+import {NearestSort, TopRatedSort} from "@/views/Search/DefaultSort";
+
 
 const Home = React.lazy(() => import("@/views/Home/Home"))
 const RestaurantDetails = React.lazy(() => import("@/views/RestaurantDetails/RestaurantDetails"))
@@ -31,6 +33,12 @@ const router = createBrowserRouter([
                 {
                     path: "/search/",
                     element: <SearchResults/>,
+                },                {
+                    path: "/nearest/",
+                    element: <NearestSort/>,
+                },                {
+                    path: "/top/",
+                    element: <TopRatedSort/>,
                 },
                 {
                     path: "/profile/",
