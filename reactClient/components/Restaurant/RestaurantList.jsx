@@ -11,6 +11,7 @@ import {GetRestaurantRecentReviews, GetRestaurantReviews, GetRestaurants} from "
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 import {Link} from "react-router-dom";
 import {useSearchParamsState} from "@/tools/hooks";
+import Fuse from "fuse.js";
 
 /**
  * This component represents a single restaurant in the list
@@ -101,16 +102,47 @@ RestaurantListItem.propType = {
     hidden: PropTypes.bool.isRequired
 }
 
+
 /**
  * This component represents the list of restaurants
  * @param props
  * @return {React.ReactNode}
  */
 const RestaurantListContents = (props) => {
+    const [restaurants, setRestaurants] = useState([])
+
+    function searchFilter(restuaraunts) {
+        if (props.searchQuery === "") {
+            return true
+        }
+        // use the fuse.js library to handle the searching for me
+        // fuse.js includes features like extended search which will allow users to refine their search
+        // https://fusejs.io/examples.html#extended-search
+        const fuse = new Fuse(restuaraunts, {
+            keys: [
+                {name: "name", weight: 1},
+                {name: "description", weight: 0.5},
+                {name: "tags", weight: 2, getFn: (obj) => obj.tags.join(" ")} // join the tags array into a string so that extended search can work
+            ],
+            isCaseSensitive: false,
+            useExtendedSearch: true,
+            includeScore: true,
+            shouldSort: props.shouldSort
+        })
+
+        return fuse.search(props.searchQuery)
+    }
+
+    useEffect(() => {
+        let results = searchFilter(props.restaurants)
+        console.log("R", results)
+        setRestaurants(results)
+    }, [props.restaurants])
 
     return (<ul className={classes.restaurantListContent}>
         {
-            props.restaurants.map((value, index) => {
+            restaurants.map((value_, index) => {
+                let value = value_.item
                 let filtersTest = value.cost_rating > props.maxCost * 2 || value.avg_rating < props.minRating * 2 || value.reviews_count < props.minReviews
 
                 return <RestaurantListItem
@@ -136,7 +168,8 @@ RestaurantListContents.propTypes = {
     maxCost: PropTypes.number.isRequired,
     minRating: PropTypes.number.isRequired,
     minReviews: PropTypes.number.isRequired,
-    searchQuery: PropTypes.string
+    searchQuery: PropTypes.string,
+    shouldSort: PropTypes.bool.isRequired,
 }
 /**
  * This component represents the entire restaurant list page
@@ -220,6 +253,7 @@ export const RestaurantList = (props) => {
             minReviews={minReviews}
             minRating={minRating}
             searchQuery={props.searchQuery}
+            shouldSort={sortBy === -1}
         />
         {/*on load more load more data lah*/}
         <InfiniteScroll loadMore={loadData} className={classes.infiniteScrollStyle} hide={isAllLoaded}

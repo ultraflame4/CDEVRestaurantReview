@@ -15,6 +15,22 @@ Features planned include:
 
 This is a fullstack web development project done for school.
 
+### Searching:
+This project uses the [Fuse.js](https://fusejs.io/) library to search for restaurants.
+
+To refine your search, you can use the following search operators:
+
+|Token|Match type|Description|
+|--- |--- |--- |
+|jscript|fuzzy-match|Items that fuzzy match jscript|
+|=scheme|exact-match|Items that are scheme|
+|'python|include-match|Items that include python|
+|!ruby|inverse-exact-match|Items that do not include ruby|
+|^java|prefix-exact-match|Items that start with java|
+|!^earlang|inverse-prefix-exact-match|Items that do not start with earlang|
+|.js$|suffix-exact-match|Items that end with .js|
+|!.go$|inverse-suffix-exact-match|Items that do not end with .go|
+Taken from: https://fusejs.io/examples.html#extended-search
 ## Installation
 1. Clone the repository
 2. Run `npm install` in the root directory
