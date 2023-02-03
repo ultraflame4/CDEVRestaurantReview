@@ -5,18 +5,23 @@ import React, {Suspense, useContext, useEffect} from "react";
 import classes from "./UserProfile.module.css";
 import {Icon} from "@iconify-icon/react";
 import {IconLink} from "@/components/Links/IconLink";
+import {useWatchableValue} from "@/tools/hooks";
+import authManager from "@/core/authManager";
 
 export default function UserProfile() {
     const currentUser = useContext(UserAccountContext);
     const settingsActive = useMatch("/profile/settings/*") !==null
     const reviewsActive = useMatch("/profile/reviews/*") !==null
+
     const navigate = useNavigate()
     console.log(settingsActive, reviewsActive)
     useEffect(() => {
-        if (currentUser === null){
-            navigate("/")
-        }
-    },[currentUser])
+        setTimeout(() => {
+            if (!authManager.isLoggedIn.value) {
+                navigate("/")
+            }
+        },1000)
+    }, [currentUser])
     return (
         <div className={classes.UserProfile}>
             <aside>
