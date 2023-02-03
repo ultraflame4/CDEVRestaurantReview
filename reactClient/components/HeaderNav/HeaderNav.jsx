@@ -108,10 +108,10 @@ export default defComponent((props) => {
             </div>
             <ul className={classes.HeaderNavLinks}>
                 <li>
-                    <IconLink to={"/search?sort=0"} text={"Nearby"} icon={"oi:map-marker"}/>
+                    <IconLink to={"/nearest"} text={"Nearby"} icon={"oi:map-marker"}/>
                 </li>
                 <li>
-                    <IconLink to={"/search?sort=1"} text={"Top Rated"} icon={"ic:stars"}/>
+                    <IconLink to={"/top"} text={"Top Rated"} icon={"ic:stars"}/>
                 </li>
             </ul>
             <HeaderNavAccount/>
