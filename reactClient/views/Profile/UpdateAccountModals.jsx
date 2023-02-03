@@ -89,7 +89,7 @@ export function UpdatePasswordModal() {
             })
             .catch(err => {
                 if (err.code === 401) {
-                    alert("Wrong password!")
+                    alert("Wrong password or email!")
                 } else {
                     alert("Something went wrong! Please try again later.")
                 }

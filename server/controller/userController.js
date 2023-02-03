@@ -223,7 +223,7 @@ async function DeleteAccount(req, res) {
     try {
         let usr = await RestauRantDB.FindUserById(req.user.id)
         let checkPasswd = await usr.ComparePassword(queryParams.password)
-        if (!checkPasswd && usr.email !== queryParams.email) {
+        if (!checkPasswd || usr.email !== queryParams.email) {
 
             return resUnauthorised(res)
         }
