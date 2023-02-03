@@ -109,16 +109,14 @@ RestaurantListItem.propType = {
  * @return {React.ReactNode}
  */
 const RestaurantListContents = (props) => {
-    const [restaurants, setRestaurants] = useState([])
-
-    function searchFilter(restuaraunts) {
-        if (props.searchQuery === "") {
-            return true
+    function searchFilter(restaurants_list) {
+        if (!props.searchQuery) {
+            return restaurants_list
         }
         // use the fuse.js library to handle the searching for me
         // fuse.js includes features like extended search which will allow users to refine their search
         // https://fusejs.io/examples.html#extended-search
-        const fuse = new Fuse(restuaraunts, {
+        const fuse = new Fuse(restaurants_list, {
             keys: [
                 {name: "name", weight: 1},
                 {name: "description", weight: 0.5},
@@ -133,14 +131,7 @@ const RestaurantListContents = (props) => {
         return fuse.search(props.searchQuery)
     }
 
-    useEffect(() => {
-        if (props.searchQuery){
-            let results = searchFilter(props.restaurants)
-            setRestaurants(results)
-            return
-        }
-        setRestaurants(props.restaurants)
-    }, [props.restaurants, props.searchQuery])
+    let restaurants = searchFilter(props.restaurants)
 
     return (<ul className={classes.restaurantListContent}>
         {
