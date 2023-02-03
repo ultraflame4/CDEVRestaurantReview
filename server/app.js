@@ -121,6 +121,7 @@ app.get('/api/user/reviews', middlewares.authenticated(),middlewares.cached(3), 
 app.put('/api/user/email', middlewares.authenticated(), userController.UpdateEmail)
 app.put('/api/user/password', middlewares.authenticated(), userController.UpdatePassword)
 app.put('/api/user/username', middlewares.authenticated(), userController.UpdateUsername)
+app.delete('/api/user/delete', middlewares.authenticated(), userController.DeleteAccount)
 app.get('/api/user/info', middlewares.authenticated(),middlewares.cached(2,2), userController.GetUserInfo)
 
 app.listen(port, "localhost", () => {

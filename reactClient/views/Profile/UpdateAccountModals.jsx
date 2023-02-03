@@ -1,7 +1,7 @@
 import {WModal} from "@/components/Modal/WModal";
 import {useContext, useEffect, useRef} from "react";
 import {UserAccountContext} from "@/tools/contexts";
-import {UpdateEmail, UpdatePassword, UpdateUsername} from "@/core/api";
+import {DeleteAccount, UpdateEmail, UpdatePassword, UpdateUsername} from "@/core/api";
 import {closeModal} from "@/components/Modal/modalsManager";
 
 export function EditUsernameModal() {
@@ -102,6 +102,40 @@ export function UpdatePasswordModal() {
             <input placeholder={"Current Password"} ref={passwdRef} type={"password"}/>
             <br/>
             <button onClick={savePassword}>Update</button>
+        </WModal>
+    )
+}
+
+export function DeleteAcccountModal() {
+
+    const passwdRef = useRef(null)
+    const emailRef = useRef(null)
+
+    function deleteAccount() {
+
+        DeleteAccount(emailRef.current.value, passwdRef.current.value)
+            .then(value => {
+                window.location.reload()
+                alert("Account deleted successfully!")
+            })
+            .catch(err => {
+                if (err.code === 401) {
+                    alert("Wrong password!")
+                } else {
+                    alert("Something went wrong! Please try again later.")
+                }
+            })
+    }
+
+    return (
+        <WModal icon={"material-symbols:warning-rounded"} modalId={"delete-acc"} title={"Delete Account"} >
+            <p style={{color:"var(--red)"}}>Are you sure you want to delete your account ?</p>
+            <p>Enter your email & password to confirm</p>
+            <br/>
+            <input placeholder={"Email"} ref={emailRef} type={"email"}/>
+            <input placeholder={"Password"} ref={passwdRef} type={"password"}/>
+            <br/>
+            <button onClick={deleteAccount} className={"btn-danger"}>Delete</button>
         </WModal>
     )
 }

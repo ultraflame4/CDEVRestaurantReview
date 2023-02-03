@@ -107,6 +107,7 @@ export function postApi(path_, data, queryParams = {}, init = {}) {
         body: JSON.stringify(data)
     })
 }
+
 /**
  * Fetches the api with the Put method
  * @param path_
@@ -179,8 +180,8 @@ const sortConvTable = [
  * @param order {number}
  * @return {Promise<DBRestaurantType[]>}
  */
-export async function GetRestaurants(start, sort = -1,order = 0) {
-    let sort_converted = sortConvTable[parseInt(sort)+1] // add 1 to sort to account for the index (-1 no sort becomes index sort)
+export async function GetRestaurants(start, sort = -1, order = 0) {
+    let sort_converted = sortConvTable[parseInt(sort) + 1] // add 1 to sort to account for the index (-1 no sort becomes index sort)
     // get the current position
     let pos = await getCurrentGeoPosition()
 
@@ -364,28 +365,45 @@ export async function DeleteRestaurantReview(id) {
     })
 }
 
-export async function UpdateUsername(newUsername,password) {
-    return await putApi("/api/user/username",{
+export async function UpdateUsername(newUsername, password) {
+    return await putApi("/api/user/username", {
         newUsername: newUsername,
         password: password
     })
 }
-export async function UpdateEmail(newEmail,password) {
-    return await putApi("/api/user/email",{
+
+export async function UpdateEmail(newEmail, password) {
+    return await putApi("/api/user/email", {
         newEmail: newEmail,
         password: password
     })
 }
-export async function UpdatePassword(newPassword,password) {
-    return await putApi("/api/user/password",{
+
+export async function UpdatePassword(newPassword, password) {
+    return await putApi("/api/user/password", {
         newPassword: newPassword,
         password: password
     })
 }
-export async function CreateAccount(username,email,password) {
-    return await postApi("/api/user/create",{
+
+export async function CreateAccount(username, email, password) {
+    return await postApi("/api/user/create", {
         username: username,
         email: email,
         password: password
+    })
+}
+
+export async function DeleteAccount(email, password) {
+    return await fetchApi("/api/user/delete", undefined, {
+        method: "DELETE",
+        headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ // pass in the parameters as a json string
+            email: email,
+            password: password
+        })
     })
 }

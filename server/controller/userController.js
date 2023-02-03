@@ -196,12 +196,39 @@ async function UpdatePassword(req, res) {
         let usr = await RestauRantDB.FindUserById(req.user.id)
         let checkPasswd = await usr.ComparePassword(queryParams.password)
         if (!checkPasswd) {
-            console.log("TEST")
+
             return resUnauthorised(res)
         }
 
         let newHash = await User.HashUserPassword(queryParams.newPassword, FormatTimestamp(usr.date_created))
         let r = await RestauRantDB.UpdatePassword(req.user.id, newHash)
+        res.json({sql: r})
+    } catch (err) {
+        resInternalErr(res, {success: false, sqlErrors: err})
+    }
+
+}
+/**
+ * Delete the user's account
+ * @param req {import("express").Request}
+ * @param res {import("express").Response}
+ */
+async function DeleteAccount(req, res) {
+    let queryParams = GetJsonParams(req, res, {
+        email: {type: "string"},
+        password: {type: "string"}
+    })
+    if (!queryParams) return
+
+    try {
+        let usr = await RestauRantDB.FindUserById(req.user.id)
+        let checkPasswd = await usr.ComparePassword(queryParams.password)
+        if (!checkPasswd && usr.email !== queryParams.email) {
+
+            return resUnauthorised(res)
+        }
+        let r = await RestauRantDB.DeleteUser(req.user.id)
+        req.session.destroy()
         res.json({sql: r})
     } catch (err) {
         resInternalErr(res, {success: false, sqlErrors: err})
@@ -219,5 +246,6 @@ module.exports = {
     UpdateEmail,
     UpdateUsername,
     UpdatePassword,
-    GetUserInfo
+    GetUserInfo,
+    DeleteAccount
 }

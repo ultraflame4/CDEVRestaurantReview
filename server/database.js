@@ -542,6 +542,25 @@ class RestauRantDatabase {
          })
       })
    }
+   /**
+    * Delete a user
+    * @param userId {number}
+    * @return {Promise<void>}
+    */
+   async DeleteUser(userId) {
+      return new Promise((resolve, reject) => {
+         this.#conn.query(`
+            DELETE FROM users WHERE id = ?
+         `, [userId], (err, result, fields) => {
+            if (err) {
+               console.warn("Error while executing DeleteAccount:", err)
+               reject(err)
+               return
+            }
+            resolve(result)
+         })
+      })
+   }
 }
 
 const RestauRantDB = new RestauRantDatabase({

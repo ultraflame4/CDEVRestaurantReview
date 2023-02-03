@@ -2,7 +2,12 @@ import classes from "./Settings.module.css";
 import {useContext} from "react";
 import {UserAccountContext} from "@/tools/contexts";
 import {Icon} from "@iconify-icon/react";
-import {ChangeEmailModal, EditUsernameModal, UpdatePasswordModal} from "@/views/Profile/UpdateAccountModals";
+import {
+    ChangeEmailModal,
+    DeleteAcccountModal,
+    EditUsernameModal,
+    UpdatePasswordModal
+} from "@/views/Profile/UpdateAccountModals";
 import {showModal} from "@/components/Modal/modalsManager";
 
 export default function UserProfile_Settings() {
@@ -14,6 +19,7 @@ export default function UserProfile_Settings() {
         <EditUsernameModal/>
         <ChangeEmailModal/>
         <UpdatePasswordModal/>
+        <DeleteAcccountModal/>
 
         <div>
             <h2>Username :</h2><p>{currentUser?.username}</p>
@@ -27,5 +33,8 @@ export default function UserProfile_Settings() {
             <h2>Password : </h2><p>{new Array(16).fill("█")}</p>
         </div>
         <button onClick={()=>showModal("update-password")}>Update Password <Icon icon={"ic:baseline-edit"}/></button>
+        <div style={{marginTop:"6rem"}}>
+            <button onClick={()=>showModal("delete-acc")} className={"btn-danger"}>Delete Account<Icon icon={"ic:baseline-delete-forever"}/></button>
+        </div>
     </main>)
 }
