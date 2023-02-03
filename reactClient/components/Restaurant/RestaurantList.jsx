@@ -30,7 +30,7 @@ const RestaurantListItem = (props) => {
 
 
     return (<li className={classes.restaurantListContentItem + " card"} hidden={props.hidden}>
-        <Link to={`restaurant/${props.id}`}> {/*Link to restaurant page*/}
+        <Link to={`/restaurant/${props.id}`}> {/*Link to restaurant page*/}
 
             <div className={classes.restaurantListContentItem_Head}>
                 <h3 className={classes.restaurantListContentItem_Name}>
