@@ -1,7 +1,7 @@
 import {defComponent} from "@/tools/define";
 import "./Home.css"
 import {RestaurantList} from "@/components/Restaurant/RestaurantList";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {GetRestaurants} from "@/core/api";
 import {RecommendedNearbyItem} from "@/components/RecommendedBanner/RecommendedItems";
 
@@ -10,11 +10,29 @@ import {RecommendedNearbyItem} from "@/components/RecommendedBanner/RecommendedI
  */
 export default defComponent((props) => {
     const [nearbyRestaurants, setNearbyRestaurants] = useState([])
+    /**
+     * @type {React.MutableRefObject<null|HTMLUListElement>}
+     */
+    const recommendedListRef = useRef(null)
 
     useEffect(() => {
         GetRestaurants(0, 3,0,4).then(value => {
             setNearbyRestaurants(value)
         })
+
+        let intervalId = setInterval(() => {
+            let percentScrolled= recommendedListRef.current.scrollLeft / (recommendedListRef.current.scrollWidth-recommendedListRef.current.clientWidth)
+            if (percentScrolled >= 0.9){
+                recommendedListRef.current.scrollTo({left:0,behavior:"smooth"})
+            }
+            else{
+                recommendedListRef.current.scrollBy({left:recommendedListRef.current.clientWidth,behavior:"smooth"})
+            }
+
+        },2000)
+        return ()=>{
+            clearInterval(intervalId)
+        }
     },[true])
 
 
@@ -23,8 +41,8 @@ export default defComponent((props) => {
             <section id={"recommendations-banner"}>
                 <div>
                     <div id={"recommended-list"}>
-                        <h1>Recommended near you</h1>
-                        <ul>
+                        <h1 >Recommended near you</h1>
+                        <ul ref={recommendedListRef}>
                             {
                                 nearbyRestaurants.map((value,index) =>
                                 <RecommendedNearbyItem
