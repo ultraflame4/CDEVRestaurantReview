@@ -5,8 +5,6 @@ import {DeleteReviewModal, EditReviewModal} from "@/components/Reviews/ReviewsMo
 import {StarRatings} from "@/components/Ratings/StarRatings";
 import {LineBreaker} from "@/components/LineBreaker";
 import PropTypes from "prop-types";
-import {showModal} from "@/components/Modal/modalsManager";
-import authManager from "@/core/authManager";
 import {UserAccountContext} from "@/tools/contexts";
 import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 

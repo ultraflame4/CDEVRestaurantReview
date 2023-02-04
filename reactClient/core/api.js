@@ -407,3 +407,10 @@ export async function DeleteAccount(email, password) {
         })
     })
 }
+
+export async function GetUserReviews(start=0) {
+    return await fetchApi("/api/user/reviews",{
+        start:start,
+        limit:15
+    })
+}
