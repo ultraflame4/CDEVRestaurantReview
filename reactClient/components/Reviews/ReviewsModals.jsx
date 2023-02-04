@@ -2,7 +2,7 @@ import {WModal} from "@/components/Modal/WModal";
 import PropTypes from "prop-types";
 import React, {useEffect, useRef} from "react";
 import {StarRatings} from "@/components/Ratings/StarRatings";
-import classes from "./ReviewsModals.module.css";
+import classes from "../../views/RestaurantDetails/ReviewsModals.module.css";
 import {CreateRestaurantReview, DeleteRestaurantReview, UpdateRestaurantReview} from "@/core/api";
 import authManager from "@/core/authManager";
 
