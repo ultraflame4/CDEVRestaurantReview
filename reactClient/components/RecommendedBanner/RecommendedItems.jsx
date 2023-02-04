@@ -76,7 +76,21 @@ RecommendedNearbyItem.propType = {
 export function RecommendedPopularItem(props) {
     return (<li className={`${classes.topRatedItem}`}>
         <Link to={`/restaurant/${props.id}`}>
-            test
+
+            <img src={props.imageSrc}/>
+
+            <h3>{props.name}</h3>
+            <span><StarRatings rating={props.rating}/> </span>
+            {/*Tags here*/}
+            <ul className={classes.restaurant_tagslist}>
+                { // For each tag given in the tag list in props, create a li for it
+                    props.tags?.map((tagname, tagindex) => {
+                        return (<li key={tagindex}>
+                            {tagname}
+                        </li>)
+                    })
+                }
+            </ul>
         </Link>
     </li>)
 }
