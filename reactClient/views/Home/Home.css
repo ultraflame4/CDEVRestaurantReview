@@ -52,6 +52,7 @@ section{
     gap: 1rem;
     width: 100%;
     flex-grow: 1;
+    height: 1rem; /* Needs to define a height of some sort else everything breaks*/
     scroll-snap-type: x mandatory;
     overflow-x: auto;
 }

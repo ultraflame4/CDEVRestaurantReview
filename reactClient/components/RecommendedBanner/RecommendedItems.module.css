@@ -1,9 +1,177 @@
 
-.nearbyItem{
+.nearbyItem {
     display: block;
     background: var(--gray);
     width: calc(100% - 2rem);
     height: 100%;
     flex-shrink: 0;
     scroll-snap-align: center;
+    overflow: hidden;
+}
+
+.nearbyItem > a {
+    display: grid;
+    width: 100%;
+    height: 100%;
+
+    grid-template-rows: 2fr 3fr;
+    grid-template-columns: auto;
+    text-decoration: none;
+    color: var(--white);
+}
+
+.nearbyItem img {
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    object-fit: cover;
+}
+
+.nearbyItemInfoCtn {
+    grid-row: 2;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    grid-template-rows: min-content min-content auto min-content;
+    grid-template-columns: 2fr 1.5fr;
+    padding: 0 0.5rem 0.25rem;
+    box-sizing: border-box;
+    grid-column-gap: 0.5rem;
+}
+
+.nearbyItemInfoCtn h3 {
+    font-size: 1.75rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nearbyItemInfoCtn > p {
+    grid-column: 1;
+    grid-row: 3;
+    margin: 0;
+    width: 100%;
+    height: fit-content;
+    overflow: hidden;
+    line-break: auto;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    font-size: 0.9rem;
+    font-family: "Poppins";
+    font-weight: 600;
+    color: var(--light-gray);
+}
+
+.review{
+    grid-column: 2;
+    grid-row: 3;
+    font-family: "Poppins";
+    font-weight: 600;
+    position: relative;
+    padding-left: 2.5rem;
+
+}
+.review > p{
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-break: auto;
+    font-size: 0.9rem;
+    color: var(--light-gray);
+    margin: 0;
+}
+
+.review > p::before{
+    font-size: 1.5rem;
+    margin-right: 0.25rem;
+    content: open-quote;
+    color: var(--green);
+}
+.review > span::before{
+    font-size: 1.5rem;
+    margin-right: 0.25rem;
+    content: close-quote;
+    color: var(--green);
+}
+.reviewIcon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 2rem;
+    color: var(--green);
+}
+
+.nearbyItemRating {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-family: "Poppins";
+    font-size: 1.25rem;
+    font-weight: 700;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+}
+
+.nearbyItemRating > span {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+    margin-top: 0.4rem;
+
+}
+
+/*Tags list*/
+.restaurant_tagslist {
+    margin: 0.4em 0.15em 0.25em;
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 0.25em;
+    font-size: 1.11rem;
+    grid-row: 2;
+    grid-column: 1/-1;
+
+}
+
+/*Individual Tags*/
+.restaurant_tagslist > li {
+    font-family: "Poppins";
+    font-weight: 700;
+    font-size: 0.6em;
+    padding: 0 0.5em;
+    border-radius: 0.275rem;
+    background: var(--black);
+    color: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.05em;
+    height: 2em;
+    min-width: 2.5rem;
+    max-width: fit-content;
+
+
+}
+.nearbyItemCost{
+    grid-row: 4;
+    grid-column: 1;
+}
+.nearbyItemDistance{
+    font-family: "Poppins";
+    font-size: 1rem;
+    grid-row: 4;
+    grid-column: 2;
+    font-weight: 700;
+    color: var(--green);
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
 }
