@@ -91,6 +91,7 @@ export function RecommendedPopularItem(props) {
                     })
                 }
             </ul>
+            <span><CostRatings rating={props.cost}/> </span>
         </Link>
     </li>)
 }

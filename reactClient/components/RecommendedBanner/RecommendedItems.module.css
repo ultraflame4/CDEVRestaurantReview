@@ -241,8 +241,14 @@
     overflow: hidden;
 
 }
+
 .topRatedItem .restaurant_tagslist > li {
 
     border: 0.1rem solid var(--gray);
 }
 
+.topRatedItem > a > span:nth-of-type(2) {
+    grid-row: 4;
+    grid-column: 1;
+    padding-left: 0.25rem;
+}
