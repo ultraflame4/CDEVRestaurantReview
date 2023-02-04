@@ -1,63 +1,113 @@
 {
   "index.html": {
-    "file": "assets/index.d067d297.js",
+    "file": "assets/index.9172c5e3.js",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
       "reactClient/views/Home/Home.jsx",
-      "reactClient/views/RestaurantDetails/RestaurantDetails.jsx"
+      "reactClient/views/RestaurantDetails/RestaurantDetails.jsx",
+      "reactClient/views/Search/SearchResults.jsx",
+      "reactClient/views/Profile/UserProfile.jsx",
+      "reactClient/views/Profile/UserProfile_Settings.jsx",
+      "reactClient/views/Profile/UserProfile_Reviews.jsx"
     ],
     "css": [
-      "assets/index.9608940a.css"
+      "assets/index.3cb31b23.css"
     ]
   },
   "reactClient/views/Home/Home.jsx": {
-    "file": "assets/Home.96cf3330.js",
+    "file": "assets/Home.5f686754.js",
     "src": "reactClient/views/Home/Home.jsx",
     "isDynamicEntry": true,
-    "imports": [
-      "index.html",
-      "_InfiniteScroll.7be66ddc.js"
-    ],
-    "css": [
-      "assets/Home.4f3e0517.css"
-    ]
-  },
-  "_InfiniteScroll.7be66ddc.js": {
-    "file": "assets/InfiniteScroll.7be66ddc.js",
     "imports": [
       "index.html"
     ],
     "css": [
-      "assets/InfiniteScroll.c840a84f.css"
+      "assets/Home.89068752.css"
     ]
   },
   "reactClient/views/RestaurantDetails/RestaurantDetails.jsx": {
-    "file": "assets/RestaurantDetails.744d18cc.js",
+    "file": "assets/RestaurantDetails.8e209ba7.js",
     "src": "reactClient/views/RestaurantDetails/RestaurantDetails.jsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_InfiniteScroll.7be66ddc.js"
+      "_ReviewsList.e45ed777.js"
     ],
     "css": [
-      "assets/RestaurantDetails.a68d7992.css"
+      "assets/RestaurantDetails.6f41ba76.css"
+    ]
+  },
+  "_ReviewsList.e45ed777.js": {
+    "file": "assets/ReviewsList.e45ed777.js",
+    "imports": [
+      "index.html"
+    ],
+    "css": [
+      "assets/ReviewsList.4233d967.css"
+    ]
+  },
+  "reactClient/views/Search/SearchResults.jsx": {
+    "file": "assets/SearchResults.de7e34a6.js",
+    "src": "reactClient/views/Search/SearchResults.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ]
+  },
+  "reactClient/views/Profile/UserProfile.jsx": {
+    "file": "assets/UserProfile.db012401.js",
+    "src": "reactClient/views/Profile/UserProfile.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ],
+    "css": [
+      "assets/UserProfile.25793264.css"
+    ]
+  },
+  "reactClient/views/Profile/UserProfile_Settings.jsx": {
+    "file": "assets/UserProfile_Settings.0e1862f0.js",
+    "src": "reactClient/views/Profile/UserProfile_Settings.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ],
+    "css": [
+      "assets/UserProfile_Settings.a7ba71aa.css"
+    ]
+  },
+  "reactClient/views/Profile/UserProfile_Reviews.jsx": {
+    "file": "assets/UserProfile_Reviews.51055afe.js",
+    "src": "reactClient/views/Profile/UserProfile_Reviews.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ReviewsList.e45ed777.js",
+      "index.html"
     ]
   },
   "reactClient/views/Home/Home.css": {
-    "file": "assets/Home.4f3e0517.css",
+    "file": "assets/Home.89068752.css",
     "src": "reactClient/views/Home/Home.css"
   },
+  "ReviewsList.css": {
+    "file": "assets/ReviewsList.4233d967.css",
+    "src": "ReviewsList.css"
+  },
+  "reactClient/views/Profile/UserProfile_Settings.css": {
+    "file": "assets/UserProfile_Settings.a7ba71aa.css",
+    "src": "reactClient/views/Profile/UserProfile_Settings.css"
+  },
+  "reactClient/views/Profile/UserProfile.css": {
+    "file": "assets/UserProfile.25793264.css",
+    "src": "reactClient/views/Profile/UserProfile.css"
+  },
   "reactClient/views/RestaurantDetails/RestaurantDetails.css": {
-    "file": "assets/RestaurantDetails.a68d7992.css",
+    "file": "assets/RestaurantDetails.6f41ba76.css",
     "src": "reactClient/views/RestaurantDetails/RestaurantDetails.css"
   },
   "index.css": {
-    "file": "assets/index.9608940a.css",
+    "file": "assets/index.3cb31b23.css",
     "src": "index.css"
-  },
-  "InfiniteScroll.css": {
-    "file": "assets/InfiniteScroll.c840a84f.css",
-    "src": "InfiniteScroll.css"
   }
 }
