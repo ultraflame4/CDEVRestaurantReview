@@ -4,7 +4,7 @@ import React, {useEffect, useRef} from "react";
 import {StarRatings} from "@/components/Ratings/StarRatings";
 import classes from "../../views/RestaurantDetails/ReviewsModals.module.css";
 import {CreateRestaurantReview, DeleteRestaurantReview, UpdateRestaurantReview} from "@/core/api";
-import authManager from "@/core/authManager";
+
 
 export function PhotosModal(props){
     return <WModal title={"All Photos"} icon={"mdi:folder-multiple-image"} isOpen={props.isOpen} onClose={props.onClose}>
@@ -31,7 +31,7 @@ export function EditReviewModal(props) {
 
     function onModalLoad() {
         if (inpRef.current === null) return
-        inpRef.current.value = props.initialContents.replace("<br>","\n") // Change br to actual line breaks
+        inpRef.current.value = props.initialContents.replaceAll("<br>","\n") // Change br to actual line breaks
     }
 
     /**
@@ -55,7 +55,7 @@ export function EditReviewModal(props) {
 
     function submitReview() {
         let reviewContents = inpRef.current.value
-        reviewContents = reviewContents.replace("\n","<br>")// preserve line breaks
+        reviewContents = reviewContents.replaceAll("\n","<br>")// preserve line breaks
         UpdateRestaurantReview(props.reviewId, rating, reviewContents).then((val) => {
             alert("Updated Review!")
             window.location.reload()
