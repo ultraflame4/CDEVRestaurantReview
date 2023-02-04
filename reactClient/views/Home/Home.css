@@ -6,6 +6,7 @@ section{
 }
 
 #recommendations-banner{
+    display: grid;
 
 }
 

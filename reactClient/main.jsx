@@ -6,16 +6,16 @@ import './index.css'
 import {createBrowserRouter, RouterProvider, Route} from "react-router-dom";
 
 import App from "@/views/App";
-import {SignInModal, SignUpModal} from "@/components/HeaderNav/AccountModals";
-import UserProfile from "@/views/Profile/UserProfile";
-import UserProfile_Settings from "@/views/Profile/UserProfile_Settings";
-import UserProfile_Reviews from "@/views/Profile/UserProfile_Reviews";
-import SearchResults from "@/views/Search/SearchResults";
-import {NearestSort, TopRatedSort} from "@/views/Search/DefaultSort";
+
+import {NearestSort, TopRatedSort} from "@/views/Search/DefaultSort"; // Cannot lazy load these because they are both in the same file.
 
 
 const Home = React.lazy(() => import("@/views/Home/Home"))
 const RestaurantDetails = React.lazy(() => import("@/views/RestaurantDetails/RestaurantDetails"))
+const SearchResults = React.lazy(() => import("@/views/Search/SearchResults"))
+const UserProfile = React.lazy(() => import("@/views/Profile/UserProfile"))
+const UserProfile_Settings  = React.lazy(() => import("@/views/Profile/UserProfile_Settings"))
+const UserProfile_Reviews = React.lazy(() => import("@/views/Profile/UserProfile_Reviews"))
 
 const router = createBrowserRouter([
         {
