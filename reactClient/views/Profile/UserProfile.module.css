@@ -2,7 +2,8 @@
     display: grid;
     grid-template-columns: max-content auto;
     width: 100%;
-    height: calc(100% - var(--header-height) - 1px);
+    min-height: calc(100% - var(--header-height) - 1px);
+    max-height: fit-content;
     background: var(--black);
     padding: 1rem;
     box-sizing: border-box;
@@ -24,6 +25,7 @@
     background: var(--gray);
     border-radius: 0.9rem;
     position: sticky;
+    top: calc(var(--header-height) + 1rem);
 }
 
 .UserDetails {
