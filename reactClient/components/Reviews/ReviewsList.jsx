@@ -16,7 +16,9 @@ import {InfiniteScroll} from "@/components/InfiniteScroll/InfiniteScroll";
 export const ReviewItem = (props) => {
     // 0 = delete, 1 = edit
     const [currentModal, setCurrentModal] = useState(null)
-    let date = new Date(props.last_edit)
+    let date_ = new Date(props.last_edit) // date with timezone offset (making it incorrect)
+    let offset = (-date_.getTimezoneOffset()*1000*60)
+    let date = new Date(date_.getTime()+offset)
 
     function deleteReview() {
         // open delete review modal
