@@ -72,3 +72,24 @@ RecommendedNearbyItem.propType = {
     reviews_count: PropTypes.number.isRequired,
     hidden: PropTypes.bool.isRequired
 }
+
+export function RecommendedPopularItem(props) {
+    return (<li className={`${classes.topRatedItem}`}>
+        <Link to={`/restaurant/${props.id}`}>
+            test
+        </Link>
+    </li>)
+}
+
+RecommendedPopularItem.propType = {
+    id: PropTypes.number.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    name: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    cost: PropTypes.number.isRequired,
+    desc: PropTypes.string.isRequired,
+    imageSrc: PropTypes.string.isRequired,
+    distance: PropTypes.number.isRequired,
+    reviews_count: PropTypes.number.isRequired,
+    hidden: PropTypes.bool.isRequired
+}

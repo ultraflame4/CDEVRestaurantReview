@@ -164,3 +164,27 @@ a {
 .textRed{
     color: var(--red);
 }
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: #8f54a0 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 0.6rem;
+    height: 0.6rem;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--gray);
+    border-radius: 0.5rem;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--black);
+    border-radius: 10px;
+    border: 0.15rem solid var(--gray);
+}

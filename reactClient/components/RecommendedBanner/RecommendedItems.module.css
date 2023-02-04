@@ -175,3 +175,21 @@
     margin-top: auto;
     margin-bottom: auto;
 }
+
+.topRatedItem{
+    height: 8rem;
+    margin-bottom: 1.25rem;
+
+    border-radius: 0.6rem;
+    overflow: hidden;
+}
+.topRatedItem a{
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    color: var(--white);
+    background: var(--black);
+    padding: 0.5rem;
+    box-sizing: border-box;
+
+}
