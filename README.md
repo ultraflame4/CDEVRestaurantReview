@@ -26,9 +26,9 @@ Taken from: https://fusejs.io/examples.html#extended-search
 2. Run `npm install` in the root directory
 
 ## Running the project
-1. node .<br/>
+1. `node .`<br/> or `npm run express-run`
 or
-2. Run `npm build-run` to build the client and run the server.
+2. Run `npm run build-run` to build the client and run the server.
 
 Alternatively, you can build the client and run server separately.
 
