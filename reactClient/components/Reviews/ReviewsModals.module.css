@@ -34,8 +34,8 @@
     flex-wrap: wrap;
     list-style-type: none;
     padding: 0;
-    max-height: 45vh;
-    max-width: 65vw;
+    max-height: 70vh;
+    max-width: 90vw;
     overflow-y: auto;
     justify-content: center;
     gap: 1rem;
