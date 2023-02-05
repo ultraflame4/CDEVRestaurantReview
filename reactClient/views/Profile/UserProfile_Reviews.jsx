@@ -9,6 +9,6 @@ export default function UserProfile_Reviews() {
         return {reviews: value.reviews, allShown: allShown}
     }
     return (<main>
-        <ReviewsList loadMore={loadMoreReviews}/>
+        <ReviewsList loadMore={loadMoreReviews} useRestaurantName={true}/>
     </main>)
 }

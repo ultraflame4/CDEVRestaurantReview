@@ -43,6 +43,7 @@ const {GetNowTimestamp} = require("./tools");
  * @property {string} last_edited
  * @property {number} like_count
  * @property {string} username
+ * @property {string} restaurant_name
  */
 
 /**
@@ -314,8 +315,9 @@ class RestauRantDatabase {
             this.#conn.query(
                 `SELECT 
                     *,
-                    (SELECT username FROM cdevrestaurantdatabase.users WHERE users.id=reviews.author_id)
-                    as username 
+                    (SELECT username FROM cdevrestaurantdatabase.users WHERE users.id=reviews.author_id) as username ,
+                    (SELECT name FROM cdevrestaurantdatabase.restaurant WHERE restaurant.id=reviews.restaurant_id) as restaurant_name 
+                    
                     FROM cdevrestaurantdatabase.reviews WHERE author_id=? LIMIT ? OFFSET ?`,
                 [userId, limit, startOffset], (err, result, fields) => {
                 if (err) {

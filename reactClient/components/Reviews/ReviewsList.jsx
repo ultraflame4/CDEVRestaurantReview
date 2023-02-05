@@ -105,7 +105,7 @@ export default function ReviewsList(props) {
         })
     }
 
-
+    console.log(props.useRestaurantName,"FFF")
 
     return <ul className={classes.reviewsList}>
         {
@@ -113,7 +113,7 @@ export default function ReviewsList(props) {
 
                 <ReviewItem
                     key={index}
-                    username={value.username}
+                    username={props.useRestaurantName ? value.restaurant_name : value.username}
                     last_edit={value.last_edit}
                     rating={value.rating}
                     content={value.content}
@@ -129,4 +129,5 @@ export default function ReviewsList(props) {
 
 ReviewsList.propTypes = {
     loadMore: PropTypes.func.isRequired, // Callback function to load more reviews
+    useRestaurantName: PropTypes.bool // Whether to use the restaurant name in the review instead of the username
 }

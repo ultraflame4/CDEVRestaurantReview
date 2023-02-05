@@ -2,18 +2,7 @@
 
 This is a Restaurant Review website built using ReactJS and ExpressJS
 
-Features planned include:
-1. A list of restaurants
-2. Restaurant ratings in stars out of 10
-3. Restaurant average cost
-4. Creation of review accounts
-5. Posting of reviews with said accounts
-6. Rating of reviews with upvotes and downvotes
-7. Sorting by price
-8. Sorting by proximity
-9. to be continued
-
-This is a fullstack web development project done for school.
+This is a web development project done for school.
 
 ### Searching:
 This project uses the [Fuse.js](https://fusejs.io/) library to search for restaurants.
@@ -31,6 +20,7 @@ To refine your search, you can use the following search operators:
 |.js$|suffix-exact-match|Items that end with .js|
 |!.go$|inverse-suffix-exact-match|Items that do not end with .go|
 Taken from: https://fusejs.io/examples.html#extended-search
+
 ## Installation
 1. Clone the repository
 2. Run `npm install` in the root directory
