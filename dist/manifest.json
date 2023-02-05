@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/index.9172c5e3.js",
+    "file": "assets/index.2c58c893.js",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
@@ -16,7 +16,7 @@
     ]
   },
   "reactClient/views/Home/Home.jsx": {
-    "file": "assets/Home.5f686754.js",
+    "file": "assets/Home.5956883d.js",
     "src": "reactClient/views/Home/Home.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -27,28 +27,28 @@
     ]
   },
   "reactClient/views/RestaurantDetails/RestaurantDetails.jsx": {
-    "file": "assets/RestaurantDetails.8e209ba7.js",
+    "file": "assets/RestaurantDetails.87c4b12f.js",
     "src": "reactClient/views/RestaurantDetails/RestaurantDetails.jsx",
     "isDynamicEntry": true,
     "imports": [
       "index.html",
-      "_ReviewsList.e45ed777.js"
+      "_ReviewsList.6e0673e4.js"
     ],
     "css": [
       "assets/RestaurantDetails.6f41ba76.css"
     ]
   },
-  "_ReviewsList.e45ed777.js": {
-    "file": "assets/ReviewsList.e45ed777.js",
+  "_ReviewsList.6e0673e4.js": {
+    "file": "assets/ReviewsList.6e0673e4.js",
     "imports": [
       "index.html"
     ],
     "css": [
-      "assets/ReviewsList.4233d967.css"
+      "assets/ReviewsList.ca964fdd.css"
     ]
   },
   "reactClient/views/Search/SearchResults.jsx": {
-    "file": "assets/SearchResults.de7e34a6.js",
+    "file": "assets/SearchResults.416ce9c7.js",
     "src": "reactClient/views/Search/SearchResults.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -56,7 +56,7 @@
     ]
   },
   "reactClient/views/Profile/UserProfile.jsx": {
-    "file": "assets/UserProfile.db012401.js",
+    "file": "assets/UserProfile.1faa6788.js",
     "src": "reactClient/views/Profile/UserProfile.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -67,7 +67,7 @@
     ]
   },
   "reactClient/views/Profile/UserProfile_Settings.jsx": {
-    "file": "assets/UserProfile_Settings.0e1862f0.js",
+    "file": "assets/UserProfile_Settings.24a1ea28.js",
     "src": "reactClient/views/Profile/UserProfile_Settings.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -78,33 +78,33 @@
     ]
   },
   "reactClient/views/Profile/UserProfile_Reviews.jsx": {
-    "file": "assets/UserProfile_Reviews.51055afe.js",
+    "file": "assets/UserProfile_Reviews.f70ca26d.js",
     "src": "reactClient/views/Profile/UserProfile_Reviews.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_ReviewsList.e45ed777.js",
+      "_ReviewsList.6e0673e4.js",
       "index.html"
     ]
+  },
+  "reactClient/views/Profile/UserProfile.css": {
+    "file": "assets/UserProfile.25793264.css",
+    "src": "reactClient/views/Profile/UserProfile.css"
+  },
+  "reactClient/views/Profile/UserProfile_Settings.css": {
+    "file": "assets/UserProfile_Settings.a7ba71aa.css",
+    "src": "reactClient/views/Profile/UserProfile_Settings.css"
+  },
+  "reactClient/views/RestaurantDetails/RestaurantDetails.css": {
+    "file": "assets/RestaurantDetails.6f41ba76.css",
+    "src": "reactClient/views/RestaurantDetails/RestaurantDetails.css"
   },
   "reactClient/views/Home/Home.css": {
     "file": "assets/Home.89068752.css",
     "src": "reactClient/views/Home/Home.css"
   },
   "ReviewsList.css": {
-    "file": "assets/ReviewsList.4233d967.css",
+    "file": "assets/ReviewsList.ca964fdd.css",
     "src": "ReviewsList.css"
-  },
-  "reactClient/views/Profile/UserProfile_Settings.css": {
-    "file": "assets/UserProfile_Settings.a7ba71aa.css",
-    "src": "reactClient/views/Profile/UserProfile_Settings.css"
-  },
-  "reactClient/views/Profile/UserProfile.css": {
-    "file": "assets/UserProfile.25793264.css",
-    "src": "reactClient/views/Profile/UserProfile.css"
-  },
-  "reactClient/views/RestaurantDetails/RestaurantDetails.css": {
-    "file": "assets/RestaurantDetails.6f41ba76.css",
-    "src": "reactClient/views/RestaurantDetails/RestaurantDetails.css"
   },
   "index.css": {
     "file": "assets/index.3cb31b23.css",
