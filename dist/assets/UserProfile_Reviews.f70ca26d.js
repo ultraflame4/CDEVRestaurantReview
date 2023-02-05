@@ -1,0 +1,1 @@
+import{R as i}from"./ReviewsList.6e0673e4.js";import{j as r,A as o}from"./index.2c58c893.js";function u(){async function t(s){let e=await o(s);console.log(e);let a=e.limit>e.total;return{reviews:e.reviews,allShown:a}}return r("main",{children:r(i,{loadMore:t,useRestaurantName:!0})})}export{u as default};

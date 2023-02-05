@@ -1,0 +1,1 @@
+import{n as t,j as e,o as c,R as n}from"./index.2c58c893.js";function l(){var s;const[r]=t();let a=(s=r.get("q"))!=null?s:"";return e("main",{className:c.main,children:e(n,{title:`Search for "${a}"`,searchQuery:a})})}export{l as default};
