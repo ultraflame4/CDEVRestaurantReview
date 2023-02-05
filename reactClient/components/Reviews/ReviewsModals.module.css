@@ -33,7 +33,7 @@
     display: flex;
     flex-wrap: wrap;
     list-style-type: none;
-    padding: 0;
+    padding: 0 0.5rem;
     max-height: 70vh;
     max-width: 90vw;
     overflow-y: auto;
