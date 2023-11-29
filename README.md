@@ -7,9 +7,13 @@ This is a Restaurant Review website built using ReactJS and ExpressJS
 This is a web development project done for school.
 
 **Browsing / General Features**
-resources/restaurant_review_loggedout.mp4
+
+https://github.com/ultraflame4/CDEVRestaurantReview/assets/34125174/3c876ee8-3a27-44a3-a5f6-6158688299fd
+
 **Account Features**
-resources/restaurant_review_account_features.mp4
+
+https://github.com/ultraflame4/CDEVRestaurantReview/assets/34125174/64611454-7a46-4d79-924d-9df283221bab
+
 
 ### Searching:
 
