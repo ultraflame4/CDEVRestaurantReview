@@ -6,6 +6,11 @@ This is a Restaurant Review website built using ReactJS and ExpressJS
 
 This is a web development project done for school.
 
+**Browsing / General Features**
+resources/restaurant_review_loggedout.mp4
+**Account Features**
+resources/restaurant_review_account_features.mp4
+
 ### Searching:
 
 This project uses the [Fuse.js](https://fusejs.io/) library to search for restaurants.
